@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-br" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Facilitador de Atendimento</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
+    /* ===== Estilos existentes (mantidos) ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html,
+    body {
       height: 100%;
       overflow: hidden;
     }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #f0f4fa;
       color: #0b1a2e;
       padding: 20px 20px 0 20px;
@@ -29,7 +35,6 @@
       color: #e6edf5;
     }
 
-    /* --- SCROLL ÁREA PRINCIPAL (apenas o conteúdo rola, não a página toda) --- */
     .scroll-area {
       flex: 1;
       overflow-y: auto;
@@ -60,7 +65,8 @@
       align-items: flex-start;
     }
 
-    .container, .sidebar {
+    .container,
+    .sidebar {
       background: #ffffff;
       border-radius: 24px;
       padding: 28px 26px;
@@ -70,10 +76,16 @@
     [data-theme="dark"] .container,
     [data-theme="dark"] .sidebar {
       background: #1e293b;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
     }
-    .container { flex: 2; min-width: 360px; }
-    .sidebar { flex: 1.2; min-width: 300px; }
+    .container {
+      flex: 2;
+      min-width: 360px;
+    }
+    .sidebar {
+      flex: 1.2;
+      min-width: 300px;
+    }
 
     .titulo-com-botao {
       display: flex;
@@ -91,7 +103,10 @@
       gap: 10px;
       margin: 0;
     }
-    h1::before { content: "📋"; font-size: 26px; }
+    h1::before {
+      content: "📋";
+      font-size: 26px;
+    }
 
     .limpar-titulo-btn {
       background: transparent;
@@ -139,7 +154,10 @@
       align-items: center;
       gap: 6px;
     }
-    .sidebar-header h2::before { content: "⚡"; font-size: 20px; }
+    .sidebar-header h2::before {
+      content: "⚡";
+      font-size: 20px;
+    }
 
     .header-actions {
       display: flex;
@@ -167,9 +185,13 @@
       border-color: #3b4a62;
       color: #b8c9e0;
     }
-    .header-actions button:hover { background: #e3eaf3; }
-    [data-theme="dark"] .header-actions button:hover { background: #2a3750; }
-    
+    .header-actions button:hover {
+      background: #e3eaf3;
+    }
+    [data-theme="dark"] .header-actions button:hover {
+      background: #2a3750;
+    }
+
     #editModeToggle.active {
       background: #1a4cff;
       color: white;
@@ -180,7 +202,9 @@
       color: white;
       border-color: #1a4cff;
     }
-    #editModeToggle.active:hover { background: #0e3fd6; }
+    #editModeToggle.active:hover {
+      background: #0e3fd6;
+    }
 
     .top-bar {
       display: flex;
@@ -208,8 +232,12 @@
       background: #2d3a4f;
       color: #d6e0ee;
     }
-    .theme-toggle:hover { background: #dce4ed; }
-    [data-theme="dark"] .theme-toggle:hover { background: #3b4a62; }
+    .theme-toggle:hover {
+      background: #dce4ed;
+    }
+    [data-theme="dark"] .theme-toggle:hover {
+      background: #3b4a62;
+    }
 
     label {
       display: block;
@@ -219,9 +247,13 @@
       margin-bottom: 5px;
       color: #1f3349;
     }
-    [data-theme="dark"] label { color: #b8c9e0; }
+    [data-theme="dark"] label {
+      color: #b8c9e0;
+    }
 
-    input, textarea, select {
+    input,
+    textarea,
+    select {
       width: 100%;
       padding: 11px 14px;
       border: 1.5px solid #e2e8f0;
@@ -239,12 +271,16 @@
       border-color: #3b4a62;
       color: #e6edf5;
     }
-    input:focus, textarea:focus, select:focus {
+    input:focus,
+    textarea:focus,
+    select:focus {
       border-color: #2d7aff;
       outline: none;
       box-shadow: 0 0 0 4px rgba(45, 122, 255, 0.12);
     }
-    textarea { min-height: 72px; }
+    textarea {
+      min-height: 72px;
+    }
 
     .radio-group {
       display: flex;
@@ -262,7 +298,8 @@
       font-size: 14px;
     }
     .radio-group input[type="radio"] {
-      width: 18px; height: 18px;
+      width: 18px;
+      height: 18px;
       accent-color: #2d7aff;
       margin: 0;
       cursor: pointer;
@@ -277,10 +314,19 @@
       border-radius: 18px;
       flex-wrap: wrap;
     }
-    [data-theme="dark"] .versao-fields { background: #1f2a3e; }
-    .versao-fields.show { display: flex; }
-    .versao-fields > div { flex: 1 1 130px; }
-    .versao-fields label { margin-top: 0; font-size: 13px; }
+    [data-theme="dark"] .versao-fields {
+      background: #1f2a3e;
+    }
+    .versao-fields.show {
+      display: flex;
+    }
+    .versao-fields > div {
+      flex: 1 1 130px;
+    }
+    .versao-fields label {
+      margin-top: 0;
+      font-size: 13px;
+    }
 
     .conditional-fields {
       display: none;
@@ -319,7 +365,10 @@
       border-radius: 60px;
       box-shadow: 0 4px 12px rgba(26, 76, 255, 0.25);
     }
-    #gerarBtn:hover { background: #0e3fd6; transform: scale(1.01); }
+    #gerarBtn:hover {
+      background: #0e3fd6;
+      transform: scale(1.01);
+    }
 
     .popup-overlay {
       display: none;
@@ -332,20 +381,31 @@
       z-index: 999;
       padding: 20px;
     }
-    .popup-overlay.ativo { display: flex; }
+    .popup-overlay.ativo {
+      display: flex;
+    }
     .popup-card {
       background: #fff;
       max-width: 740px;
       width: 100%;
       border-radius: 32px;
       padding: 32px 34px 26px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
       animation: popIn 0.25s ease;
     }
-    [data-theme="dark"] .popup-card { background: #1e293b; color: #e6edf5; }
+    [data-theme="dark"] .popup-card {
+      background: #1e293b;
+      color: #e6edf5;
+    }
     @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.96) translateY(10px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
+      0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
     .popup-header {
       display: flex;
@@ -353,7 +413,9 @@
       align-items: center;
       margin-bottom: 18px;
     }
-    .popup-header h2 { font-size: 20px; }
+    .popup-header h2 {
+      font-size: 20px;
+    }
     .popup-header button {
       background: transparent;
       font-size: 28px;
@@ -362,9 +424,15 @@
       padding: 0 6px;
       border-radius: 40px;
     }
-    [data-theme="dark"] .popup-header button { color: #9ab0cc; }
-    .popup-header button:hover { background: #eef3f9; }
-    [data-theme="dark"] .popup-header button:hover { background: #2d3a4f; }
+    [data-theme="dark"] .popup-header button {
+      color: #9ab0cc;
+    }
+    .popup-header button:hover {
+      background: #eef3f9;
+    }
+    [data-theme="dark"] .popup-header button:hover {
+      background: #2d3a4f;
+    }
     #popupTexto {
       width: 100%;
       min-height: 200px;
@@ -372,7 +440,7 @@
       border-radius: 20px;
       border: 1.5px solid #e2e8f0;
       font-size: 14px;
-      font-family: 'Inter', monospace;
+      font-family: "Inter", monospace;
       line-height: 1.6;
       background: #f8faff;
       resize: vertical;
@@ -394,12 +462,27 @@
       border-radius: 60px;
       flex: 1 1 auto;
     }
-    #copiarPopupBtn { background: #16a34a; color: white; }
-    #copiarPopupBtn:hover { background: #0f8a3b; }
-    #fecharPopupBtn { background: #eef2f6; color: #1f3349; }
-    [data-theme="dark"] #fecharPopupBtn { background: #2d3a4f; color: #d6e0ee; }
-    #fecharPopupBtn:hover { background: #dce4ed; }
-    [data-theme="dark"] #fecharPopupBtn:hover { background: #3b4a62; }
+    #copiarPopupBtn {
+      background: #16a34a;
+      color: white;
+    }
+    #copiarPopupBtn:hover {
+      background: #0f8a3b;
+    }
+    #fecharPopupBtn {
+      background: #eef2f6;
+      color: #1f3349;
+    }
+    [data-theme="dark"] #fecharPopupBtn {
+      background: #2d3a4f;
+      color: #d6e0ee;
+    }
+    #fecharPopupBtn:hover {
+      background: #dce4ed;
+    }
+    [data-theme="dark"] #fecharPopupBtn:hover {
+      background: #3b4a62;
+    }
     #copiadoPopupMsg {
       color: #16a34a;
       font-weight: 500;
@@ -430,8 +513,14 @@
       background: #1f2a3e;
       border-color: #3b4a62;
     }
-    .atalho-item:hover { background: #e8f0fe; border-color: #b6cef5; }
-    [data-theme="dark"] .atalho-item:hover { background: #2a3750; border-color: #5a6f8f; }
+    .atalho-item:hover {
+      background: #e8f0fe;
+      border-color: #b6cef5;
+    }
+    [data-theme="dark"] .atalho-item:hover {
+      background: #2a3750;
+      border-color: #5a6f8f;
+    }
 
     .atalho-btn {
       flex: 1;
@@ -450,16 +539,25 @@
       min-width: 0;
       border: none;
     }
-    [data-theme="dark"] .atalho-btn { color: #d6e0ee; }
-    .atalho-btn:hover { background: rgba(45, 122, 255, 0.06); }
-    .atalho-icon { flex-shrink: 0; font-size: 14px; }
+    [data-theme="dark"] .atalho-btn {
+      color: #d6e0ee;
+    }
+    .atalho-btn:hover {
+      background: rgba(45, 122, 255, 0.06);
+    }
+    .atalho-icon {
+      flex-shrink: 0;
+      font-size: 14px;
+    }
 
     .vazio-msg {
       font-size: 14px;
       color: #798ea5;
       padding: 10px 0 6px;
     }
-    [data-theme="dark"] .vazio-msg { color: #8fa3be; }
+    [data-theme="dark"] .vazio-msg {
+      color: #8fa3be;
+    }
 
     #ioFeedback {
       font-size: 13px;
@@ -468,12 +566,26 @@
       padding: 4px 12px;
       border-radius: 40px;
     }
-    #ioFeedback.ok { background: #e6f7ec; color: #0a6b34; display: block; }
-    #ioFeedback.erro { background: #fee9e7; color: #b91c1c; display: block; }
-    [data-theme="dark"] #ioFeedback.ok { background: #1a3a2a; color: #7be0a0; }
-    [data-theme="dark"] #ioFeedback.erro { background: #3a1f1f; color: #f7a8a8; }
+    #ioFeedback.ok {
+      background: #e6f7ec;
+      color: #0a6b34;
+      display: block;
+    }
+    #ioFeedback.erro {
+      background: #fee9e7;
+      color: #b91c1c;
+      display: block;
+    }
+    [data-theme="dark"] #ioFeedback.ok {
+      background: #1a3a2a;
+      color: #7be0a0;
+    }
+    [data-theme="dark"] #ioFeedback.erro {
+      background: #3a1f1f;
+      color: #f7a8a8;
+    }
 
-    /* ----- BLOCO DE NOTAS FLUTUANTE (fixo, sem scroll) ----- */
+    /* ===== BLOCO DE NOTAS FLUTUANTE ===== */
     .sticky-note-float {
       position: fixed;
       min-width: 200px;
@@ -515,8 +627,12 @@
       pointer-events: auto;
       z-index: 10;
     }
-    .sticky-note-float:hover::after { opacity: 1; }
-    [data-theme="dark"] .sticky-note-float::after { color: #5a6f8f; }
+    .sticky-note-float:hover::after {
+      opacity: 1;
+    }
+    [data-theme="dark"] .sticky-note-float::after {
+      color: #5a6f8f;
+    }
 
     .sticky-note-float.minimizado {
       min-height: 48px;
@@ -524,9 +640,15 @@
       overflow: hidden;
       resize: none;
     }
-    .sticky-note-float.minimizado::after { display: none; }
-    .sticky-note-float.minimizado .sticky-body { display: none; }
-    .sticky-note-float.minimizado .sticky-header .minimizar-btn { transform: rotate(180deg); }
+    .sticky-note-float.minimizado::after {
+      display: none;
+    }
+    .sticky-note-float.minimizado .sticky-body {
+      display: none;
+    }
+    .sticky-note-float.minimizado .sticky-header .minimizar-btn {
+      transform: rotate(180deg);
+    }
 
     .sticky-header {
       display: flex;
@@ -539,7 +661,9 @@
       padding: 2px 0;
       flex-shrink: 0;
     }
-    .sticky-header:active { cursor: grabbing; }
+    .sticky-header:active {
+      cursor: grabbing;
+    }
     .sticky-header label {
       font-size: 13px;
       font-weight: 600;
@@ -551,8 +675,13 @@
       cursor: grab;
       user-select: none;
     }
-    [data-theme="dark"] .sticky-header label { color: #8fa3be; }
-    .sticky-header label::before { content: "📝"; font-size: 16px; }
+    [data-theme="dark"] .sticky-header label {
+      color: #8fa3be;
+    }
+    .sticky-header label::before {
+      content: "📝";
+      font-size: 16px;
+    }
     .sticky-actions {
       display: flex;
       gap: 2px;
@@ -583,7 +712,9 @@
       background: #2d3a4f;
       color: #d6e0ee;
     }
-    .sticky-actions .minimizar-btn { transition: transform 0.3s ease; }
+    .sticky-actions .minimizar-btn {
+      transition: transform 0.3s ease;
+    }
 
     .sticky-body {
       flex: 1;
@@ -638,10 +769,7 @@
       padding-right: 20px;
     }
 
-    /* ============================================== */
-    /* === CALCULADORA DE HORÁRIOS FLUTUANTE === */
-    /* ============================================== */
-
+    /* ===== CALCULADORA DE HORÁRIOS FLUTUANTE ===== */
     .calc-toggle-btn {
       position: fixed;
       bottom: 28px;
@@ -686,7 +814,7 @@
       display: none;
       opacity: 0;
       transform: translateY(12px);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       transition: opacity 0.25s ease, transform 0.25s ease;
     }
     [data-theme="dark"] .calc-panel {
@@ -709,8 +837,13 @@
       align-items: center;
       gap: 8px;
     }
-    [data-theme="dark"] .calc-panel h3 { color: #d6e0ee; }
-    .calc-panel h3::before { content: "⏰"; font-size: 18px; }
+    [data-theme="dark"] .calc-panel h3 {
+      color: #d6e0ee;
+    }
+    .calc-panel h3::before {
+      content: "⏰";
+      font-size: 18px;
+    }
 
     .calc-row {
       display: flex;
@@ -725,14 +858,16 @@
       margin: 0;
       min-width: 36px;
     }
-    [data-theme="dark"] .calc-row label { color: #8fa3be; }
+    [data-theme="dark"] .calc-row label {
+      color: #8fa3be;
+    }
     .calc-row input[type="time"] {
       flex: 1;
       padding: 8px 10px;
       border: 1.5px solid #e2e8f0;
       border-radius: 10px;
       font-size: 14px;
-      font-family: 'Inter', monospace;
+      font-family: "Inter", monospace;
       background: #fafcff;
       transition: 0.15s;
       min-width: 0;
@@ -754,7 +889,7 @@
       border-radius: 10px;
       font-size: 14px;
       text-align: center;
-      font-family: 'Inter', monospace;
+      font-family: "Inter", monospace;
       background: #fafcff;
       transition: 0.15s;
     }
@@ -773,7 +908,9 @@
       color: #52677a;
       font-weight: 500;
     }
-    [data-theme="dark"] .calc-row span { color: #8fa3be; }
+    [data-theme="dark"] .calc-row span {
+      color: #8fa3be;
+    }
 
     .calc-resultado {
       margin-top: 12px;
@@ -784,7 +921,7 @@
       font-size: 22px;
       font-weight: 700;
       color: #1a4cff;
-      font-family: 'Inter', monospace;
+      font-family: "Inter", monospace;
       letter-spacing: 1px;
     }
     [data-theme="dark"] .calc-resultado {
@@ -799,9 +936,17 @@
       text-align: center;
       min-height: 20px;
     }
-    [data-theme="dark"] .calc-comparacao { color: #8fa3be; }
-    .calc-comparacao .atraso { color: #e74c3c; font-weight: 600; }
-    .calc-comparacao .adiantado { color: #27ae60; font-weight: 600; }
+    [data-theme="dark"] .calc-comparacao {
+      color: #8fa3be;
+    }
+    .calc-comparacao .atraso {
+      color: #e74c3c;
+      font-weight: 600;
+    }
+    .calc-comparacao .adiantado {
+      color: #27ae60;
+      font-weight: 600;
+    }
 
     .calc-actions {
       display: flex;
@@ -822,14 +967,23 @@
       background: #1a4cff;
       color: white;
     }
-    .calc-calcular-btn:hover { background: #0e3fd6; }
+    .calc-calcular-btn:hover {
+      background: #0e3fd6;
+    }
     .calc-limpar-btn {
       background: #eef2f6;
       color: #1f3349;
     }
-    [data-theme="dark"] .calc-limpar-btn { background: #2d3a4f; color: #d6e0ee; }
-    .calc-limpar-btn:hover { background: #dce4ed; }
-    [data-theme="dark"] .calc-limpar-btn:hover { background: #3b4a62; }
+    [data-theme="dark"] .calc-limpar-btn {
+      background: #2d3a4f;
+      color: #d6e0ee;
+    }
+    .calc-limpar-btn:hover {
+      background: #dce4ed;
+    }
+    [data-theme="dark"] .calc-limpar-btn:hover {
+      background: #3b4a62;
+    }
 
     .edit-popup-overlay {
       display: none;
@@ -842,17 +996,22 @@
       z-index: 1000;
       padding: 20px;
     }
-    .edit-popup-overlay.ativo { display: flex; }
+    .edit-popup-overlay.ativo {
+      display: flex;
+    }
     .edit-popup-card {
       background: #fff;
       max-width: 480px;
       width: 100%;
       border-radius: 32px;
       padding: 28px 30px 24px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
       animation: popIn 0.2s ease;
     }
-    [data-theme="dark"] .edit-popup-card { background: #1e293b; color: #e6edf5; }
+    [data-theme="dark"] .edit-popup-card {
+      background: #1e293b;
+      color: #e6edf5;
+    }
     .edit-popup-card h3 {
       font-size: 19px;
       margin-bottom: 18px;
@@ -865,7 +1024,9 @@
       margin-top: 14px;
       margin-bottom: 4px;
     }
-    .edit-popup-card input, .edit-popup-card select, .edit-popup-card textarea {
+    .edit-popup-card input,
+    .edit-popup-card select,
+    .edit-popup-card textarea {
       background: #fafcff;
       border-radius: 40px;
       padding: 10px 16px;
@@ -894,14 +1055,34 @@
       font-size: 14px;
       min-width: 100px;
     }
-    #salvarEditBtn { background: #1a4cff; color: white; }
-    #salvarEditBtn:hover { background: #0e3fd6; }
-    #excluirEditBtn { background: #e74c3c; color: white; }
-    #excluirEditBtn:hover { background: #c0392b; }
-    #cancelarEditBtn { background: #eef2f6; color: #1f3349; }
-    [data-theme="dark"] #cancelarEditBtn { background: #2d3a4f; color: #d6e0ee; }
-    #cancelarEditBtn:hover { background: #dce4ed; }
-    [data-theme="dark"] #cancelarEditBtn:hover { background: #3b4a62; }
+    #salvarEditBtn {
+      background: #1a4cff;
+      color: white;
+    }
+    #salvarEditBtn:hover {
+      background: #0e3fd6;
+    }
+    #excluirEditBtn {
+      background: #e74c3c;
+      color: white;
+    }
+    #excluirEditBtn:hover {
+      background: #c0392b;
+    }
+    #cancelarEditBtn {
+      background: #eef2f6;
+      color: #1f3349;
+    }
+    [data-theme="dark"] #cancelarEditBtn {
+      background: #2d3a4f;
+      color: #d6e0ee;
+    }
+    #cancelarEditBtn:hover {
+      background: #dce4ed;
+    }
+    [data-theme="dark"] #cancelarEditBtn:hover {
+      background: #3b4a62;
+    }
     #editFeedback {
       font-size: 13px;
       color: #b91c1c;
@@ -909,59 +1090,7 @@
       display: none;
     }
 
-    @media (max-width: 860px) {
-      .layout { flex-direction: column; }
-      .container, .sidebar { min-width: 0; }
-      .atalho-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-      .sidebar-header { flex-direction: column; align-items: stretch; }
-      .header-actions { justify-content: flex-start; flex-wrap: wrap; }
-      .sticky-note-float {
-        width: 300px !important;
-        min-width: 160px;
-        height: 250px !important;
-      }
-      .calc-panel {
-        width: 280px;
-        right: 16px;
-        bottom: 90px;
-      }
-      .calc-toggle-btn {
-        bottom: 20px;
-        right: 16px;
-        width: 48px;
-        height: 48px;
-        font-size: 20px;
-      }
-      .titulo-com-botao {
-        flex-wrap: wrap;
-      }
-    }
-    @media (max-width: 480px) {
-      .atalho-grid { grid-template-columns: 1fr 1fr; }
-      .popup-card, .edit-popup-card { padding: 20px 16px; }
-      .header-actions button { font-size: 14px; padding: 4px 8px; min-width: 32px; height: 32px; }
-      .sticky-note-float {
-        width: 260px !important;
-        min-width: 140px;
-        height: 200px !important;
-        padding: 12px 12px 10px;
-      }
-      .sticky-body textarea { font-size: 12px; padding: 8px 12px; }
-      .calc-panel {
-        width: 260px !important;
-        right: 10px;
-        bottom: 80px;
-        padding: 16px;
-      }
-      .calc-toggle-btn {
-        width: 44px;
-        height: 44px;
-        font-size: 18px;
-        bottom: 16px;
-        right: 10px;
-      }
-    }
-    /* ===== CRONÔMETROS FLUTUANTES (mesmo tamanho do botão de relógio ⏰, coladinho na borda) ===== */
+    /* ===== CRONÔMETROS FLUTUANTES ===== */
     .cronometro-fab {
       position: fixed;
       bottom: 28px;
@@ -981,11 +1110,14 @@
       z-index: 1500;
       transition: transform 0.15s, box-shadow 0.15s;
     }
-    .cronometro-fab:hover { transform: scale(1.06); box-shadow: 0 6px 18px rgba(26,76,255,0.38); }
-    .cronometro-fab:active { transform: scale(0.94); }
+    .cronometro-fab:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 18px rgba(26, 76, 255, 0.38);
+    }
+    .cronometro-fab:active {
+      transform: scale(0.94);
+    }
 
-    /* Alinhado ao mesmo "right" do botão ⏰ (calc-toggle-btn), para ficar
-       coladinho na borda direita de verdade, e não na borda do botão ⏱. */
     .cronometros-container {
       position: fixed;
       bottom: 92px;
@@ -999,80 +1131,32 @@
       padding: 2px;
       align-items: flex-end;
     }
-    @media (max-width: 860px) {
-      .cronometro-fab {
-        bottom: 20px;
-        right: 72px;
-        width: 48px;
-        height: 48px;
-        font-size: 19px;
-      }
-      .cronometros-container {
-        bottom: 76px;
-        right: 16px;
-        max-height: 26vh;
-      }
-    }
-    @media (max-width: 480px) {
-      .cronometro-fab {
-        bottom: 16px;
-        right: 62px;
-        width: 44px;
-        height: 44px;
-        font-size: 17px;
-      }
-      .cronometros-container {
-        bottom: 68px;
-        right: 10px;
-        max-height: 24vh;
-      }
-    }
 
-    /* ===== AVISO VISUAL DE CRONÔMETRO (reforço caso a notificação do sistema falhe) ===== */
-    .cronometro-toast {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-20px);
-      background: #1a4cff;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(26,76,255,0.4);
-      font-size: 14px;
-      font-weight: 500;
-      z-index: 3000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-    }
-    .cronometro-toast.ativo {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
     .cronometro-card {
-      background: rgba(255,255,255,0.92);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(6px);
       border-radius: 12px;
       padding: 6px 8px 6px 12px;
       width: auto;
       max-width: 190px;
-      box-shadow: 0 4px 14px rgba(0,20,40,0.10);
-      border: 1px solid rgba(11,26,46,0.08);
+      box-shadow: 0 4px 14px rgba(0, 20, 40, 0.10);
+      border: 1px solid rgba(11, 26, 46, 0.08);
       transition: box-shadow 0.3s, border-color 0.3s;
       display: flex;
       align-items: center;
       gap: 8px;
     }
     [data-theme="dark"] .cronometro-card {
-      background: rgba(30,41,59,0.92);
-      border-color: rgba(255,255,255,0.08);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      background: rgba(30, 41, 59, 0.92);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
     }
-    .cronometro-card.cronometro-pausado { opacity: 0.6; }
+    .cronometro-card.cronometro-pausado {
+      opacity: 0.6;
+    }
     .cronometro-card.cronometro-notificado {
       border-color: #1a4cff;
-      box-shadow: 0 0 0 2px rgba(26,76,255,0.3), 0 4px 14px rgba(0,20,40,0.10);
+      box-shadow: 0 0 0 2px rgba(26, 76, 255, 0.3), 0 4px 14px rgba(0, 20, 40, 0.10);
     }
     .cronometro-card-main {
       display: flex;
@@ -1094,7 +1178,9 @@
       text-overflow: ellipsis;
       max-width: 100px;
     }
-    [data-theme="dark"] .cronometro-nome { color: #93a6bd; }
+    [data-theme="dark"] .cronometro-nome {
+      color: #93a6bd;
+    }
     .cronometro-tempo {
       font-size: 15px;
       font-weight: 700;
@@ -1103,8 +1189,15 @@
       color: #0b1a2e;
       line-height: 1.2;
     }
-    [data-theme="dark"] .cronometro-tempo { color: #e6edf5; }
-    .cronometro-acoes { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+    [data-theme="dark"] .cronometro-tempo {
+      color: #e6edf5;
+    }
+    .cronometro-acoes {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
     .cronometro-pausar,
     .cronometro-fechar {
       background: transparent;
@@ -1120,10 +1213,19 @@
       align-items: center;
       justify-content: center;
     }
-    .cronometro-pausar:hover { background: #eef2f6; color: #1f3349; }
-    .cronometro-fechar:hover { background: #eef2f6; color: #d64545; }
+    .cronometro-pausar:hover {
+      background: #eef2f6;
+      color: #1f3349;
+    }
+    .cronometro-fechar:hover {
+      background: #eef2f6;
+      color: #d64545;
+    }
     [data-theme="dark"] .cronometro-pausar:hover,
-    [data-theme="dark"] .cronometro-fechar:hover { background: #2d3a4f; color: #d6e0ee; }
+    [data-theme="dark"] .cronometro-fechar:hover {
+      background: #2d3a4f;
+      color: #d6e0ee;
+    }
 
     .cronometro-popup-overlay {
       display: none;
@@ -1134,22 +1236,28 @@
       justify-content: center;
       z-index: 2000;
     }
-    .cronometro-popup-overlay.ativo { display: flex; }
+    .cronometro-popup-overlay.ativo {
+      display: flex;
+    }
     .cronometro-popup-card {
       background: #ffffff;
       border-radius: 20px;
       padding: 24px 24px 20px;
       width: 320px;
       max-width: 90vw;
-      box-shadow: 0 16px 40px rgba(0,20,40,0.25);
+      box-shadow: 0 16px 40px rgba(0, 20, 40, 0.25);
     }
-    [data-theme="dark"] .cronometro-popup-card { background: #1e293b; }
+    [data-theme="dark"] .cronometro-popup-card {
+      background: #1e293b;
+    }
     .cronometro-popup-card h3 {
       font-size: 17px;
       margin-bottom: 14px;
       color: #0b1a2e;
     }
-    [data-theme="dark"] .cronometro-popup-card h3 { color: #e6edf5; }
+    [data-theme="dark"] .cronometro-popup-card h3 {
+      color: #e6edf5;
+    }
     .cronometro-popup-card label {
       display: block;
       font-size: 13px;
@@ -1157,7 +1265,9 @@
       margin-bottom: 6px;
       color: #1f3349;
     }
-    [data-theme="dark"] .cronometro-popup-card label { color: #b8c9e0; }
+    [data-theme="dark"] .cronometro-popup-card label {
+      color: #b8c9e0;
+    }
     .cronometro-popup-card input[type="text"] {
       width: 100%;
       border: 1px solid #dce4ed;
@@ -1191,1328 +1301,1538 @@
       font-weight: 600;
       cursor: pointer;
     }
-    #cronometroIniciarBtn { background: #1a4cff; color: #fff; border: none; }
-    #cronometroIniciarBtn:hover { background: #0e3fd6; }
-    #cronometroCancelarBtn { background: transparent; border: 1px solid #dce4ed; color: #1f3349; }
-    [data-theme="dark"] #cronometroCancelarBtn { border-color: #3b4a62; color: #b8c9e0; }
+    #cronometroIniciarBtn {
+      background: #1a4cff;
+      color: #fff;
+      border: none;
+    }
+    #cronometroIniciarBtn:hover {
+      background: #0e3fd6;
+    }
+    #cronometroCancelarBtn {
+      background: transparent;
+      border: 1px solid #dce4ed;
+      color: #1f3349;
+    }
+    [data-theme="dark"] #cronometroCancelarBtn {
+      border-color: #3b4a62;
+      color: #b8c9e0;
+    }
+
+    /* ===== NOVO: Configuração de intervalo do cronômetro ===== */
+    .cronometro-config-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e8f0;
+    }
+    [data-theme="dark"] .cronometro-config-row {
+      border-top-color: #3b4a62;
+    }
+    .cronometro-config-row label {
+      font-size: 12px;
+      font-weight: 500;
+      margin: 0;
+      color: #52677a;
+      min-width: 40px;
+    }
+    [data-theme="dark"] .cronometro-config-row label {
+      color: #8fa3be;
+    }
+    .cronometro-config-row input[type="number"] {
+      width: 60px;
+      padding: 6px 4px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      font-family: "Inter", monospace;
+      background: #fafcff;
+      transition: 0.15s;
+    }
+    [data-theme="dark"] .cronometro-config-row input[type="number"] {
+      background: #0f1729;
+      border-color: #3b4a62;
+      color: #e6edf5;
+    }
+    .cronometro-config-row input[type="number"]:focus {
+      border-color: #2d7aff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(45, 122, 255, 0.12);
+    }
+    .cronometro-config-row span {
+      font-size: 12px;
+      color: #798ea5;
+    }
+    [data-theme="dark"] .cronometro-config-row span {
+      color: #8fa3be;
+    }
+
+    .cronometro-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #1a4cff;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(26, 76, 255, 0.4);
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .cronometro-toast.ativo {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        flex-direction: column;
+      }
+      .container,
+      .sidebar {
+        min-width: 0;
+      }
+      .atalho-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      }
+      .sidebar-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .header-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+      .sticky-note-float {
+        width: 300px !important;
+        min-width: 160px;
+        height: 250px !important;
+      }
+      .calc-panel {
+        width: 280px;
+        right: 16px;
+        bottom: 90px;
+      }
+      .calc-toggle-btn {
+        bottom: 20px;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+      }
+      .cronometro-fab {
+        bottom: 20px;
+        right: 72px;
+        width: 48px;
+        height: 48px;
+        font-size: 19px;
+      }
+      .cronometros-container {
+        bottom: 76px;
+        right: 16px;
+        max-height: 26vh;
+      }
+      .titulo-com-botao {
+        flex-wrap: wrap;
+      }
+    }
+    @media (max-width: 480px) {
+      .atalho-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .popup-card,
+      .edit-popup-card {
+        padding: 20px 16px;
+      }
+      .header-actions button {
+        font-size: 14px;
+        padding: 4px 8px;
+        min-width: 32px;
+        height: 32px;
+      }
+      .sticky-note-float {
+        width: 260px !important;
+        min-width: 140px;
+        height: 200px !important;
+        padding: 12px 12px 10px;
+      }
+      .sticky-body textarea {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+      .calc-panel {
+        width: 260px !important;
+        right: 10px;
+        bottom: 80px;
+        padding: 16px;
+      }
+      .calc-toggle-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        bottom: 16px;
+        right: 10px;
+      }
+      .cronometro-fab {
+        bottom: 16px;
+        right: 62px;
+        width: 44px;
+        height: 44px;
+        font-size: 17px;
+      }
+      .cronometros-container {
+        bottom: 68px;
+        right: 10px;
+        max-height: 24vh;
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- TEMA TOGGLE no topo -->
-<div class="top-bar">
-  <button class="theme-toggle" id="themeToggle">🌓 Tema escuro</button>
-</div>
+  <!-- TEMA TOGGLE no topo -->
+  <div class="top-bar">
+    <button class="theme-toggle" id="themeToggle">🌓 Tema escuro</button>
+  </div>
 
-<!-- ÁREA COM SCROLL APENAS NO CONTEÚDO -->
-<div class="scroll-area">
-  <div class="layout">
-    <!-- COLUNA PRINCIPAL -->
-    <div class="container">
-      <div class="titulo-com-botao">
-        <h1>Gerador de Atendimento</h1>
-        <button class="limpar-titulo-btn" id="limparTituloBtn" title="Limpar todos os campos">🧹 Limpar</button>
-      </div>
-      <form id="form">
-        <label for="solicitacao">Solicitação ou problema</label>
-        <input type="text" id="solicitacao" placeholder="Ex: Dúvidas operacionais">
-
-        <label for="solucao">Solução</label>
-        <textarea id="solucao" placeholder="Descreva a solução aplicada..."></textarea>
-
-        <label>Tem haver com os últimos 3 chamados?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="chamados" value="Sim"> Sim</label>
-          <label><input type="radio" name="chamados" value="Não" checked> Não</label>
+  <!-- ÁREA COM SCROLL APENAS NO CONTEÚDO -->
+  <div class="scroll-area">
+    <div class="layout">
+      <!-- COLUNA PRINCIPAL -->
+      <div class="container">
+        <div class="titulo-com-botao">
+          <h1>Gerador de Atendimento</h1>
+          <button class="limpar-titulo-btn" id="limparTituloBtn" title="Limpar todos os campos">🧹 Limpar</button>
         </div>
+        <form id="form">
+          <label for="solicitacao">Solicitação ou problema</label>
+          <input type="text" id="solicitacao" placeholder="Ex: Dúvidas operacionais" />
 
-        <label>Existiu ou foi necessário kanban?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="kanban" value="Sim" onchange="mostrarKanban()">
-            Sim
-          </label>
-          <label>
-            <input type="radio" name="kanban" value="Não" onchange="mostrarKanban()" checked>
-            Não
-          </label>
-        </div>
+          <label for="solucao">Solução</label>
+          <textarea id="solucao" placeholder="Descreva a solução aplicada..."></textarea>
 
-        <div id="kanbanFields" class="conditional-fields">
-          <label for="kanbanMotivo">Por que foi necessário o Kanban?</label>
-          <textarea id="kanbanMotivo" name="kanbanMotivo" placeholder="Explique o motivo pelo qual foi necessário o Kanban..."></textarea>
-        </div>
+          <label>Tem haver com os últimos 3 chamados?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="chamados" value="Sim" /> Sim</label>
+            <label><input type="radio" name="chamados" value="Não" checked /> Não</label>
+          </div>
 
-        <label>Efetuou ligação?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="ligacao" value="Sim" onchange="mostrarLigacao()">
-            Sim
-          </label>
-          <label>
-            <input type="radio" name="ligacao" value="Não" onchange="mostrarLigacao()" checked>
-            Não
-          </label>
-        </div>
+          <label>Existiu ou foi necessário kanban?</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="kanban" value="Sim" onchange="mostrarKanban()" />
+              Sim
+            </label>
+            <label>
+              <input type="radio" name="kanban" value="Não" onchange="mostrarKanban()" checked />
+              Não
+            </label>
+          </div>
 
-        <div id="ligacaoFields" class="conditional-fields">
-          <label for="ligacaoMotivo">Por que foi necessário efetuar ligação?</label>
-          <textarea id="ligacaoMotivo" name="ligacaoMotivo" placeholder="Explique o motivo da ligação..."></textarea>
-        </div>
+          <div id="kanbanFields" class="conditional-fields">
+            <label for="kanbanMotivo">Por que foi necessário o Kanban?</label>
+            <textarea id="kanbanMotivo" name="kanbanMotivo" placeholder="Explique o motivo pelo qual foi necessário o Kanban..."></textarea>
+          </div>
 
-        <label>Foi realizado atualização?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="atualizacao" value="Sim"> Sim</label>
-          <label><input type="radio" name="atualizacao" value="Não" checked> Não</label>
-        </div>
+          <label>Efetuou ligação?</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="ligacao" value="Sim" onchange="mostrarLigacao()" />
+              Sim
+            </label>
+            <label>
+              <input type="radio" name="ligacao" value="Não" onchange="mostrarLigacao()" checked />
+              Não
+            </label>
+          </div>
 
-        <div class="versao-fields" id="versaoFields">
-          <div><label for="versaoDe">Versão de</label><input type="text" id="versaoDe" placeholder="Ex: 4295"></div>
-          <div><label for="versaoPara">Para</label><input type="text" id="versaoPara" placeholder="Ex: 4659"></div>
-        </div>
+          <div id="ligacaoFields" class="conditional-fields">
+            <label for="ligacaoMotivo">Por que foi necessário efetuar ligação?</label>
+            <textarea id="ligacaoMotivo" name="ligacaoMotivo" placeholder="Explique o motivo da ligação..."></textarea>
+          </div>
 
-        <label>Cliente vinculado?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="vinculado" value="Sim" checked> Sim</label>
-          <label><input type="radio" name="vinculado" value="Não"> Não</label>
-        </div>
+          <label>Foi realizado atualização?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="atualizacao" value="Sim" /> Sim</label>
+            <label><input type="radio" name="atualizacao" value="Não" checked /> Não</label>
+          </div>
 
-        <button type="button" id="gerarBtn">✨ Gerar texto</button>
-      </form>
-    </div>
+          <div class="versao-fields" id="versaoFields">
+            <div><label for="versaoDe">Versão de</label><input type="text" id="versaoDe" placeholder="Ex: 4295" /></div>
+            <div><label for="versaoPara">Para</label><input type="text" id="versaoPara" placeholder="Ex: 4659" /></div>
+          </div>
 
-    <!-- COLUNA ATALHOS -->
-    <div class="sidebar">
-      <div class="sidebar-header">
-        <h2>Atalhos rápidos</h2>
-        <div class="header-actions">
-          <button id="novoAtalhoBtn" title="Novo atalho">➕</button>
-          <button id="editModeToggle" title="Modo edição">✎</button>
-          <button id="exportarBtn" title="Exportar atalhos">⬇</button>
-          <button id="importarBtn" title="Importar atalhos">⬆</button>
-          <input type="file" id="importarInput" accept="application/json" style="display:none">
-        </div>
+          <label>Cliente vinculado?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="vinculado" value="Sim" checked /> Sim</label>
+            <label><input type="radio" name="vinculado" value="Não" /> Não</label>
+          </div>
+
+          <button type="button" id="gerarBtn">✨ Gerar texto</button>
+        </form>
       </div>
 
-      <div id="listaAtalhos" class="atalho-grid"></div>
-      <div id="vazioMsg" class="vazio-msg">Nenhum atalho cadastrado.</div>
+      <!-- COLUNA ATALHOS -->
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <h2>Atalhos rápidos</h2>
+          <div class="header-actions">
+            <button id="novoAtalhoBtn" title="Novo atalho">➕</button>
+            <button id="editModeToggle" title="Modo edição">✎</button>
+            <button id="exportarBtn" title="Exportar atalhos">⬇</button>
+            <button id="importarBtn" title="Importar atalhos">⬆</button>
+            <input type="file" id="importarInput" accept="application/json" style="display:none" />
+          </div>
+        </div>
 
-      <div id="ioFeedback"></div>
+        <div id="listaAtalhos" class="atalho-grid"></div>
+        <div id="vazioMsg" class="vazio-msg">Nenhum atalho cadastrado.</div>
+
+        <div id="ioFeedback"></div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- BLOCO DE NOTAS FLUTUANTE (FIXED) -->
-<div class="sticky-note-float" id="stickyNoteFloat" style="left: auto; right: 28px; bottom: 28px;">
-  <div class="sticky-header" id="stickyHeader">
-    <label>Bloco de notas</label>
-    <div class="sticky-actions">
-      <button class="minimizar-btn" id="minimizarStickyBtn" title="Minimizar/Expandir">▼</button>
-      <button id="limparStickyBtn" title="Limpar nota">🗑</button>
+  <!-- BLOCO DE NOTAS FLUTUANTE (FIXED) -->
+  <div class="sticky-note-float" id="stickyNoteFloat" style="left: auto; right: 28px; bottom: 28px;">
+    <div class="sticky-header" id="stickyHeader">
+      <label>Bloco de notas</label>
+      <div class="sticky-actions">
+        <button class="minimizar-btn" id="minimizarStickyBtn" title="Minimizar/Expandir">▼</button>
+        <button id="limparStickyBtn" title="Limpar nota">🗑</button>
+      </div>
+    </div>
+    <div class="sticky-body">
+      <textarea id="stickyNoteText" placeholder="Digite algo aqui... (salvo automaticamente)"></textarea>
+      <div class="sticky-status" id="stickyNoteStatus">Salvo automaticamente</div>
     </div>
   </div>
-  <div class="sticky-body">
-    <textarea id="stickyNoteText" placeholder="Digite algo aqui... (salvo automaticamente)"></textarea>
-    <div class="sticky-status" id="stickyNoteStatus">Salvo automaticamente</div>
-  </div>
-</div>
 
-<!-- ============================================= -->
-<!-- === CALCULADORA DE HORÁRIOS FLUTUANTE === -->
-<!-- ============================================= -->
+  <!-- CALCULADORA DE HORÁRIOS FLUTUANTE -->
+  <button class="calc-toggle-btn" id="calcToggleBtn" title="Calculadora de horários">⏰</button>
+  <div class="calc-panel" id="calcPanel">
+    <h3>Calculadora de Horários</h3>
 
-<!-- Botão para abrir/fechar a calculadora -->
-<button class="calc-toggle-btn" id="calcToggleBtn" title="Calculadora de horários">⏰</button>
-
-<!-- Painel da calculadora -->
-<div class="calc-panel" id="calcPanel">
-  <h3>Calculadora de Horários</h3>
-  
-  <div class="calc-row">
-    <label>Início</label>
-    <input type="time" id="calcHoraInicial" value="">
-  </div>
-  
-  <div class="calc-row">
-    <label>+</label>
-    <input type="number" id="calcHoras" value="1" min="0" max="99" style="width:48px;">
-    <span>h</span>
-    <input type="number" id="calcMinutos" value="10" min="0" max="59" style="width:48px;">
-    <span>min</span>
-  </div>
-
-  <div class="calc-row" style="margin-top:6px;">
-    <label>Chegou</label>
-    <input type="time" id="calcChegada" placeholder="Opcional">
-  </div>
-
-  <div class="calc-resultado" id="calcResultado">--:--</div>
-  <div class="calc-comparacao" id="calcComparacao">Insira um horário inicial</div>
-
-  <div class="calc-actions">
-    <button class="calc-calcular-btn" id="calcCalcularBtn">Calcular</button>
-    <button class="calc-limpar-btn" id="calcLimparBtn">Limpar</button>
-  </div>
-</div>
-
-<!-- ============================================= -->
-
-<!-- POPUP RESULTADO (texto gerado) -->
-<div class="popup-overlay" id="popupOverlay">
-  <div class="popup-card">
-    <div class="popup-header">
-      <h2>📄 Texto gerado</h2>
-      <button id="fecharPopupX">✕</button>
+    <div class="calc-row">
+      <label>Início</label>
+      <input type="time" id="calcHoraInicial" value="" />
     </div>
-    <textarea id="popupTexto" readonly></textarea>
-    <div class="popup-acoes">
-      <button id="copiarPopupBtn">📋 Copiar texto</button>
-      <button id="fecharPopupBtn">Fechar</button>
-      <span id="copiadoPopupMsg">✔ Copiado!</span>
+
+    <div class="calc-row">
+      <label>+</label>
+      <input type="number" id="calcHoras" value="1" min="0" max="99" style="width:48px;" />
+      <span>h</span>
+      <input type="number" id="calcMinutos" value="10" min="0" max="59" style="width:48px;" />
+      <span>min</span>
+    </div>
+
+    <div class="calc-row" style="margin-top:6px;">
+      <label>Chegou</label>
+      <input type="time" id="calcChegada" placeholder="Opcional" />
+    </div>
+
+    <div class="calc-resultado" id="calcResultado">--:--</div>
+    <div class="calc-comparacao" id="calcComparacao">Insira um horário inicial</div>
+
+    <div class="calc-actions">
+      <button class="calc-calcular-btn" id="calcCalcularBtn">Calcular</button>
+      <button class="calc-limpar-btn" id="calcLimparBtn">Limpar</button>
     </div>
   </div>
-</div>
 
-<!-- POPUP EDIÇÃO/CRIAÇÃO DE ATALHO (flutuante) -->
-<div class="edit-popup-overlay" id="editPopupOverlay">
-  <div class="edit-popup-card">
-    <h3 id="editPopupTitle">✎ Editar atalho</h3>
-    <input type="hidden" id="editId">
-    <label for="editNome">Nome</label>
-    <input type="text" id="editNome" placeholder="Nome do atalho">
-    <label for="editTipo">Ação</label>
-    <select id="editTipo">
-      <option value="link">Abrir link</option>
-      <option value="texto">Copiar texto</option>
-    </select>
-    <label for="editValorLink">Link / URL</label>
-    <input type="url" id="editValorLink" placeholder="https://exemplo.com">
-    <label for="editValorTexto" style="display:none" id="editLabelTexto">Texto a copiar</label>
-    <textarea id="editValorTexto" placeholder="Texto a copiar" style="display:none"></textarea>
-    <div id="editFeedback">Preencha todos os campos.</div>
-    <div class="edit-actions">
-      <button id="salvarEditBtn">💾 Salvar</button>
-      <button id="excluirEditBtn" style="display:none;">🗑 Excluir</button>
-      <button id="cancelarEditBtn">Cancelar</button>
+  <!-- POPUP RESULTADO (texto gerado) -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+      <div class="popup-header">
+        <h2>📄 Texto gerado</h2>
+        <button id="fecharPopupX">✕</button>
+      </div>
+      <textarea id="popupTexto" readonly></textarea>
+      <div class="popup-acoes">
+        <button id="copiarPopupBtn">📋 Copiar texto</button>
+        <button id="fecharPopupBtn">Fechar</button>
+        <span id="copiadoPopupMsg">✔ Copiado!</span>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- CRONÔMETROS FLUTUANTES -->
-<div id="cronometrosContainer" class="cronometros-container"></div>
-<button id="cronometroFab" class="cronometro-fab" title="Novo cronômetro">⏱</button>
-<div id="cronometroToast" class="cronometro-toast"></div>
-<audio id="cronometroBeepAudio" preload="auto" src="data:audio/wav;base64,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"></audio>
-
-<div class="cronometro-popup-overlay" id="cronometroPopupOverlay">
-  <div class="cronometro-popup-card">
-    <h3>⏱ Novo cronômetro</h3>
-    <label for="cronometroNomeInput">Nome do cronômetro</label>
-    <input type="text" id="cronometroNomeInput" placeholder="Ex: Aguardando cliente" maxlength="40">
-    <div class="cronometro-popup-feedback" id="cronometroPopupFeedback"></div>
-    <div class="cronometro-popup-actions">
-      <button id="cronometroCancelarBtn">Cancelar</button>
-      <button id="cronometroIniciarBtn">▶ Iniciar</button>
+  <!-- POPUP EDIÇÃO/CRIAÇÃO DE ATALHO -->
+  <div class="edit-popup-overlay" id="editPopupOverlay">
+    <div class="edit-popup-card">
+      <h3 id="editPopupTitle">✎ Editar atalho</h3>
+      <input type="hidden" id="editId" />
+      <label for="editNome">Nome</label>
+      <input type="text" id="editNome" placeholder="Nome do atalho" />
+      <label for="editTipo">Ação</label>
+      <select id="editTipo">
+        <option value="link">Abrir link</option>
+        <option value="texto">Copiar texto</option>
+      </select>
+      <label for="editValorLink">Link / URL</label>
+      <input type="url" id="editValorLink" placeholder="https://exemplo.com" />
+      <label for="editValorTexto" style="display:none" id="editLabelTexto">Texto a copiar</label>
+      <textarea id="editValorTexto" placeholder="Texto a copiar" style="display:none"></textarea>
+      <div id="editFeedback">Preencha todos os campos.</div>
+      <div class="edit-actions">
+        <button id="salvarEditBtn">💾 Salvar</button>
+        <button id="excluirEditBtn" style="display:none;">🗑 Excluir</button>
+        <button id="cancelarEditBtn">Cancelar</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-  (function() {
-    // ----- TEMA CLARO/ESCURO -----
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-    function toggleTheme() {
-      const current = html.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      html.setAttribute('data-theme', next);
-      themeToggle.textContent = next === 'dark' ? '☀️ Tema claro' : '🌓 Tema escuro';
-    }
-    themeToggle.addEventListener('click', toggleTheme);
-    if (html.getAttribute('data-theme') === 'dark') themeToggle.textContent = '☀️ Tema claro';
+  <!-- CRONÔMETROS FLUTUANTES -->
+  <div id="cronometrosContainer" class="cronometros-container"></div>
+  <button id="cronometroFab" class="cronometro-fab" title="Novo cronômetro">⏱</button>
+  <div id="cronometroToast" class="cronometro-toast"></div>
+  <audio id="cronometroBeepAudio" preload="auto" src="data:audio/wav;base64,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"></audio>
 
-    // ----- FUNÇÕES PARA MOSTRAR/ESCONDER CAMPOS CONDICIONAIS -----
-    window.mostrarKanban = function() {
-      const kanbanSim = document.querySelector('input[name="kanban"][value="Sim"]').checked;
-      const campos = document.getElementById("kanbanFields");
-      if (kanbanSim) {
-        campos.classList.add('show');
-      } else {
-        campos.classList.remove('show');
+  <!-- POPUP PARA NOVO CRONÔMETRO -->
+  <div class="cronometro-popup-overlay" id="cronometroPopupOverlay">
+    <div class="cronometro-popup-card">
+      <h3>⏱ Novo cronômetro</h3>
+      <label for="cronometroNomeInput">Nome do cronômetro</label>
+      <input type="text" id="cronometroNomeInput" placeholder="Ex: Aguardando cliente" maxlength="40" />
+
+      <!-- NOVO: Configuração de intervalo de notificação -->
+      <div class="cronometro-config-row">
+        <label>Notificar a cada</label>
+        <input type="number" id="cronometroIntervaloInput" value="5" min="1" max="120" />
+        <span>minutos</span>
+      </div>
+
+      <div class="cronometro-popup-feedback" id="cronometroPopupFeedback"></div>
+      <div class="cronometro-popup-actions">
+        <button id="cronometroCancelarBtn">Cancelar</button>
+        <button id="cronometroIniciarBtn">▶ Iniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ----- TEMA CLARO/ESCURO -----
+      const themeToggle = document.getElementById('themeToggle');
+      const html = document.documentElement;
+
+      function toggleTheme() {
+        const current = html.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', next);
+        themeToggle.textContent = next === 'dark' ? '☀️ Tema claro' : '🌓 Tema escuro';
       }
-    };
+      themeToggle.addEventListener('click', toggleTheme);
+      if (html.getAttribute('data-theme') === 'dark') themeToggle.textContent = '☀️ Tema claro';
 
-    window.mostrarLigacao = function() {
-      const ligacaoSim = document.querySelector('input[name="ligacao"][value="Sim"]').checked;
-      const campos = document.getElementById("ligacaoFields");
-      if (ligacaoSim) {
-        campos.classList.add('show');
-      } else {
-        campos.classList.remove('show');
-      }
-    };
-
-    // Inicializar os campos condicionais ao carregar a página
-    function inicializarCamposCondicionais() {
-      mostrarKanban();
-      mostrarLigacao();
-    }
-
-    // ----- FORMULÁRIO PRINCIPAL (popup) -----
-    const gerarBtn = document.getElementById('gerarBtn');
-    const limparTituloBtn = document.getElementById('limparTituloBtn');
-    const popupOverlay = document.getElementById('popupOverlay');
-    const popupTexto = document.getElementById('popupTexto');
-    const copiarPopupBtn = document.getElementById('copiarPopupBtn');
-    const copiadoPopupMsg = document.getElementById('copiadoPopupMsg');
-    const fecharPopupBtn = document.getElementById('fecharPopupBtn');
-    const fecharPopupX = document.getElementById('fecharPopupX');
-
-    const atualizacaoRadios = document.querySelectorAll('input[name="atualizacao"]');
-    const versaoFields = document.getElementById('versaoFields');
-    atualizacaoRadios.forEach(r => {
-      r.addEventListener('change', () => {
-        const val = document.querySelector('input[name="atualizacao"]:checked').value;
-        versaoFields.classList.toggle('show', val === 'Sim');
-      });
-    });
-
-    function gerarTexto() {
-      const solicitacao = document.getElementById('solicitacao').value.trim() || '(não preenchido)';
-      const solucao = document.getElementById('solucao').value.trim() || '(não preenchido)';
-      const chamados = document.querySelector('input[name="chamados"]:checked').value;
-      const kanban = document.querySelector('input[name="kanban"]:checked').value;
-      const ligacao = document.querySelector('input[name="ligacao"]:checked').value;
-      const atualizacao = document.querySelector('input[name="atualizacao"]:checked').value;
-      const vinculado = document.querySelector('input[name="vinculado"]:checked').value;
-      
-      let blocoKanban = `Foi criado kanban? ${kanban}`;
-      if (kanban === 'Sim') {
-        const motivo = document.getElementById('kanbanMotivo').value.trim();
-        if (motivo) {
-          blocoKanban += `\nJustificativa Kanban: ${motivo}`;
-        }
-      }
-
-      let blocoLigacao = `Efetuou ligação? ${ligacao}`;
-      if (ligacao === 'Sim') {
-        const motivo = document.getElementById('ligacaoMotivo').value.trim();
-        if (motivo) {
-          blocoLigacao += `\nJustificativa ligação: ${motivo}`;
-        }
-      }
-
-      let blocoAtualizacao = `Foi realizado atualização? ${atualizacao}`;
-      if (atualizacao === 'Sim') {
-        const de = document.getElementById('versaoDe').value.trim();
-        const para = document.getElementById('versaoPara').value.trim();
-        if (de || para) {
-          blocoAtualizacao += `\nVersão: ${de || '(vazio)'} para ${para || '(vazio)'}`;
-        }
-      }
-
-      const blocos = [
-        `Solicitação ou problema: ${solicitacao}`,
-        `Solução: ${solucao}`,
-        `Tem haver com os últimos 3 chamados? ${chamados}`,
-        blocoKanban,
-        blocoLigacao,
-        blocoAtualizacao,
-        `Cliente vinculado? ${vinculado}`
-      ];
-
-      // Junta os blocos com APENAS uma quebra de linha entre eles (sem
-      // linha em branco), para colar direto no Kanban sem espaçamento extra.
-      // No final, garante que nunca fique mais de uma quebra de linha seguida,
-      // mesmo que algum valor colado pelo usuário já contenha quebras extras.
-      return blocos
-        .join('\n')
-        .replace(/\n{2,}/g, '\n')
-        .trim();
-    }
-
-    function mostrarPopup(texto) {
-      popupTexto.value = texto;
-      popupOverlay.classList.add('ativo');
-      copiadoPopupMsg.style.display = 'none';
-    }
-    gerarBtn.addEventListener('click', () => mostrarPopup(gerarTexto()));
-
-    // ----- BOTÃO LIMPAR CAMPOS (ao lado do título) -----
-    function limparCampos() {
-      document.getElementById('solicitacao').value = '';
-      document.getElementById('solucao').value = '';
-      document.getElementById('versaoDe').value = '';
-      document.getElementById('versaoPara').value = '';
-      document.getElementById('kanbanMotivo').value = '';
-      document.getElementById('ligacaoMotivo').value = '';
-      
-      document.querySelectorAll('input[name="chamados"]').forEach(r => r.checked = r.value === 'Não');
-      document.querySelectorAll('input[name="kanban"]').forEach(r => r.checked = r.value === 'Não');
-      document.querySelectorAll('input[name="ligacao"]').forEach(r => r.checked = r.value === 'Não');
-      document.querySelectorAll('input[name="atualizacao"]').forEach(r => r.checked = r.value === 'Não');
-      document.querySelectorAll('input[name="vinculado"]').forEach(r => r.checked = r.value === 'Sim');
-      
-      versaoFields.classList.remove('show');
-      document.getElementById('kanbanFields').classList.remove('show');
-      document.getElementById('ligacaoFields').classList.remove('show');
-      
-      limparTituloBtn.textContent = '✅';
-      setTimeout(() => { limparTituloBtn.innerHTML = '🧹 Limpar'; }, 1200);
-    }
-
-    limparTituloBtn.addEventListener('click', limparCampos);
-
-    function fecharPopup() { popupOverlay.classList.remove('ativo'); }
-    fecharPopupBtn.addEventListener('click', fecharPopup);
-    fecharPopupX.addEventListener('click', fecharPopup);
-    popupOverlay.addEventListener('click', (e) => { if (e.target === popupOverlay) fecharPopup(); });
-
-    function copiarParaAreaDeTransferencia(texto) {
-      return navigator.clipboard.writeText(texto).catch(() => {
-        const temp = document.createElement('textarea');
-        temp.value = texto;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
-      });
-    }
-
-    copiarPopupBtn.addEventListener('click', () => {
-      copiarParaAreaDeTransferencia(popupTexto.value).then(() => {
-        copiadoPopupMsg.style.display = 'inline-block';
-        setTimeout(() => { copiadoPopupMsg.style.display = 'none'; }, 2500);
-      });
-    });
-
-    // ----- ATALHOS EM GRADE -----
-    const STORAGE_KEY = 'atalhosRapidos';
-
-    function carregarAtalhos() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
-    }
-    function salvarAtalhosStorage(lista) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
-    }
-
-    let editMode = false;
-
-    function renderizarAtalhos() {
-      const lista = carregarAtalhos();
-      const container = document.getElementById('listaAtalhos');
-      const vazioMsg = document.getElementById('vazioMsg');
-      container.innerHTML = '';
-
-      if (lista.length === 0) {
-        vazioMsg.style.display = 'block';
-        return;
-      }
-      vazioMsg.style.display = 'none';
-
-      lista.forEach(atalho => {
-        const item = document.createElement('div');
-        item.className = 'atalho-item';
-
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'atalho-btn';
-        btn.title = atalho.nome + (atalho.tipo === 'link' ? ' (link)' : ' (copiar)');
-        const icone = atalho.tipo === 'link' ? '🔗' : '📋';
-        btn.innerHTML = `<span class="atalho-icon">${icone}</span><span>${atalho.nome}</span>`;
-        btn.addEventListener('click', (ev) => {
-          if (editMode) {
-            ev.stopPropagation();
-            abrirEditPopup(atalho.id);
-          } else {
-            executarAtalho(atalho, ev);
-          }
-        });
-
-        item.appendChild(btn);
-        container.appendChild(item);
-      });
-    }
-
-    function executarAtalho(atalho, ev) {
-      if (atalho.tipo === 'link') {
-        window.open(atalho.valor, '_blank');
-      } else {
-        copiarParaAreaDeTransferencia(atalho.valor).then(() => {
-          const btnEl = ev.target.closest('.atalho-btn');
-          if (btnEl) {
-            const original = btnEl.innerHTML;
-            btnEl.innerHTML = '<span>✅ Copiado!</span>';
-            setTimeout(() => { btnEl.innerHTML = original; }, 1200);
-          }
-        });
-      }
-    }
-
-    // ----- POPUP DE EDIÇÃO FLUTUANTE (reutilizável para criar/editar) -----
-    const editPopupOverlay = document.getElementById('editPopupOverlay');
-    const editPopupTitle = document.getElementById('editPopupTitle');
-    const editId = document.getElementById('editId');
-    const editNome = document.getElementById('editNome');
-    const editTipo = document.getElementById('editTipo');
-    const editValorLink = document.getElementById('editValorLink');
-    const editValorTexto = document.getElementById('editValorTexto');
-    const editLabelTexto = document.getElementById('editLabelTexto');
-    const editFeedback = document.getElementById('editFeedback');
-    const salvarEditBtn = document.getElementById('salvarEditBtn');
-    const excluirEditBtn = document.getElementById('excluirEditBtn');
-    const cancelarEditBtn = document.getElementById('cancelarEditBtn');
-
-    function atualizarCamposEdit() {
-      const tipo = editTipo.value;
-      if (tipo === 'link') {
-        editValorLink.style.display = 'block';
-        editValorLink.previousElementSibling.style.display = 'block';
-        editLabelTexto.style.display = 'none';
-        editValorTexto.style.display = 'none';
-      } else {
-        editValorLink.style.display = 'none';
-        editValorLink.previousElementSibling.style.display = 'none';
-        editLabelTexto.style.display = 'block';
-        editValorTexto.style.display = 'block';
-      }
-    }
-    editTipo.addEventListener('change', atualizarCamposEdit);
-
-    function abrirEditPopup(id = null) {
-      editFeedback.style.display = 'none';
-      
-      if (id) {
-        const atalho = carregarAtalhos().find(a => a.id === id);
-        if (!atalho) return;
-        editPopupTitle.textContent = '✎ Editar atalho';
-        editId.value = atalho.id;
-        editNome.value = atalho.nome;
-        editTipo.value = atalho.tipo;
-        if (atalho.tipo === 'link') {
-          editValorLink.value = atalho.valor;
-          editValorTexto.value = '';
+      // ----- FUNÇÕES PARA MOSTRAR/ESCONDER CAMPOS CONDICIONAIS -----
+      window.mostrarKanban = function() {
+        const kanbanSim = document.querySelector('input[name="kanban"][value="Sim"]').checked;
+        const campos = document.getElementById("kanbanFields");
+        if (kanbanSim) {
+          campos.classList.add('show');
         } else {
-          editValorTexto.value = atalho.valor;
-          editValorLink.value = '';
+          campos.classList.remove('show');
         }
-        excluirEditBtn.style.display = 'block';
-      } else {
-        editPopupTitle.textContent = '➕ Novo atalho';
-        editId.value = '';
-        editNome.value = '';
-        editTipo.value = 'link';
-        editValorLink.value = '';
-        editValorTexto.value = '';
-        excluirEditBtn.style.display = 'none';
-      }
-      atualizarCamposEdit();
-      editPopupOverlay.classList.add('ativo');
-    }
-
-    function fecharEditPopup() {
-      editPopupOverlay.classList.remove('ativo');
-    }
-
-    salvarEditBtn.addEventListener('click', () => {
-      const id = editId.value;
-      const nome = editNome.value.trim();
-      const tipo = editTipo.value;
-      const valor = tipo === 'link' ? editValorLink.value.trim() : editValorTexto.value.trim();
-      
-      if (!nome || !valor) {
-        editFeedback.textContent = 'Preencha nome e valor.';
-        editFeedback.style.display = 'block';
-        return;
-      }
-
-      const lista = carregarAtalhos();
-      
-      if (id) {
-        const atalho = lista.find(a => a.id === id);
-        if (atalho) {
-          atalho.nome = nome;
-          atalho.tipo = tipo;
-          atalho.valor = valor;
-        }
-      } else {
-        lista.push({ id: Date.now().toString(), nome, tipo, valor });
-      }
-      
-      salvarAtalhosStorage(lista);
-      renderizarAtalhos();
-      fecharEditPopup();
-      
-      if (editMode) {
-        document.querySelectorAll('.atalho-item').forEach(el => {
-          el.style.transform = 'scale(1.02)';
-          el.style.boxShadow = '0 0 0 2px #2d7aff, 0 4px 12px rgba(45,122,255,0.2)';
-        });
-      }
-    });
-
-    excluirEditBtn.addEventListener('click', () => {
-      const id = editId.value;
-      if (!id) return;
-      if (!confirm('Excluir este atalho?')) return;
-      const lista = carregarAtalhos().filter(a => a.id !== id);
-      salvarAtalhosStorage(lista);
-      renderizarAtalhos();
-      fecharEditPopup();
-    });
-
-    cancelarEditBtn.addEventListener('click', fecharEditPopup);
-    editPopupOverlay.addEventListener('click', (e) => {
-      if (e.target === editPopupOverlay) fecharEditPopup();
-    });
-
-    document.getElementById('novoAtalhoBtn').addEventListener('click', () => {
-      abrirEditPopup(null);
-    });
-
-    const editModeToggle = document.getElementById('editModeToggle');
-    editModeToggle.addEventListener('click', () => {
-      editMode = !editMode;
-      editModeToggle.classList.toggle('active', editMode);
-      
-      document.querySelectorAll('.atalho-item').forEach(el => {
-        el.style.transition = 'transform 0.15s, box-shadow 0.15s';
-        if (editMode) {
-          el.style.transform = 'scale(1.02)';
-          el.style.boxShadow = '0 0 0 2px #2d7aff, 0 4px 12px rgba(45,122,255,0.2)';
-        } else {
-          el.style.transform = 'scale(1)';
-          el.style.boxShadow = 'none';
-        }
-      });
-    });
-
-    // Export
-    function mostrarFeedbackIO(msg, tipo) {
-      const el = document.getElementById('ioFeedback');
-      el.textContent = msg;
-      el.className = tipo;
-      el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 3200);
-    }
-
-    document.getElementById('exportarBtn').addEventListener('click', () => {
-      const lista = carregarAtalhos();
-      const blob = new Blob([JSON.stringify(lista, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'atalhos.json';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      mostrarFeedbackIO('Arquivo exportado!', 'ok');
-    });
-
-    document.getElementById('importarBtn').addEventListener('click', () => {
-      document.getElementById('importarInput').click();
-    });
-
-    document.getElementById('importarInput').addEventListener('change', (ev) => {
-      const arquivo = ev.target.files[0];
-      if (!arquivo) return;
-      const leitor = new FileReader();
-      leitor.onload = (e) => {
-        try {
-          const importados = JSON.parse(e.target.result);
-          if (!Array.isArray(importados)) throw new Error('formato inválido');
-          const atuais = carregarAtalhos();
-          const idsAtuais = new Set(atuais.map(a => a.id));
-          importados.forEach(item => {
-            if (!item.nome || !item.tipo || !item.valor) return;
-            if (idsAtuais.has(item.id)) item.id = Date.now().toString() + Math.random().toString(36).slice(2, 6);
-            atuais.push(item);
-            idsAtuais.add(item.id);
-          });
-          salvarAtalhosStorage(atuais);
-          renderizarAtalhos();
-          mostrarFeedbackIO(`${importados.length} atalho(s) importado(s)!`, 'ok');
-        } catch (err) {
-          mostrarFeedbackIO('Erro: arquivo inválido.', 'erro');
-        }
-        ev.target.value = '';
       };
-      leitor.readAsText(arquivo);
-    });
 
-    // ----- BLOCO DE NOTAS FLUTUANTE COM ARRASTE E REDIMENSIONAMENTO -----
-    const STICKY_KEY = 'stickyNoteContent';
-    const stickyNoteText = document.getElementById('stickyNoteText');
-    const stickyNoteStatus = document.getElementById('stickyNoteStatus');
-    const limparStickyBtn = document.getElementById('limparStickyBtn');
-    const minimizarBtn = document.getElementById('minimizarStickyBtn');
-    const stickyFloat = document.getElementById('stickyNoteFloat');
-    const stickyHeader = document.getElementById('stickyHeader');
-
-    function carregarPosicao() {
-      try {
-        const pos = JSON.parse(localStorage.getItem('stickyNotePosition'));
-        if (pos) {
-          stickyFloat.style.left = pos.left;
-          stickyFloat.style.right = pos.right;
-          stickyFloat.style.top = pos.top;
-          stickyFloat.style.bottom = pos.bottom;
+      window.mostrarLigacao = function() {
+        const ligacaoSim = document.querySelector('input[name="ligacao"][value="Sim"]').checked;
+        const campos = document.getElementById("ligacaoFields");
+        if (ligacaoSim) {
+          campos.classList.add('show');
+        } else {
+          campos.classList.remove('show');
         }
-        const size = JSON.parse(localStorage.getItem('stickyNoteSize'));
-        if (size) {
-          stickyFloat.style.width = size.width;
-          stickyFloat.style.height = size.height;
-        }
-      } catch (e) { /* ignore */ }
-    }
+      };
 
-    function salvarPosicao() {
-      try {
-        const rect = stickyFloat.getBoundingClientRect();
-        const pos = {
-          left: stickyFloat.style.left,
-          right: stickyFloat.style.right,
-          top: stickyFloat.style.top,
-          bottom: stickyFloat.style.bottom
-        };
-        localStorage.setItem('stickyNotePosition', JSON.stringify(pos));
-        const size = {
-          width: stickyFloat.style.width,
-          height: stickyFloat.style.height
-        };
-        localStorage.setItem('stickyNoteSize', JSON.stringify(size));
-      } catch (e) { /* ignore */ }
-    }
-
-    function carregarStickyNote() {
-      try {
-        const salvo = localStorage.getItem(STICKY_KEY);
-        if (salvo !== null) {
-          stickyNoteText.value = salvo;
-        }
-      } catch (e) { /* ignore */ }
-    }
-
-    let stickyTimeout = null;
-    function salvarStickyNote() {
-      try {
-        localStorage.setItem(STICKY_KEY, stickyNoteText.value);
-        stickyNoteStatus.textContent = 'Salvo ✓';
-        stickyNoteStatus.style.opacity = '1';
-        clearTimeout(stickyTimeout);
-        stickyTimeout = setTimeout(() => {
-          stickyNoteStatus.textContent = 'Salvo automaticamente';
-          stickyNoteStatus.style.opacity = '0.7';
-        }, 1500);
-      } catch (e) { /* ignore */ }
-    }
-
-    stickyNoteText.addEventListener('input', salvarStickyNote);
-
-    limparStickyBtn.addEventListener('click', () => {
-      if (stickyNoteText.value.trim() === '') return;
-      if (confirm('Limpar o conteúdo do bloco de notas?')) {
-        stickyNoteText.value = '';
-        salvarStickyNote();
-        stickyNoteStatus.textContent = 'Limpo ✓';
-        stickyNoteStatus.style.opacity = '1';
-        setTimeout(() => {
-          stickyNoteStatus.textContent = 'Salvo automaticamente';
-          stickyNoteStatus.style.opacity = '0.7';
-        }, 1500);
+      function inicializarCamposCondicionais() {
+        mostrarKanban();
+        mostrarLigacao();
       }
-    });
 
-    let minimizado = false;
-    minimizarBtn.addEventListener('click', () => {
-      minimizado = !minimizado;
-      stickyFloat.classList.toggle('minimizado', minimizado);
-      minimizarBtn.textContent = minimizado ? '▲' : '▼';
-      if (!minimizado) {
-        try {
-          const size = JSON.parse(localStorage.getItem('stickyNoteSize'));
-          if (size && size.height) {
-            stickyFloat.style.height = size.height;
+      // ----- FORMULÁRIO PRINCIPAL (popup) -----
+      const gerarBtn = document.getElementById('gerarBtn');
+      const limparTituloBtn = document.getElementById('limparTituloBtn');
+      const popupOverlay = document.getElementById('popupOverlay');
+      const popupTexto = document.getElementById('popupTexto');
+      const copiarPopupBtn = document.getElementById('copiarPopupBtn');
+      const copiadoPopupMsg = document.getElementById('copiadoPopupMsg');
+      const fecharPopupBtn = document.getElementById('fecharPopupBtn');
+      const fecharPopupX = document.getElementById('fecharPopupX');
+
+      const atualizacaoRadios = document.querySelectorAll('input[name="atualizacao"]');
+      const versaoFields = document.getElementById('versaoFields');
+      atualizacaoRadios.forEach(r => {
+        r.addEventListener('change', () => {
+          const val = document.querySelector('input[name="atualizacao"]:checked').value;
+          versaoFields.classList.toggle('show', val === 'Sim');
+        });
+      });
+
+      function gerarTexto() {
+        const solicitacao = document.getElementById('solicitacao').value.trim() || '(não preenchido)';
+        const solucao = document.getElementById('solucao').value.trim() || '(não preenchido)';
+        const chamados = document.querySelector('input[name="chamados"]:checked').value;
+        const kanban = document.querySelector('input[name="kanban"]:checked').value;
+        const ligacao = document.querySelector('input[name="ligacao"]:checked').value;
+        const atualizacao = document.querySelector('input[name="atualizacao"]:checked').value;
+        const vinculado = document.querySelector('input[name="vinculado"]:checked').value;
+
+        let blocoKanban = `Foi criado kanban? ${kanban}`;
+        if (kanban === 'Sim') {
+          const motivo = document.getElementById('kanbanMotivo').value.trim();
+          if (motivo) {
+            blocoKanban += `\nJustificativa Kanban: ${motivo}`;
+          }
+        }
+
+        let blocoLigacao = `Efetuou ligação? ${ligacao}`;
+        if (ligacao === 'Sim') {
+          const motivo = document.getElementById('ligacaoMotivo').value.trim();
+          if (motivo) {
+            blocoLigacao += `\nJustificativa ligação: ${motivo}`;
+          }
+        }
+
+        let blocoAtualizacao = `Foi realizado atualização? ${atualizacao}`;
+        if (atualizacao === 'Sim') {
+          const de = document.getElementById('versaoDe').value.trim();
+          const para = document.getElementById('versaoPara').value.trim();
+          if (de || para) {
+            blocoAtualizacao += `\nVersão: ${de || '(vazio)'} para ${para || '(vazio)'}`;
+          }
+        }
+
+        const blocos = [
+          `Solicitação ou problema: ${solicitacao}`,
+          `Solução: ${solucao}`,
+          `Tem haver com os últimos 3 chamados? ${chamados}`,
+          blocoKanban,
+          blocoLigacao,
+          blocoAtualizacao,
+          `Cliente vinculado? ${vinculado}`
+        ];
+
+        return blocos
+          .join('\n')
+          .replace(/\n{2,}/g, '\n')
+          .trim();
+      }
+
+      function mostrarPopup(texto) {
+        popupTexto.value = texto;
+        popupOverlay.classList.add('ativo');
+        copiadoPopupMsg.style.display = 'none';
+      }
+      gerarBtn.addEventListener('click', () => mostrarPopup(gerarTexto()));
+
+      // ----- BOTÃO LIMPAR CAMPOS -----
+      function limparCampos() {
+        document.getElementById('solicitacao').value = '';
+        document.getElementById('solucao').value = '';
+        document.getElementById('versaoDe').value = '';
+        document.getElementById('versaoPara').value = '';
+        document.getElementById('kanbanMotivo').value = '';
+        document.getElementById('ligacaoMotivo').value = '';
+
+        document.querySelectorAll('input[name="chamados"]').forEach(r => r.checked = r.value === 'Não');
+        document.querySelectorAll('input[name="kanban"]').forEach(r => r.checked = r.value === 'Não');
+        document.querySelectorAll('input[name="ligacao"]').forEach(r => r.checked = r.value === 'Não');
+        document.querySelectorAll('input[name="atualizacao"]').forEach(r => r.checked = r.value === 'Não');
+        document.querySelectorAll('input[name="vinculado"]').forEach(r => r.checked = r.value === 'Sim');
+
+        versaoFields.classList.remove('show');
+        document.getElementById('kanbanFields').classList.remove('show');
+        document.getElementById('ligacaoFields').classList.remove('show');
+
+        limparTituloBtn.textContent = '✅';
+        setTimeout(() => { limparTituloBtn.innerHTML = '🧹 Limpar'; }, 1200);
+      }
+
+      limparTituloBtn.addEventListener('click', limparCampos);
+
+      function fecharPopup() { popupOverlay.classList.remove('ativo'); }
+      fecharPopupBtn.addEventListener('click', fecharPopup);
+      fecharPopupX.addEventListener('click', fecharPopup);
+      popupOverlay.addEventListener('click', (e) => { if (e.target === popupOverlay) fecharPopup(); });
+
+      function copiarParaAreaDeTransferencia(texto) {
+        return navigator.clipboard.writeText(texto).catch(() => {
+          const temp = document.createElement('textarea');
+          temp.value = texto;
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+        });
+      }
+
+      copiarPopupBtn.addEventListener('click', () => {
+        copiarParaAreaDeTransferencia(popupTexto.value).then(() => {
+          copiadoPopupMsg.style.display = 'inline-block';
+          setTimeout(() => { copiadoPopupMsg.style.display = 'none'; }, 2500);
+        });
+      });
+
+      // ----- ATALHOS EM GRADE -----
+      const STORAGE_KEY = 'atalhosRapidos';
+
+      function carregarAtalhos() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+      }
+
+      function salvarAtalhosStorage(lista) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
+      }
+
+      let editMode = false;
+
+      function renderizarAtalhos() {
+        const lista = carregarAtalhos();
+        const container = document.getElementById('listaAtalhos');
+        const vazioMsg = document.getElementById('vazioMsg');
+        container.innerHTML = '';
+
+        if (lista.length === 0) {
+          vazioMsg.style.display = 'block';
+          return;
+        }
+        vazioMsg.style.display = 'none';
+
+        lista.forEach(atalho => {
+          const item = document.createElement('div');
+          item.className = 'atalho-item';
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'atalho-btn';
+          btn.title = atalho.nome + (atalho.tipo === 'link' ? ' (link)' : ' (copiar)');
+          const icone = atalho.tipo === 'link' ? '🔗' : '📋';
+          btn.innerHTML = `<span class="atalho-icon">${icone}</span><span>${atalho.nome}</span>`;
+          btn.addEventListener('click', (ev) => {
+            if (editMode) {
+              ev.stopPropagation();
+              abrirEditPopup(atalho.id);
+            } else {
+              executarAtalho(atalho, ev);
+            }
+          });
+
+          item.appendChild(btn);
+          container.appendChild(item);
+        });
+      }
+
+      function executarAtalho(atalho, ev) {
+        if (atalho.tipo === 'link') {
+          window.open(atalho.valor, '_blank');
+        } else {
+          copiarParaAreaDeTransferencia(atalho.valor).then(() => {
+            const btnEl = ev.target.closest('.atalho-btn');
+            if (btnEl) {
+              const original = btnEl.innerHTML;
+              btnEl.innerHTML = '<span>✅ Copiado!</span>';
+              setTimeout(() => { btnEl.innerHTML = original; }, 1200);
+            }
+          });
+        }
+      }
+
+      // ----- POPUP DE EDIÇÃO FLUTUANTE -----
+      const editPopupOverlay = document.getElementById('editPopupOverlay');
+      const editPopupTitle = document.getElementById('editPopupTitle');
+      const editId = document.getElementById('editId');
+      const editNome = document.getElementById('editNome');
+      const editTipo = document.getElementById('editTipo');
+      const editValorLink = document.getElementById('editValorLink');
+      const editValorTexto = document.getElementById('editValorTexto');
+      const editLabelTexto = document.getElementById('editLabelTexto');
+      const editFeedback = document.getElementById('editFeedback');
+      const salvarEditBtn = document.getElementById('salvarEditBtn');
+      const excluirEditBtn = document.getElementById('excluirEditBtn');
+      const cancelarEditBtn = document.getElementById('cancelarEditBtn');
+
+      function atualizarCamposEdit() {
+        const tipo = editTipo.value;
+        if (tipo === 'link') {
+          editValorLink.style.display = 'block';
+          editValorLink.previousElementSibling.style.display = 'block';
+          editLabelTexto.style.display = 'none';
+          editValorTexto.style.display = 'none';
+        } else {
+          editValorLink.style.display = 'none';
+          editValorLink.previousElementSibling.style.display = 'none';
+          editLabelTexto.style.display = 'block';
+          editValorTexto.style.display = 'block';
+        }
+      }
+      editTipo.addEventListener('change', atualizarCamposEdit);
+
+      function abrirEditPopup(id = null) {
+        editFeedback.style.display = 'none';
+
+        if (id) {
+          const atalho = carregarAtalhos().find(a => a.id === id);
+          if (!atalho) return;
+          editPopupTitle.textContent = '✎ Editar atalho';
+          editId.value = atalho.id;
+          editNome.value = atalho.nome;
+          editTipo.value = atalho.tipo;
+          if (atalho.tipo === 'link') {
+            editValorLink.value = atalho.valor;
+            editValorTexto.value = '';
           } else {
+            editValorTexto.value = atalho.valor;
+            editValorLink.value = '';
+          }
+          excluirEditBtn.style.display = 'block';
+        } else {
+          editPopupTitle.textContent = '➕ Novo atalho';
+          editId.value = '';
+          editNome.value = '';
+          editTipo.value = 'link';
+          editValorLink.value = '';
+          editValorTexto.value = '';
+          excluirEditBtn.style.display = 'none';
+        }
+        atualizarCamposEdit();
+        editPopupOverlay.classList.add('ativo');
+      }
+
+      function fecharEditPopup() {
+        editPopupOverlay.classList.remove('ativo');
+      }
+
+      salvarEditBtn.addEventListener('click', () => {
+        const id = editId.value;
+        const nome = editNome.value.trim();
+        const tipo = editTipo.value;
+        const valor = tipo === 'link' ? editValorLink.value.trim() : editValorTexto.value.trim();
+
+        if (!nome || !valor) {
+          editFeedback.textContent = 'Preencha nome e valor.';
+          editFeedback.style.display = 'block';
+          return;
+        }
+
+        const lista = carregarAtalhos();
+
+        if (id) {
+          const atalho = lista.find(a => a.id === id);
+          if (atalho) {
+            atalho.nome = nome;
+            atalho.tipo = tipo;
+            atalho.valor = valor;
+          }
+        } else {
+          lista.push({ id: Date.now().toString(), nome, tipo, valor });
+        }
+
+        salvarAtalhosStorage(lista);
+        renderizarAtalhos();
+        fecharEditPopup();
+
+        if (editMode) {
+          document.querySelectorAll('.atalho-item').forEach(el => {
+            el.style.transform = 'scale(1.02)';
+            el.style.boxShadow = '0 0 0 2px #2d7aff, 0 4px 12px rgba(45,122,255,0.2)';
+          });
+        }
+      });
+
+      excluirEditBtn.addEventListener('click', () => {
+        const id = editId.value;
+        if (!id) return;
+        if (!confirm('Excluir este atalho?')) return;
+        const lista = carregarAtalhos().filter(a => a.id !== id);
+        salvarAtalhosStorage(lista);
+        renderizarAtalhos();
+        fecharEditPopup();
+      });
+
+      cancelarEditBtn.addEventListener('click', fecharEditPopup);
+      editPopupOverlay.addEventListener('click', (e) => {
+        if (e.target === editPopupOverlay) fecharEditPopup();
+      });
+
+      document.getElementById('novoAtalhoBtn').addEventListener('click', () => {
+        abrirEditPopup(null);
+      });
+
+      const editModeToggle = document.getElementById('editModeToggle');
+      editModeToggle.addEventListener('click', () => {
+        editMode = !editMode;
+        editModeToggle.classList.toggle('active', editMode);
+
+        document.querySelectorAll('.atalho-item').forEach(el => {
+          el.style.transition = 'transform 0.15s, box-shadow 0.15s';
+          if (editMode) {
+            el.style.transform = 'scale(1.02)';
+            el.style.boxShadow = '0 0 0 2px #2d7aff, 0 4px 12px rgba(45,122,255,0.2)';
+          } else {
+            el.style.transform = 'scale(1)';
+            el.style.boxShadow = 'none';
+          }
+        });
+      });
+
+      // Export
+      function mostrarFeedbackIO(msg, tipo) {
+        const el = document.getElementById('ioFeedback');
+        el.textContent = msg;
+        el.className = tipo;
+        el.style.display = 'block';
+        setTimeout(() => { el.style.display = 'none'; }, 3200);
+      }
+
+      document.getElementById('exportarBtn').addEventListener('click', () => {
+        const lista = carregarAtalhos();
+        const blob = new Blob([JSON.stringify(lista, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'atalhos.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        mostrarFeedbackIO('Arquivo exportado!', 'ok');
+      });
+
+      document.getElementById('importarBtn').addEventListener('click', () => {
+        document.getElementById('importarInput').click();
+      });
+
+      document.getElementById('importarInput').addEventListener('change', (ev) => {
+        const arquivo = ev.target.files[0];
+        if (!arquivo) return;
+        const leitor = new FileReader();
+        leitor.onload = (e) => {
+          try {
+            const importados = JSON.parse(e.target.result);
+            if (!Array.isArray(importados)) throw new Error('formato inválido');
+            const atuais = carregarAtalhos();
+            const idsAtuais = new Set(atuais.map(a => a.id));
+            importados.forEach(item => {
+              if (!item.nome || !item.tipo || !item.valor) return;
+              if (idsAtuais.has(item.id)) item.id = Date.now().toString() + Math.random().toString(36).slice(2, 6);
+              atuais.push(item);
+              idsAtuais.add(item.id);
+            });
+            salvarAtalhosStorage(atuais);
+            renderizarAtalhos();
+            mostrarFeedbackIO(`${importados.length} atalho(s) importado(s)!`, 'ok');
+          } catch (err) {
+            mostrarFeedbackIO('Erro: arquivo inválido.', 'erro');
+          }
+          ev.target.value = '';
+        };
+        leitor.readAsText(arquivo);
+      });
+
+      // ----- BLOCO DE NOTAS FLUTUANTE COM ARRASTE E REDIMENSIONAMENTO -----
+      const STICKY_KEY = 'stickyNoteContent';
+      const stickyNoteText = document.getElementById('stickyNoteText');
+      const stickyNoteStatus = document.getElementById('stickyNoteStatus');
+      const limparStickyBtn = document.getElementById('limparStickyBtn');
+      const minimizarBtn = document.getElementById('minimizarStickyBtn');
+      const stickyFloat = document.getElementById('stickyNoteFloat');
+      const stickyHeader = document.getElementById('stickyHeader');
+
+      function carregarPosicao() {
+        try {
+          const pos = JSON.parse(localStorage.getItem('stickyNotePosition'));
+          if (pos) {
+            stickyFloat.style.left = pos.left;
+            stickyFloat.style.right = pos.right;
+            stickyFloat.style.top = pos.top;
+            stickyFloat.style.bottom = pos.bottom;
+          }
+          const size = JSON.parse(localStorage.getItem('stickyNoteSize'));
+          if (size) {
+            stickyFloat.style.width = size.width;
+            stickyFloat.style.height = size.height;
+          }
+        } catch (e) { /* ignore */ }
+      }
+
+      function salvarPosicao() {
+        try {
+          const rect = stickyFloat.getBoundingClientRect();
+          const pos = {
+            left: stickyFloat.style.left,
+            right: stickyFloat.style.right,
+            top: stickyFloat.style.top,
+            bottom: stickyFloat.style.bottom
+          };
+          localStorage.setItem('stickyNotePosition', JSON.stringify(pos));
+          const size = {
+            width: stickyFloat.style.width,
+            height: stickyFloat.style.height
+          };
+          localStorage.setItem('stickyNoteSize', JSON.stringify(size));
+        } catch (e) { /* ignore */ }
+      }
+
+      function carregarStickyNote() {
+        try {
+          const salvo = localStorage.getItem(STICKY_KEY);
+          if (salvo !== null) {
+            stickyNoteText.value = salvo;
+          }
+        } catch (e) { /* ignore */ }
+      }
+
+      let stickyTimeout = null;
+
+      function salvarStickyNote() {
+        try {
+          localStorage.setItem(STICKY_KEY, stickyNoteText.value);
+          stickyNoteStatus.textContent = 'Salvo ✓';
+          stickyNoteStatus.style.opacity = '1';
+          clearTimeout(stickyTimeout);
+          stickyTimeout = setTimeout(() => {
+            stickyNoteStatus.textContent = 'Salvo automaticamente';
+            stickyNoteStatus.style.opacity = '0.7';
+          }, 1500);
+        } catch (e) { /* ignore */ }
+      }
+
+      stickyNoteText.addEventListener('input', salvarStickyNote);
+
+      limparStickyBtn.addEventListener('click', () => {
+        if (stickyNoteText.value.trim() === '') return;
+        if (confirm('Limpar o conteúdo do bloco de notas?')) {
+          stickyNoteText.value = '';
+          salvarStickyNote();
+          stickyNoteStatus.textContent = 'Limpo ✓';
+          stickyNoteStatus.style.opacity = '1';
+          setTimeout(() => {
+            stickyNoteStatus.textContent = 'Salvo automaticamente';
+            stickyNoteStatus.style.opacity = '0.7';
+          }, 1500);
+        }
+      });
+
+      let minimizado = false;
+      minimizarBtn.addEventListener('click', () => {
+        minimizado = !minimizado;
+        stickyFloat.classList.toggle('minimizado', minimizado);
+        minimizarBtn.textContent = minimizado ? '▲' : '▼';
+        if (!minimizado) {
+          try {
+            const size = JSON.parse(localStorage.getItem('stickyNoteSize'));
+            if (size && size.height) {
+              stickyFloat.style.height = size.height;
+            } else {
+              stickyFloat.style.height = '300px';
+            }
+          } catch (e) {
             stickyFloat.style.height = '300px';
           }
-        } catch (e) {
-          stickyFloat.style.height = '300px';
         }
-      }
-      salvarPosicao();
-    });
-
-    // ----- ARRASTE (Drag) -----
-    let isDragging = false;
-    let dragStartX, dragStartY;
-    let startLeft, startTop, startRight, startBottom;
-
-    stickyHeader.addEventListener('mousedown', (e) => {
-      if (e.target.closest('.sticky-actions')) return;
-      isDragging = true;
-      const rect = stickyFloat.getBoundingClientRect();
-      dragStartX = e.clientX;
-      dragStartY = e.clientY;
-      
-      const style = window.getComputedStyle(stickyFloat);
-      startLeft = style.left;
-      startTop = style.top;
-      startRight = style.right;
-      startBottom = style.bottom;
-      
-      stickyFloat.style.cursor = 'grabbing';
-      document.body.style.userSelect = 'none';
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      
-      const dx = e.clientX - dragStartX;
-      const dy = e.clientY - dragStartY;
-      
-      if (startLeft !== 'auto') {
-        const leftVal = parseFloat(startLeft) || 0;
-        stickyFloat.style.left = (leftVal + dx) + 'px';
-        stickyFloat.style.right = 'auto';
-      } else if (startRight !== 'auto') {
-        const rightVal = parseFloat(startRight) || 0;
-        stickyFloat.style.right = (rightVal - dx) + 'px';
-        stickyFloat.style.left = 'auto';
-      }
-      
-      if (startTop !== 'auto') {
-        const topVal = parseFloat(startTop) || 0;
-        stickyFloat.style.top = (topVal + dy) + 'px';
-        stickyFloat.style.bottom = 'auto';
-      } else if (startBottom !== 'auto') {
-        const bottomVal = parseFloat(startBottom) || 0;
-        stickyFloat.style.bottom = (bottomVal - dy) + 'px';
-        stickyFloat.style.top = 'auto';
-      }
-      
-      e.preventDefault();
-    });
-
-    document.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
-        stickyFloat.style.cursor = 'default';
-        document.body.style.userSelect = '';
         salvarPosicao();
-      }
-    });
+      });
 
-    // Suporte para touch (mobile)
-    stickyHeader.addEventListener('touchstart', (e) => {
-      if (e.target.closest('.sticky-actions')) return;
-      const touch = e.touches[0];
-      isDragging = true;
-      const rect = stickyFloat.getBoundingClientRect();
-      dragStartX = touch.clientX;
-      dragStartY = touch.clientY;
-      
-      const style = window.getComputedStyle(stickyFloat);
-      startLeft = style.left;
-      startTop = style.top;
-      startRight = style.right;
-      startBottom = style.bottom;
-      
-      document.body.style.userSelect = 'none';
-      e.preventDefault();
-    }, { passive: false });
+      // ----- ARRASTE (Drag) -----
+      let isDragging = false;
+      let dragStartX, dragStartY;
+      let startLeft, startTop, startRight, startBottom;
 
-    document.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      const touch = e.touches[0];
-      const dx = touch.clientX - dragStartX;
-      const dy = touch.clientY - dragStartY;
-      
-      if (startLeft !== 'auto') {
-        const leftVal = parseFloat(startLeft) || 0;
-        stickyFloat.style.left = (leftVal + dx) + 'px';
-        stickyFloat.style.right = 'auto';
-      } else if (startRight !== 'auto') {
-        const rightVal = parseFloat(startRight) || 0;
-        stickyFloat.style.right = (rightVal - dx) + 'px';
-        stickyFloat.style.left = 'auto';
-      }
-      
-      if (startTop !== 'auto') {
-        const topVal = parseFloat(startTop) || 0;
-        stickyFloat.style.top = (topVal + dy) + 'px';
-        stickyFloat.style.bottom = 'auto';
-      } else if (startBottom !== 'auto') {
-        const bottomVal = parseFloat(startBottom) || 0;
-        stickyFloat.style.bottom = (bottomVal - dy) + 'px';
-        stickyFloat.style.top = 'auto';
-      }
-      
-      e.preventDefault();
-    }, { passive: false });
-
-    document.addEventListener('touchend', () => {
-      if (isDragging) {
-        isDragging = false;
-        document.body.style.userSelect = '';
-        salvarPosicao();
-      }
-    });
-
-    // ----- REDIMENSIONAMENTO COM AUTO-AJUSTE DO TEXTAREA -----
-    function ajustarTextarea() {
-      if (!minimizado) {
+      stickyHeader.addEventListener('mousedown', (e) => {
+        if (e.target.closest('.sticky-actions')) return;
+        isDragging = true;
         const rect = stickyFloat.getBoundingClientRect();
-        const headerHeight = stickyHeader.getBoundingClientRect().height;
-        const statusHeight = stickyNoteStatus.getBoundingClientRect().height;
-        const padding = 28;
-        const gap = 10;
-        const newHeight = rect.height - headerHeight - statusHeight - padding - gap - 4;
-        
-        if (newHeight > 40) {
-          stickyNoteText.style.height = newHeight + 'px';
-        } else {
-          stickyNoteText.style.height = '40px';
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+
+        const style = window.getComputedStyle(stickyFloat);
+        startLeft = style.left;
+        startTop = style.top;
+        startRight = style.right;
+        startBottom = style.bottom;
+
+        stickyFloat.style.cursor = 'grabbing';
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        const dx = e.clientX - dragStartX;
+        const dy = e.clientY - dragStartY;
+
+        if (startLeft !== 'auto') {
+          const leftVal = parseFloat(startLeft) || 0;
+          stickyFloat.style.left = (leftVal + dx) + 'px';
+          stickyFloat.style.right = 'auto';
+        } else if (startRight !== 'auto') {
+          const rightVal = parseFloat(startRight) || 0;
+          stickyFloat.style.right = (rightVal - dx) + 'px';
+          stickyFloat.style.left = 'auto';
+        }
+
+        if (startTop !== 'auto') {
+          const topVal = parseFloat(startTop) || 0;
+          stickyFloat.style.top = (topVal + dy) + 'px';
+          stickyFloat.style.bottom = 'auto';
+        } else if (startBottom !== 'auto') {
+          const bottomVal = parseFloat(startBottom) || 0;
+          stickyFloat.style.bottom = (bottomVal - dy) + 'px';
+          stickyFloat.style.top = 'auto';
+        }
+
+        e.preventDefault();
+      });
+
+      document.addEventListener('mouseup', () => {
+        if (isDragging) {
+          isDragging = false;
+          stickyFloat.style.cursor = 'default';
+          document.body.style.userSelect = '';
+          salvarPosicao();
+        }
+      });
+
+      // Suporte para touch (mobile)
+      stickyHeader.addEventListener('touchstart', (e) => {
+        if (e.target.closest('.sticky-actions')) return;
+        const touch = e.touches[0];
+        isDragging = true;
+        const rect = stickyFloat.getBoundingClientRect();
+        dragStartX = touch.clientX;
+        dragStartY = touch.clientY;
+
+        const style = window.getComputedStyle(stickyFloat);
+        startLeft = style.left;
+        startTop = style.top;
+        startRight = style.right;
+        startBottom = style.bottom;
+
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        const dx = touch.clientX - dragStartX;
+        const dy = touch.clientY - dragStartY;
+
+        if (startLeft !== 'auto') {
+          const leftVal = parseFloat(startLeft) || 0;
+          stickyFloat.style.left = (leftVal + dx) + 'px';
+          stickyFloat.style.right = 'auto';
+        } else if (startRight !== 'auto') {
+          const rightVal = parseFloat(startRight) || 0;
+          stickyFloat.style.right = (rightVal - dx) + 'px';
+          stickyFloat.style.left = 'auto';
+        }
+
+        if (startTop !== 'auto') {
+          const topVal = parseFloat(startTop) || 0;
+          stickyFloat.style.top = (topVal + dy) + 'px';
+          stickyFloat.style.bottom = 'auto';
+        } else if (startBottom !== 'auto') {
+          const bottomVal = parseFloat(startBottom) || 0;
+          stickyFloat.style.bottom = (bottomVal - dy) + 'px';
+          stickyFloat.style.top = 'auto';
+        }
+
+        e.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener('touchend', () => {
+        if (isDragging) {
+          isDragging = false;
+          document.body.style.userSelect = '';
+          salvarPosicao();
+        }
+      });
+
+      // ----- REDIMENSIONAMENTO COM AUTO-AJUSTE DO TEXTAREA -----
+      function ajustarTextarea() {
+        if (!minimizado) {
+          const rect = stickyFloat.getBoundingClientRect();
+          const headerHeight = stickyHeader.getBoundingClientRect().height;
+          const statusHeight = stickyNoteStatus.getBoundingClientRect().height;
+          const padding = 28;
+          const gap = 10;
+          const newHeight = rect.height - headerHeight - statusHeight - padding - gap - 4;
+
+          if (newHeight > 40) {
+            stickyNoteText.style.height = newHeight + 'px';
+          } else {
+            stickyNoteText.style.height = '40px';
+          }
         }
       }
-    }
 
-    const resizeObserver = new ResizeObserver(() => {
-      if (!minimizado) {
-        ajustarTextarea();
-        salvarPosicao();
+      const resizeObserver = new ResizeObserver(() => {
+        if (!minimizado) {
+          ajustarTextarea();
+          salvarPosicao();
+        }
+      });
+      resizeObserver.observe(stickyFloat);
+
+      window.addEventListener('resize', () => {
+        if (!minimizado) {
+          ajustarTextarea();
+        }
+      });
+
+      setTimeout(ajustarTextarea, 100);
+
+      carregarPosicao();
+      carregarStickyNote();
+
+      // ==============================================
+      // === CALCULADORA DE HORÁRIOS FLUTUANTE ===
+      // ==============================================
+
+      const calcToggleBtn = document.getElementById('calcToggleBtn');
+      const calcPanel = document.getElementById('calcPanel');
+      const calcHoraInicial = document.getElementById('calcHoraInicial');
+      const calcHoras = document.getElementById('calcHoras');
+      const calcMinutos = document.getElementById('calcMinutos');
+      const calcChegada = document.getElementById('calcChegada');
+      const calcResultado = document.getElementById('calcResultado');
+      const calcComparacao = document.getElementById('calcComparacao');
+      const calcCalcularBtn = document.getElementById('calcCalcularBtn');
+      const calcLimparBtn = document.getElementById('calcLimparBtn');
+
+      let calcAberto = false;
+
+      function obterHoraAtualPrecisa() {
+        const agora = new Date();
+        const horas = String(agora.getHours()).padStart(2, '0');
+        const minutos = String(agora.getMinutes()).padStart(2, '0');
+        return `${horas}:${minutos}`;
       }
-    });
-    resizeObserver.observe(stickyFloat);
 
-    window.addEventListener('resize', () => {
-      if (!minimizado) {
-        ajustarTextarea();
+      calcToggleBtn.addEventListener('click', () => {
+        calcAberto = !calcAberto;
+        calcToggleBtn.classList.toggle('active', calcAberto);
+        calcPanel.classList.toggle('aberto', calcAberto);
+
+        if (calcAberto) {
+          const horaAtual = obterHoraAtualPrecisa();
+          calcHoraInicial.value = horaAtual;
+          calcularHorario();
+        }
+      });
+
+      function calcularHorario() {
+        const horaInicial = calcHoraInicial.value;
+        const horas = parseInt(calcHoras.value) || 0;
+        const minutos = parseInt(calcMinutos.value) || 0;
+
+        if (!horaInicial) {
+          calcResultado.textContent = '--:--';
+          calcComparacao.textContent = '⚠️ Selecione um horário inicial';
+          return;
+        }
+
+        const partes = horaInicial.split(':');
+        let hora = parseInt(partes[0]);
+        let minuto = parseInt(partes[1]);
+
+        minuto += minutos;
+        hora += horas;
+
+        while (minuto >= 60) { minuto -= 60;
+          hora += 1; }
+        while (hora >= 24) { hora -= 24; }
+
+        const horaFormatada = String(hora).padStart(2, '0');
+        const minutoFormatado = String(minuto).padStart(2, '0');
+        const resultado = `${horaFormatada}:${minutoFormatado}`;
+        calcResultado.textContent = resultado;
+
+        const chegada = calcChegada.value;
+        if (chegada) {
+          function paraMinutos(horaStr) {
+            const p = horaStr.split(':');
+            return parseInt(p[0]) * 60 + parseInt(p[1]);
+          }
+          const calcMin = paraMinutos(resultado);
+          const chegMin = paraMinutos(chegada);
+          const diff = chegMin - calcMin;
+
+          if (diff === 0) {
+            calcComparacao.innerHTML = `✅ Chegou no horário exato (${chegada}) 🎯`;
+          } else if (diff > 0) {
+            const h = Math.floor(diff / 60);
+            const m = diff % 60;
+            calcComparacao.innerHTML = `⏰ Chegou <span class="atraso">${h}h${String(m).padStart(2, '0')}min ATRASADO</span> (${chegada} vs ${resultado})`;
+          } else {
+            const diffAbs = Math.abs(diff);
+            const h = Math.floor(diffAbs / 60);
+            const m = diffAbs % 60;
+            calcComparacao.innerHTML =
+              `✅ Chegou <span class="adiantado">${h}h${String(m).padStart(2, '0')}min ADIANTADO</span> (${chegada} vs ${resultado}) 🎉`;
+          }
+        } else {
+          calcComparacao.textContent = `📌 ${horaInicial} + ${horas}h${String(minutos).padStart(2, '0')}min = ${resultado}`;
+        }
       }
-    });
 
-    setTimeout(ajustarTextarea, 100);
+      calcCalcularBtn.addEventListener('click', calcularHorario);
 
-    carregarPosicao();
-    carregarStickyNote();
+      calcLimparBtn.addEventListener('click', () => {
+        calcHoraInicial.value = '';
+        calcHoras.value = '';
+        calcMinutos.value = '';
+        calcChegada.value = '';
+        calcResultado.textContent = '--:--';
+        calcComparacao.textContent = '';
+      });
 
-    // ==============================================
-    // === CALCULADORA DE HORÁRIOS FLUTUANTE ===
-    // ==============================================
+      document.querySelectorAll('.calc-row input').forEach(input => {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') calcularHorario();
+        });
+      });
 
-    const calcToggleBtn = document.getElementById('calcToggleBtn');
-    const calcPanel = document.getElementById('calcPanel');
-    const calcHoraInicial = document.getElementById('calcHoraInicial');
-    const calcHoras = document.getElementById('calcHoras');
-    const calcMinutos = document.getElementById('calcMinutos');
-    const calcChegada = document.getElementById('calcChegada');
-    const calcResultado = document.getElementById('calcResultado');
-    const calcComparacao = document.getElementById('calcComparacao');
-    const calcCalcularBtn = document.getElementById('calcCalcularBtn');
-    const calcLimparBtn = document.getElementById('calcLimparBtn');
-
-    let calcAberto = false;
-
-    // Função para obter a hora atual com precisão de segundos
-    function obterHoraAtualPrecisa() {
-      const agora = new Date();
-      const horas = String(agora.getHours()).padStart(2, '0');
-      const minutos = String(agora.getMinutes()).padStart(2, '0');
-      return `${horas}:${minutos}`;
-    }
-
-    calcToggleBtn.addEventListener('click', () => {
-      calcAberto = !calcAberto;
-      calcToggleBtn.classList.toggle('active', calcAberto);
-      calcPanel.classList.toggle('aberto', calcAberto);
-      
-      // Quando abrir, atualizar com a hora atual precisa
-      if (calcAberto) {
+      window.addEventListener('load', () => {
         const horaAtual = obterHoraAtualPrecisa();
         calcHoraInicial.value = horaAtual;
-        calcularHorario(); // Recalcula automaticamente
+        calcularHorario();
+      });
+
+      // ==============================================
+      // === CRONÔMETROS FLUTUANTES (COM NOTIFICAÇÃO PERSONALIZADA) ===
+      // ==============================================
+
+      const cronometroFab = document.getElementById('cronometroFab');
+      const cronometroPopupOverlay = document.getElementById('cronometroPopupOverlay');
+      const cronometroNomeInput = document.getElementById('cronometroNomeInput');
+      const cronometroIntervaloInput = document.getElementById('cronometroIntervaloInput');
+      const cronometroIniciarBtn = document.getElementById('cronometroIniciarBtn');
+      const cronometroCancelarBtn = document.getElementById('cronometroCancelarBtn');
+      const cronometroPopupFeedback = document.getElementById('cronometroPopupFeedback');
+      const cronometrosContainer = document.getElementById('cronometrosContainer');
+
+      let cronometros = [];
+      let cronometroIdSeq = 0;
+
+      function abrirPopupCronometro() {
+        cronometroNomeInput.value = '';
+        cronometroIntervaloInput.value = 5;
+        cronometroPopupFeedback.textContent = '';
+        cronometroPopupOverlay.classList.add('ativo');
+        setTimeout(() => cronometroNomeInput.focus(), 50);
       }
-    });
 
-    function calcularHorario() {
-      const horaInicial = calcHoraInicial.value;
-      const horas = parseInt(calcHoras.value) || 0;
-      const minutos = parseInt(calcMinutos.value) || 0;
-
-      if (!horaInicial) {
-        calcResultado.textContent = '--:--';
-        calcComparacao.textContent = '⚠️ Selecione um horário inicial';
-        return;
+      function fecharPopupCronometro() {
+        cronometroPopupOverlay.classList.remove('ativo');
       }
 
-      const partes = horaInicial.split(':');
-      let hora = parseInt(partes[0]);
-      let minuto = parseInt(partes[1]);
+      cronometroFab.addEventListener('click', abrirPopupCronometro);
+      cronometroCancelarBtn.addEventListener('click', fecharPopupCronometro);
+      cronometroPopupOverlay.addEventListener('click', (e) => {
+        if (e.target === cronometroPopupOverlay) fecharPopupCronometro();
+      });
+      cronometroNomeInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') iniciarNovoCronometro();
+      });
+      cronometroIniciarBtn.addEventListener('click', iniciarNovoCronometro);
 
-      minuto += minutos;
-      hora += horas;
+      function pedirPermissaoNotificacao() {
+        if (!('Notification' in window)) return Promise.resolve('unsupported');
+        if (Notification.permission === 'granted') return Promise.resolve('granted');
+        if (Notification.permission === 'denied') return Promise.resolve('denied');
+        return Notification.requestPermission();
+      }
 
-      while (minuto >= 60) { minuto -= 60; hora += 1; }
-      while (hora >= 24) { hora -= 24; }
-
-      const horaFormatada = String(hora).padStart(2, '0');
-      const minutoFormatado = String(minuto).padStart(2, '0');
-      const resultado = `${horaFormatada}:${minutoFormatado}`;
-      calcResultado.textContent = resultado;
-
-      const chegada = calcChegada.value;
-      if (chegada) {
-        function paraMinutos(horaStr) {
-          const p = horaStr.split(':');
-          return parseInt(p[0]) * 60 + parseInt(p[1]);
+      function iniciarNovoCronometro() {
+        const nome = cronometroNomeInput.value.trim();
+        if (!nome) {
+          cronometroPopupFeedback.textContent = 'Digite um nome para o cronômetro.';
+          cronometroNomeInput.focus();
+          return;
         }
-        const calcMin = paraMinutos(resultado);
-        const chegMin = paraMinutos(chegada);
-        const diff = chegMin - calcMin;
 
-        if (diff === 0) {
-          calcComparacao.innerHTML = `✅ Chegou no horário exato (${chegada}) 🎯`;
-        } else if (diff > 0) {
-          const h = Math.floor(diff / 60);
-          const m = diff % 60;
-          calcComparacao.innerHTML = `⏰ Chegou <span class="atraso">${h}h${String(m).padStart(2,'0')}min ATRASADO</span> (${chegada} vs ${resultado})`;
+        let intervaloMinutos = parseInt(cronometroIntervaloInput.value) || 5;
+        if (intervaloMinutos < 1) intervaloMinutos = 1;
+        if (intervaloMinutos > 120) intervaloMinutos = 120;
+
+        pedirPermissaoNotificacao().then((permissao) => {
+          if (permissao === 'unsupported') {
+            cronometroPopupFeedback.textContent = 'Seu navegador não suporta notificações, mas o cronômetro será criado.';
+          } else if (permissao === 'denied') {
+            cronometroPopupFeedback.textContent = 'Notificações bloqueadas no navegador. O cronômetro será criado, mas sem avisos.';
+          }
+          destravarAudioCronometro();
+          criarCronometro(nome, intervaloMinutos);
+          fecharPopupCronometro();
+        });
+      }
+
+      function formatarTempo(ms) {
+        const totalSeg = Math.floor(ms / 1000);
+        const h = Math.floor(totalSeg / 3600);
+        const m = Math.floor((totalSeg % 3600) / 60);
+        const s = totalSeg % 60;
+        const pad = n => String(n).padStart(2, '0');
+        return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
+      }
+
+      function criarCronometro(nome, intervaloMinutos) {
+        const id = ++cronometroIdSeq;
+        const cronometro = {
+          id,
+          name: nome,
+          startTs: Date.now(),
+          accumulated: 0,
+          running: true,
+          notifyCount: 0,
+          intervaloMs: intervaloMinutos * 60 * 1000
+        };
+
+        const card = document.createElement('div');
+        card.className = 'cronometro-card';
+        card.dataset.id = String(id);
+
+        const main = document.createElement('div');
+        main.className = 'cronometro-card-main';
+
+        const header = document.createElement('div');
+        header.className = 'cronometro-card-header';
+
+        const nomeSpan = document.createElement('span');
+        nomeSpan.className = 'cronometro-nome';
+        nomeSpan.textContent = nome;
+        nomeSpan.title = nome;
+
+        header.appendChild(nomeSpan);
+
+        const tempoDiv = document.createElement('div');
+        tempoDiv.className = 'cronometro-tempo';
+        tempoDiv.textContent = '00:00';
+
+        main.appendChild(header);
+        main.appendChild(tempoDiv);
+
+        const acoesDiv = document.createElement('div');
+        acoesDiv.className = 'cronometro-acoes';
+
+        const pausarBtn = document.createElement('button');
+        pausarBtn.className = 'cronometro-pausar';
+        pausarBtn.title = 'Pausar';
+        pausarBtn.textContent = '⏸';
+        pausarBtn.addEventListener('click', () => togglePausaCronometro(id));
+
+        const fecharBtn = document.createElement('button');
+        fecharBtn.className = 'cronometro-fechar';
+        fecharBtn.title = 'Remover cronômetro';
+        fecharBtn.textContent = '✕';
+        fecharBtn.addEventListener('click', () => removerCronometro(id));
+
+        acoesDiv.appendChild(pausarBtn);
+        acoesDiv.appendChild(fecharBtn);
+
+        card.appendChild(main);
+        card.appendChild(acoesDiv);
+
+        cronometrosContainer.appendChild(card);
+        cronometro.el = card;
+        cronometro.tempoEl = tempoDiv;
+        cronometro.pausarBtnEl = pausarBtn;
+
+        cronometros.push(cronometro);
+        atualizarTodosCronometros();
+      }
+
+      function togglePausaCronometro(id) {
+        const c = cronometros.find(c => c.id === id);
+        if (!c) return;
+        if (c.running) {
+          c.accumulated += Date.now() - c.startTs;
+          c.running = false;
+          c.pausarBtnEl.textContent = '▶';
+          c.pausarBtnEl.title = 'Retomar';
+          c.el.classList.add('cronometro-pausado');
         } else {
-          const diffAbs = Math.abs(diff);
-          const h = Math.floor(diffAbs / 60);
-          const m = diffAbs % 60;
-          calcComparacao.innerHTML = `✅ Chegou <span class="adiantado">${h}h${String(m).padStart(2,'0')}min ADIANTADO</span> (${chegada} vs ${resultado}) 🎉`;
+          c.startTs = Date.now();
+          c.running = true;
+          c.pausarBtnEl.textContent = '⏸';
+          c.pausarBtnEl.title = 'Pausar';
+          c.el.classList.remove('cronometro-pausado');
         }
-      } else {
-        calcComparacao.textContent = `📌 ${horaInicial} + ${horas}h${String(minutos).padStart(2,'0')}min = ${resultado}`;
       }
-    }
 
-    calcCalcularBtn.addEventListener('click', calcularHorario);
-
-    calcLimparBtn.addEventListener('click', () => {
-      calcHoraInicial.value = '';
-      calcHoras.value = '';
-      calcMinutos.value = '';
-      calcChegada.value = '';
-      calcResultado.textContent = '--:--';
-      calcComparacao.textContent = '';
-    });
-
-    document.querySelectorAll('.calc-row input').forEach(input => {
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') calcularHorario();
-      });
-    });
-
-    // Inicializa com a hora atual ao carregar a página
-    window.addEventListener('load', () => {
-      const horaAtual = obterHoraAtualPrecisa();
-      calcHoraInicial.value = horaAtual;
-      calcularHorario();
-    });
-
-    // ----- INICIALIZA GERAL -----
-    atualizarCamposEdit();
-    renderizarAtalhos();
-    
-    // Inicializar campos condicionais
-    inicializarCamposCondicionais();
-    
-    // Inicializar versão
-    if (document.querySelector('input[name="atualizacao"]:checked').value === 'Sim') {
-      versaoFields.classList.add("show");
-    }
-
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      html.setAttribute('data-theme', 'dark');
-      themeToggle.textContent = '☀️ Tema claro';
-    }
-
-    // ===== CRONÔMETROS FLUTUANTES =====
-    const cronometroFab = document.getElementById('cronometroFab');
-    const cronometroPopupOverlay = document.getElementById('cronometroPopupOverlay');
-    const cronometroNomeInput = document.getElementById('cronometroNomeInput');
-    const cronometroIniciarBtn = document.getElementById('cronometroIniciarBtn');
-    const cronometroCancelarBtn = document.getElementById('cronometroCancelarBtn');
-    const cronometroPopupFeedback = document.getElementById('cronometroPopupFeedback');
-    const cronometrosContainer = document.getElementById('cronometrosContainer');
-
-    const INTERVALO_NOTIFICACAO = 5 * 60 * 1000; // 5 minutos
-    let cronometros = [];
-    let cronometroIdSeq = 0;
-
-    function abrirPopupCronometro() {
-      cronometroNomeInput.value = '';
-      cronometroPopupFeedback.textContent = '';
-      cronometroPopupOverlay.classList.add('ativo');
-      setTimeout(() => cronometroNomeInput.focus(), 50);
-    }
-    function fecharPopupCronometro() {
-      cronometroPopupOverlay.classList.remove('ativo');
-    }
-    cronometroFab.addEventListener('click', abrirPopupCronometro);
-    cronometroCancelarBtn.addEventListener('click', fecharPopupCronometro);
-    cronometroPopupOverlay.addEventListener('click', (e) => {
-      if (e.target === cronometroPopupOverlay) fecharPopupCronometro();
-    });
-    cronometroNomeInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') iniciarNovoCronometro();
-    });
-    cronometroIniciarBtn.addEventListener('click', iniciarNovoCronometro);
-
-    function pedirPermissaoNotificacao() {
-      if (!('Notification' in window)) return Promise.resolve('unsupported');
-      if (Notification.permission === 'granted') return Promise.resolve('granted');
-      if (Notification.permission === 'denied') return Promise.resolve('denied');
-      return Notification.requestPermission();
-    }
-
-    function iniciarNovoCronometro() {
-      const nome = cronometroNomeInput.value.trim();
-      if (!nome) {
-        cronometroPopupFeedback.textContent = 'Digite um nome para o cronômetro.';
-        cronometroNomeInput.focus();
-        return;
+      function removerCronometro(id) {
+        const idx = cronometros.findIndex(c => c.id === id);
+        if (idx === -1) return;
+        cronometros[idx].el.remove();
+        cronometros.splice(idx, 1);
       }
-      pedirPermissaoNotificacao().then((permissao) => {
-        if (permissao === 'unsupported') {
-          cronometroPopupFeedback.textContent = 'Seu navegador não suporta notificações, mas o cronômetro será criado.';
-        } else if (permissao === 'denied') {
-          cronometroPopupFeedback.textContent = 'Notificações bloqueadas no navegador. O cronômetro será criado, mas sem avisos.';
-        }
-        destravarAudioCronometro();
-        criarCronometro(nome);
-        fecharPopupCronometro();
-      });
-    }
 
-    function formatarTempo(ms) {
-      const totalSeg = Math.floor(ms / 1000);
-      const h = Math.floor(totalSeg / 3600);
-      const m = Math.floor((totalSeg % 3600) / 60);
-      const s = totalSeg % 60;
-      const pad = n => String(n).padStart(2, '0');
-      return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
-    }
+      const cronometroToast = document.getElementById('cronometroToast');
+      const cronometroBeepAudio = document.getElementById('cronometroBeepAudio');
+      let cronometroToastTimeout = null;
+      let audioDestravado = false;
 
-    function criarCronometro(nome) {
-      const id = ++cronometroIdSeq;
-      const cronometro = {
-        id,
-        name: nome,
-        startTs: Date.now(),
-        accumulated: 0,
-        running: true,
-        notifyCount: 0
-      };
-
-      const card = document.createElement('div');
-      card.className = 'cronometro-card';
-      card.dataset.id = String(id);
-
-      const main = document.createElement('div');
-      main.className = 'cronometro-card-main';
-
-      const header = document.createElement('div');
-      header.className = 'cronometro-card-header';
-
-      const nomeSpan = document.createElement('span');
-      nomeSpan.className = 'cronometro-nome';
-      nomeSpan.textContent = nome;
-      nomeSpan.title = nome;
-
-      header.appendChild(nomeSpan);
-
-      const tempoDiv = document.createElement('div');
-      tempoDiv.className = 'cronometro-tempo';
-      tempoDiv.textContent = '00:00';
-
-      main.appendChild(header);
-      main.appendChild(tempoDiv);
-
-      const acoesDiv = document.createElement('div');
-      acoesDiv.className = 'cronometro-acoes';
-
-      const pausarBtn = document.createElement('button');
-      pausarBtn.className = 'cronometro-pausar';
-      pausarBtn.title = 'Pausar';
-      pausarBtn.textContent = '⏸';
-      pausarBtn.addEventListener('click', () => togglePausaCronometro(id));
-
-      const fecharBtn = document.createElement('button');
-      fecharBtn.className = 'cronometro-fechar';
-      fecharBtn.title = 'Remover cronômetro';
-      fecharBtn.textContent = '✕';
-      fecharBtn.addEventListener('click', () => removerCronometro(id));
-
-      acoesDiv.appendChild(pausarBtn);
-      acoesDiv.appendChild(fecharBtn);
-
-      card.appendChild(main);
-      card.appendChild(acoesDiv);
-
-      cronometrosContainer.appendChild(card);
-      cronometro.el = card;
-      cronometro.tempoEl = tempoDiv;
-      cronometro.pausarBtnEl = pausarBtn;
-
-      cronometros.push(cronometro);
-      atualizarTodosCronometros();
-    }
-
-    function togglePausaCronometro(id) {
-      const c = cronometros.find(c => c.id === id);
-      if (!c) return;
-      if (c.running) {
-        c.accumulated += Date.now() - c.startTs;
-        c.running = false;
-        c.pausarBtnEl.textContent = '▶';
-        c.pausarBtnEl.title = 'Retomar';
-        c.el.classList.add('cronometro-pausado');
-      } else {
-        c.startTs = Date.now();
-        c.running = true;
-        c.pausarBtnEl.textContent = '⏸';
-        c.pausarBtnEl.title = 'Pausar';
-        c.el.classList.remove('cronometro-pausado');
-      }
-    }
-
-    function removerCronometro(id) {
-      const idx = cronometros.findIndex(c => c.id === id);
-      if (idx === -1) return;
-      cronometros[idx].el.remove();
-      cronometros.splice(idx, 1);
-    }
-
-    const cronometroToast = document.getElementById('cronometroToast');
-    const cronometroBeepAudio = document.getElementById('cronometroBeepAudio');
-    let cronometroToastTimeout = null;
-    let audioDestravado = false;
-
-    // Alguns navegadores só permitem tocar áudio programaticamente depois de uma
-    // interação direta do usuário. Por isso "destravamos" o player assim que o
-    // usuário clica em "Iniciar", tocando e pausando instantaneamente em silêncio.
-    function destravarAudioCronometro() {
-      if (audioDestravado || !cronometroBeepAudio) return;
-      const volumeOriginal = cronometroBeepAudio.volume;
-      cronometroBeepAudio.volume = 0;
-      const p = cronometroBeepAudio.play();
-      if (p && typeof p.then === 'function') {
-        p.then(() => {
+      function destravarAudioCronometro() {
+        if (audioDestravado || !cronometroBeepAudio) return;
+        const volumeOriginal = cronometroBeepAudio.volume;
+        cronometroBeepAudio.volume = 0;
+        const p = cronometroBeepAudio.play();
+        if (p && typeof p.then === 'function') {
+          p.then(() => {
+            cronometroBeepAudio.pause();
+            cronometroBeepAudio.currentTime = 0;
+            cronometroBeepAudio.volume = volumeOriginal;
+            audioDestravado = true;
+          }).catch(() => {
+            cronometroBeepAudio.volume = volumeOriginal;
+          });
+        } else {
           cronometroBeepAudio.pause();
           cronometroBeepAudio.currentTime = 0;
           cronometroBeepAudio.volume = volumeOriginal;
           audioDestravado = true;
-        }).catch(() => {
-          cronometroBeepAudio.volume = volumeOriginal;
+        }
+      }
+
+      function tocarBipCronometro() {
+        if (cronometroBeepAudio) {
+          try {
+            cronometroBeepAudio.currentTime = 0;
+            const p = cronometroBeepAudio.play();
+            if (p && typeof p.catch === 'function') {
+              p.catch(() => { tocarBipViaOscilador(); });
+            }
+            return;
+          } catch (e) {
+            // fallback
+          }
+        }
+        tocarBipViaOscilador();
+      }
+
+      function tocarBipViaOscilador() {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return;
+          const ctx = new AudioCtx();
+          const disparar = () => {
+            [0, 0.18].forEach((delay) => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.value = 880;
+              gain.gain.setValueAtTime(0.0001, ctx.currentTime + delay);
+              gain.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + delay + 0.02);
+              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + 0.16);
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(ctx.currentTime + delay);
+              osc.stop(ctx.currentTime + delay + 0.18);
+            });
+            setTimeout(() => ctx.close(), 500);
+          };
+          if (ctx.state === 'suspended') {
+            ctx.resume().then(disparar).catch(() => {});
+          } else {
+            disparar();
+          }
+        } catch (e) {
+          // ambiente sem suporte a áudio; ignora silenciosamente
+        }
+      }
+
+      function mostrarToastCronometro(texto) {
+        cronometroToast.textContent = texto;
+        cronometroToast.classList.add('ativo');
+        clearTimeout(cronometroToastTimeout);
+        cronometroToastTimeout = setTimeout(() => {
+          cronometroToast.classList.remove('ativo');
+        }, 4500);
+      }
+
+      // ===== FUNÇÃO DE NOTIFICAÇÃO PERSONALIZADA COM HORAS, MINUTOS E SEGUNDOS =====
+      function notificarCronometro(c, minutos) {
+        const totalSegundos = minutos * 60;
+        const h = Math.floor(totalSegundos / 3600);
+        const m = Math.floor((totalSegundos % 3600) / 60);
+        const s = totalSegundos % 60;
+
+        let tempoStr = '';
+        if (h > 0) {
+          tempoStr += `${h}h `;
+        }
+        tempoStr += `${m}min ${s}s`;
+
+        const titulo = `⏱ ${c.name}`;
+        const corpo = `Já se passaram ${tempoStr} (${minutos} min).`;
+
+        let notificacaoOk = false;
+        if ('Notification' in window && Notification.permission === 'granted') {
+          try {
+            new Notification(titulo, {
+              body: corpo,
+              tag: `cronometro-${c.id}-${c.notifyCount}`,
+              requireInteraction: true,
+              silent: false
+            });
+            notificacaoOk = true;
+          } catch (e) {
+            // fallback silencioso
+          }
+        }
+
+        // Reforço visual/sonoro sempre ativo
+        mostrarToastCronometro(`${titulo} — ${corpo}`);
+        tocarBipCronometro();
+        c.el.classList.add('cronometro-notificado');
+        setTimeout(() => c.el.classList.remove('cronometro-notificado'), 2500);
+      }
+
+      function atualizarTodosCronometros() {
+        cronometros.forEach(c => {
+          const elapsed = c.accumulated + (c.running ? Date.now() - c.startTs : 0);
+          c.tempoEl.textContent = formatarTempo(elapsed);
+
+          if (c.running) {
+            const intervaloMs = c.intervaloMs || 5 * 60 * 1000;
+            const intervalosPassados = Math.floor(elapsed / intervaloMs);
+            if (intervalosPassados > c.notifyCount) {
+              c.notifyCount = intervalosPassados;
+              const minutosDecorridos = intervalosPassados * (intervaloMs / 60000);
+              notificarCronometro(c, Math.round(minutosDecorridos));
+            }
+          }
         });
-      } else {
-        cronometroBeepAudio.pause();
-        cronometroBeepAudio.currentTime = 0;
-        cronometroBeepAudio.volume = volumeOriginal;
-        audioDestravado = true;
       }
-    }
 
-    function tocarBipCronometro() {
-      // Tentativa 1: elemento <audio> (mais confiável, sobrevive melhor a
-      // políticas de autoplay do que um AudioContext criado fora de um clique).
-      if (cronometroBeepAudio) {
-        try {
-          cronometroBeepAudio.currentTime = 0;
-          const p = cronometroBeepAudio.play();
-          if (p && typeof p.catch === 'function') {
-            p.catch(() => { tocarBipViaOscilador(); });
-          }
-          return;
-        } catch (e) {
-          // segue para o fallback abaixo
-        }
+      setInterval(atualizarTodosCronometros, 1000);
+
+      // ----- INICIALIZA GERAL -----
+      atualizarCamposEdit();
+      renderizarAtalhos();
+      inicializarCamposCondicionais();
+
+      if (document.querySelector('input[name="atualizacao"]:checked').value === 'Sim') {
+        versaoFields.classList.add("show");
       }
-      tocarBipViaOscilador();
-    }
 
-    function tocarBipViaOscilador() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        const ctx = new AudioCtx();
-        const disparar = () => {
-          [0, 0.18].forEach((delay) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.value = 880;
-            gain.gain.setValueAtTime(0.0001, ctx.currentTime + delay);
-            gain.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + delay + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + 0.16);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(ctx.currentTime + delay);
-            osc.stop(ctx.currentTime + delay + 0.18);
-          });
-          setTimeout(() => ctx.close(), 500);
-        };
-        if (ctx.state === 'suspended') {
-          ctx.resume().then(disparar).catch(() => {});
-        } else {
-          disparar();
-        }
-      } catch (e) {
-        // ambiente sem suporte a áudio; ignora silenciosamente
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        html.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️ Tema claro';
       }
-    }
-
-    function mostrarToastCronometro(texto) {
-      cronometroToast.textContent = texto;
-      cronometroToast.classList.add('ativo');
-      clearTimeout(cronometroToastTimeout);
-      cronometroToastTimeout = setTimeout(() => {
-        cronometroToast.classList.remove('ativo');
-      }, 4500);
-    }
-
-    function notificarCronometro(c, minutos) {
-      const titulo = `⏱ ${c.name}`;
-      const corpo = `Já se passaram ${minutos} minutos.`;
-      let notificacaoOk = false;
-      if ('Notification' in window && Notification.permission === 'granted') {
-        try {
-          new Notification(titulo, {
-            body: corpo,
-            tag: `cronometro-${c.id}-${c.notifyCount}`,
-            requireInteraction: true,
-            silent: false
-          });
-          notificacaoOk = true;
-        } catch (e) {
-          // alguns navegadores (principalmente mobile/Windows com foco assist) bloqueiam
-          // "new Notification" silenciosamente — por isso sempre reforçamos com toast + som abaixo.
-        }
-      }
-      // Reforço visual/sonoro sempre ativo, independente da notificação do sistema ter funcionado,
-      // pois o SO pode suprimir o balão de notificação sem lançar erro (ex.: Foco Assistido do Windows).
-      mostrarToastCronometro(`${titulo} — ${corpo}`);
-      tocarBipCronometro();
-      c.el.classList.add('cronometro-notificado');
-      setTimeout(() => c.el.classList.remove('cronometro-notificado'), 2500);
-    }
-
-    function atualizarTodosCronometros() {
-      cronometros.forEach(c => {
-        const elapsed = c.accumulated + (c.running ? Date.now() - c.startTs : 0);
-        c.tempoEl.textContent = formatarTempo(elapsed);
-        if (c.running) {
-          const intervalosPassados = Math.floor(elapsed / INTERVALO_NOTIFICACAO);
-          if (intervalosPassados > c.notifyCount) {
-            c.notifyCount = intervalosPassados;
-            notificarCronometro(c, intervalosPassados * 5);
-          }
-        }
-      });
-    }
-    setInterval(atualizarTodosCronometros, 1000);
-  })();
-</script>
+    })();
+  </script>
 </body>
 </html>
