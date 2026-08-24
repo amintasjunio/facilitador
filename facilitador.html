@@ -265,6 +265,7 @@
       width: 18px; height: 18px;
       accent-color: #2d7aff;
       margin: 0;
+      cursor: pointer;
     }
 
     .versao-fields {
@@ -280,6 +281,24 @@
     .versao-fields.show { display: flex; }
     .versao-fields > div { flex: 1 1 130px; }
     .versao-fields label { margin-top: 0; font-size: 13px; }
+
+    .conditional-fields {
+      display: none;
+      margin-top: 12px;
+      background: #f2f6fe;
+      padding: 16px 18px 14px;
+      border-radius: 18px;
+    }
+    [data-theme="dark"] .conditional-fields {
+      background: #1f2a3e;
+    }
+    .conditional-fields label {
+      margin-top: 0;
+      font-size: 13px;
+    }
+    .conditional-fields.show {
+      display: block;
+    }
 
     button {
       font-family: inherit;
@@ -942,6 +961,240 @@
         right: 10px;
       }
     }
+    /* ===== CRONÔMETROS FLUTUANTES (mesmo tamanho do botão de relógio ⏰, coladinho na borda) ===== */
+    .cronometro-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 92px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #3d6bff;
+      color: #fff;
+      border: none;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(26, 76, 255, 0.28);
+      z-index: 1500;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .cronometro-fab:hover { transform: scale(1.06); box-shadow: 0 6px 18px rgba(26,76,255,0.38); }
+    .cronometro-fab:active { transform: scale(0.94); }
+
+    /* Alinhado ao mesmo "right" do botão ⏰ (calc-toggle-btn), para ficar
+       coladinho na borda direita de verdade, e não na borda do botão ⏱. */
+    .cronometros-container {
+      position: fixed;
+      bottom: 92px;
+      right: 28px;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 6px;
+      z-index: 1400;
+      max-height: 28vh;
+      overflow-y: auto;
+      padding: 2px;
+      align-items: flex-end;
+    }
+    @media (max-width: 860px) {
+      .cronometro-fab {
+        bottom: 20px;
+        right: 72px;
+        width: 48px;
+        height: 48px;
+        font-size: 19px;
+      }
+      .cronometros-container {
+        bottom: 76px;
+        right: 16px;
+        max-height: 26vh;
+      }
+    }
+    @media (max-width: 480px) {
+      .cronometro-fab {
+        bottom: 16px;
+        right: 62px;
+        width: 44px;
+        height: 44px;
+        font-size: 17px;
+      }
+      .cronometros-container {
+        bottom: 68px;
+        right: 10px;
+        max-height: 24vh;
+      }
+    }
+
+    /* ===== AVISO VISUAL DE CRONÔMETRO (reforço caso a notificação do sistema falhe) ===== */
+    .cronometro-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #1a4cff;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(26,76,255,0.4);
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .cronometro-toast.ativo {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .cronometro-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      padding: 6px 8px 6px 12px;
+      width: auto;
+      max-width: 190px;
+      box-shadow: 0 4px 14px rgba(0,20,40,0.10);
+      border: 1px solid rgba(11,26,46,0.08);
+      transition: box-shadow 0.3s, border-color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    [data-theme="dark"] .cronometro-card {
+      background: rgba(30,41,59,0.92);
+      border-color: rgba(255,255,255,0.08);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+    .cronometro-card.cronometro-pausado { opacity: 0.6; }
+    .cronometro-card.cronometro-notificado {
+      border-color: #1a4cff;
+      box-shadow: 0 0 0 2px rgba(26,76,255,0.3), 0 4px 14px rgba(0,20,40,0.10);
+    }
+    .cronometro-card-main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      flex: 1;
+    }
+    .cronometro-card-header {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .cronometro-nome {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #52677a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100px;
+    }
+    [data-theme="dark"] .cronometro-nome { color: #93a6bd; }
+    .cronometro-tempo {
+      font-size: 15px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.2px;
+      color: #0b1a2e;
+      line-height: 1.2;
+    }
+    [data-theme="dark"] .cronometro-tempo { color: #e6edf5; }
+    .cronometro-acoes { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+    .cronometro-pausar,
+    .cronometro-fechar {
+      background: transparent;
+      border: none;
+      color: #8fa3be;
+      font-size: 13px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 5px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cronometro-pausar:hover { background: #eef2f6; color: #1f3349; }
+    .cronometro-fechar:hover { background: #eef2f6; color: #d64545; }
+    [data-theme="dark"] .cronometro-pausar:hover,
+    [data-theme="dark"] .cronometro-fechar:hover { background: #2d3a4f; color: #d6e0ee; }
+
+    .cronometro-popup-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 26, 46, 0.45);
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .cronometro-popup-overlay.ativo { display: flex; }
+    .cronometro-popup-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px 24px 20px;
+      width: 320px;
+      max-width: 90vw;
+      box-shadow: 0 16px 40px rgba(0,20,40,0.25);
+    }
+    [data-theme="dark"] .cronometro-popup-card { background: #1e293b; }
+    .cronometro-popup-card h3 {
+      font-size: 17px;
+      margin-bottom: 14px;
+      color: #0b1a2e;
+    }
+    [data-theme="dark"] .cronometro-popup-card h3 { color: #e6edf5; }
+    .cronometro-popup-card label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1f3349;
+    }
+    [data-theme="dark"] .cronometro-popup-card label { color: #b8c9e0; }
+    .cronometro-popup-card input[type="text"] {
+      width: 100%;
+      border: 1px solid #dce4ed;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      margin-bottom: 6px;
+      background: #f9fbfd;
+      color: inherit;
+    }
+    [data-theme="dark"] .cronometro-popup-card input[type="text"] {
+      border-color: #3b4a62;
+      background: #16202f;
+    }
+    .cronometro-popup-feedback {
+      font-size: 12px;
+      color: #d64545;
+      min-height: 16px;
+      margin-bottom: 10px;
+    }
+    .cronometro-popup-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .cronometro-popup-actions button {
+      border-radius: 30px;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #cronometroIniciarBtn { background: #1a4cff; color: #fff; border: none; }
+    #cronometroIniciarBtn:hover { background: #0e3fd6; }
+    #cronometroCancelarBtn { background: transparent; border: 1px solid #dce4ed; color: #1f3349; }
+    [data-theme="dark"] #cronometroCancelarBtn { border-color: #3b4a62; color: #b8c9e0; }
   </style>
 </head>
 <body>
@@ -973,46 +1226,39 @@
           <label><input type="radio" name="chamados" value="Não" checked> Não</label>
         </div>
 
-       <label>Existiu ou foi necessário kanban?</label>
+        <label>Existiu ou foi necessário kanban?</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="kanban" value="Sim" onchange="mostrarKanban()">
+            Sim
+          </label>
+          <label>
+            <input type="radio" name="kanban" value="Não" onchange="mostrarKanban()" checked>
+            Não
+          </label>
+        </div>
 
-<div class="radio-group">
-  <label>
-    <input type="radio" name="kanban" value="Sim" onchange="mostrarKanban()">
-    Sim
-  </label>
+        <div id="kanbanFields" class="conditional-fields">
+          <label for="kanbanMotivo">Por que foi necessário o Kanban?</label>
+          <textarea id="kanbanMotivo" name="kanbanMotivo" placeholder="Explique o motivo pelo qual foi necessário o Kanban..."></textarea>
+        </div>
 
-  <label>
-    <input type="radio" name="kanban" value="Não" onchange="mostrarKanban()" checked>
-    Não
-  </label>
-</div>
+        <label>Efetuou ligação?</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="ligacao" value="Sim" onchange="mostrarLigacao()">
+            Sim
+          </label>
+          <label>
+            <input type="radio" name="ligacao" value="Não" onchange="mostrarLigacao()" checked>
+            Não
+          </label>
+        </div>
 
-<div id="kanbanFields" class="conditional-fields" style="display: none;">
-  <label for="kanbanMotivo">Por que foi necessário o Kanban?</label>
-
-  <textarea
-    id="kanbanMotivo"
-    name="kanbanMotivo"
-    placeholder="Explique o motivo pelo qual foi necessário o Kanban..."
-  ></textarea>
-</div>
-
-<script>
-function mostrarKanban() {
-  const kanbanSim = document.querySelector(
-    'input[name="kanban"][value="Sim"]'
-  ).checked;
-
-  const campos = document.getElementById("kanbanFields");
-
-  if (kanbanSim) {
-    campos.style.display = "block";
-  } else {
-    campos.style.display = "none";
-  }
-}
-</script>
-
+        <div id="ligacaoFields" class="conditional-fields">
+          <label for="ligacaoMotivo">Por que foi necessário efetuar ligação?</label>
+          <textarea id="ligacaoMotivo" name="ligacaoMotivo" placeholder="Explique o motivo da ligação..."></textarea>
+        </div>
 
         <label>Foi realizado atualização?</label>
         <div class="radio-group">
@@ -1084,7 +1330,7 @@ function mostrarKanban() {
   
   <div class="calc-row">
     <label>Início</label>
-    <input type="time" id="calcHoraInicial" value="13:04">
+    <input type="time" id="calcHoraInicial" value="">
   </div>
   
   <div class="calc-row">
@@ -1100,8 +1346,8 @@ function mostrarKanban() {
     <input type="time" id="calcChegada" placeholder="Opcional">
   </div>
 
-  <div class="calc-resultado" id="calcResultado">14:14</div>
-  <div class="calc-comparacao" id="calcComparacao">📌 13:04 + 1h10min = 14:14</div>
+  <div class="calc-resultado" id="calcResultado">--:--</div>
+  <div class="calc-comparacao" id="calcComparacao">Insira um horário inicial</div>
 
   <div class="calc-actions">
     <button class="calc-calcular-btn" id="calcCalcularBtn">Calcular</button>
@@ -1152,6 +1398,25 @@ function mostrarKanban() {
   </div>
 </div>
 
+<!-- CRONÔMETROS FLUTUANTES -->
+<div id="cronometrosContainer" class="cronometros-container"></div>
+<button id="cronometroFab" class="cronometro-fab" title="Novo cronômetro">⏱</button>
+<div id="cronometroToast" class="cronometro-toast"></div>
+<audio id="cronometroBeepAudio" preload="auto" src="data:audio/wav;base64,UklGRgQWAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YeAVAAAAAMso3T4UOI8XOuz3yYLAMdT8+50l/D3oOT8bFvA6zCHAWdH790oi3TyAO9QeA/SxzgHAsc4D9NQegDvdPEoi+/dZ0SHAOswW8D8b6Dn8PZ0l/Psx1ILA98k67I8XFDjdPssoAAA11yPB7Mdx6MYTCTZ+P88rBARj2gTCGMbB5OoPxjPfP6cuBQi23SPDgMQs4f0LTzH/P08x/Qss4YDEI8O23QUIpy7fP8Yz6g/B5BjGBMJj2gQEzyt+Pwk2xhNx6OzHI8E11wAAyyjdPhQ4jxc67PfJgsAx1Pz7nSX8Peg5PxsW8DrMIcBZ0fv3SiLdPIA71B4D9LHOAcCxzgP01B6AO908SiL791nRIcA6zBbwPxvoOfw9nSX8+zHUgsD3yTrsjxcUON0+yygAADXXI8Hsx3HoxhMJNn4/zysEBGPaBMIYxsHk6g/GM98/py4FCLbdI8OAxCzh/QtPMf8/TzH9CyzhgMQjw7bdBQinLt8/xjPqD8HkGMYEwmPaBATPK34/CTbGE3Ho7McjwTXXAADLKN0+FDiPFzrs98mCwDHU/PudJfw96Dk/GxbwOswhwFnR+/dKIt08gDvUHgP0sc4BwLHOA/TUHoA73TxKIvv3WdEhwDrMFvA/G+g5/D2dJfz7MdSCwPfJOuyPFxQ43T7LKAAANdcjwezHcejGEwk2fj/PKwQEY9oEwhjGweTqD8Yz3z+nLgUItt0jw4DELOH9C08x/z9PMf0LLOGAxCPDtt0FCKcu3z/GM+oPweQYxgTCY9oEBM8rfj8JNsYTcejsxyPBNdcAAMso3T4UOI8XOuz3yYLAMdT8+50l/D3oOT8bFvA6zCHAWdH790oi3TyAO9QeA/SxzgHAsc4D9NQegDvdPEoi+/dZ0SHAOswW8D8b6Dn8PZ0l/Psx1ILA98k67I8XFDjdPssoAAA11yPB7Mdx6MYTCTZ+P88rBARj2gTCGMbB5OoPxjPfP6cuBQi23SPDgMQs4f0LTzH/P08x/Qss4YDEI8O23QUIpy7fP8Yz6g/B5BjGBMJj2gQEzyt+Pwk2xhNx6OzHI8E11wAAyyjdPhQ4jxc67PfJgsAx1Pz7nSX8Peg5PxsW8DrMIcBZ0fv3SiLdPIA71B4D9LHOAcCxzgP01B6AO908SiL791nRIcA6zBbwPxvoOfw9nSX8+zHUgsD3yTrsjxcUON0+yygAADXXI8Hsx3HoxhMJNn4/zysEBGPaBMIYxsHk6g/GM98/py4FCLbdI8OAxCzh/QtPMf8/TzH9CyzhgMQjw7bdBQinLt8/xjPqD8HkGMYEwmPaBATPK34/CTbGE3Ho7McjwTXXAADLKN0+FDiPFzrs98mCwDHU/PudJfw96Dk/GxbwOswhwFnR+/dKIt08gDvUHgP0sc4BwLHOA/TUHoA73TxKIvv3WdEhwDrMFvA/G+g5/D2dJfz7MdSCwPfJOuyPFxQ43T7LKAAANdcjwezHcejGEwk2fj/PKwQEY9oEwhjGweTqD8Yz3z+nLgUItt0jw4DELOH9C08x/z9PMf0LLOGAxCPDtt0FCKcu3z/GM+oPweQYxgTCY9oEBM8rfj8JNsYTcejsxyPBNdcAAMso3T4UOI8XOuz3yYLAMdT8+50l/D3oOT8bFvA6zCHAWdH790oi3TyAO9QeA/SxzgHAsc4D9NQegDvdPEoi+/dZ0SHAOswW8D8b6Dn8PZ0l/Psx1ILA98k67I8XFDjdPssoAAA11yPB7Mdx6MYTCTZ+P88rBARj2gTCGMbB5OoPxjPfP6cuBQi23SPDgMQs4f0LTzH/P08x/Qss4YDEI8O23QUIpy7fP8Yz6g/B5BjGBMJj2gQEzyt+Pwk2xhNx6OzHI8E11wAAyyjdPhQ4jxc67PfJgsAx1Pz7nSX8Peg5PxsW8DrMIcBZ0fv3SiLdPIA71B4D9LHOAcCxzgP01B6AO908SiL791nRIcA6zBbwPxvoOfw9nSX8+zHUgsD3yTrsjxcUON0+yygAADXXI8Hsx3HoxhMJNn4/zysEBGPaBMIYxsHk6g/GM98/py4FCLbdI8OAxCzh/QtPMf8/TzH9CyzhgMQjw7bdBQinLt8/xjPqD8HkGMYEwmPaBATPK34/CTbGE3Ho7McjwTXXAADLKN0+FDiPFzrs98mCwDHU/PudJfw96Dk/GxbwOswhwFnR+/dKIt08gDvUHgP0sc4BwLHOA/TUHoA73TxKIvv3WdEhwDrMFvA/G+g5/D2dJfz7MdSCwPfJOuyPFxQ43T7LKAAANdcjwezHcejGEwk2fj/PKwQEY9oEwhjGweTqD8Yz3z+nLgUItt0jw4DELOH9C08x/z9PMf0LLOGAxCPDtt0FCKcu3z/GM+oPweQYxgTCY9oEBM8rfj8JNsYTcejsxyPBNdcAAMso3T4UOI8XOuz3yYLAMdT8+50l/D3oOT8bFvA6zCHAWdH790oi3TyAO9QeA/SxzgHAsc4D9NQegDvdPEoi+/dZ0SHAOswW8D8b6Dn8PZ0l/Psx1ILA98k67I8XFDjdPssoAAA11yPB7Mdx6MYTCTZ+P88rBARj2gTCGMbB5OoPxjPfP6cuBQi23SPDgMQs4f0LTzH/P08x/Qss4YDEI8O23QUIpy7fP8Yz6g/B5BjGBMJj2gQEzyt+Pwk2xhNx6OzHI8E11wAAyyjdPhQ4jxc67PfJgsAx1Pz7nSX8Peg5PxsW8DrMIcBZ0fv3SiLdPIA71B4D9LHOAcCxzgP01B6AO908SiL791nRIcA6zBbwPxvoOfw9nSX8+zHUgsD3yTrsjxcUON0+yygAADXXI8Hsx3HoxhMJNn4/zysEBGPaBMIYxsHk6g/GM98/py4FCLbdI8OAxCzh/QtPMf8/TzH9CyzhgMQjw7bdBQinLt8/xjPqD8HkGMYEwmPaBATPK34/CTbGE3Ho7McjwTXXAADLKN0+FDiPFzrs98mCwDHU/PudJfw96Dk/GxbwOswhwFnR+/dKIt08gDvUHgP0sc4BwLHOA/TUHoA73TxKIvv3WdEhwDrMFvA/G+g5/D2dJfz7MdSCwPfJOuyPFxQ43T7LKAAANdcjwezHcejGEwk2fj/PKwQEY9oEwhjGweTqD8Yz3z+nLgUItt0jw4DELOH9C08x/z9PMf0LLOGAxCPDtt0FCKcu3z/GM+oPweQYxgTCY9oEBM8rfj8JNsYTcejsxyPBNdcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACdJS/tysODyvz7qjB0PlYaLOGkwMDSBAkUOFM69Q1w1iHA3tytFSs9xjMBAW/NRsJx6HAhtj8SKwP0iMb7xgD1zyucP5Mgg+cEwg7OAgJcNN08uhQI3BPANdfwDrw6lzcFCAvSy8AO4j8bqz4BMPv698kjxCbubCb/P2wmJu4jxPfJ+/oBMKs+PxsO4svAC9IFCJc3vDrwDjXXE8AI3LoU3TxcNAICDs4EwoPnkyCcP88rAPX7xojGA/QSK7Y/cCFx6EbCb80BAcYzKz2tFd7cIcBw1vUNUzoUOAQJwNKkwCzhVhp0Pqow/PuDysrDL+2dJf0/OScd74DEb8n7+VUv3T4nHPPi9cBZ0QUHFTcgO+oP/dcJwDTbxhOMPO40AwOxzsbBlua1H34/iSz+9XHHGMYG81IqzD9KImHpjMLTzAAALTN0PZ8Wtt00wK7V+gzoOY84Agp304LAS+BqGTo+TzH9/BLLdMM67Mwk9z8DKBbw4MTryPv4py4LPw0d2eMjwavQBQaRNoA74xDH2APAY9rREjY8fTUEBFbPjMGq5dQeXD9ALfz27MetxQvykCnfPyIjU+rVwjrM//6RMro9jxeQ3krA7tT9C3g5BTkACzHUZMBt330Y/D3yMf79pMsjw0br+CPtP8soEPFExWnI+/f1LTU/8h3B5FXB/88FBQk23TvaEZTZAcCU2doR3TsJNgUF/89VwcHk8h01P/Ut+/dpyETFEPHLKO0/+CNG6yPDpMv+/fIx/D19GG3fZMAx1AALBTl4Of0L7tRKwJDejxe6PZEy//46zNXCU+oiI98/kCkL8q3F7Mf89kAtXD/UHqrljMFWzwQEfTU2PNESY9oDwMfY4xCAO5E2BQar0CPB2eMNHQs/py77+OvI4MQW8AMo9z/MJDrsdMMSy/38TzE6PmoZS+CCwHfTAgqPOOg5+gyu1TTAtt2fFnQ9LTMAANPMjMJh6UoizD9SKgbzGMZxx/71iSx+P7UflubGwbHOAwPuNIw8xhM02wnA/dfqDyA7FTcFB1nR9cDz4icc3T5VL/v5b8mAxB3vOSf9P50lL+3Kw4PK/PuqMHQ+Vhos4aTAwNIECRQ4Uzr1DXDWIcDe3K0VKz3GMwEBb81GwnHocCG2PxIrA/SIxvvGAPXPK5w/kyCD5wTCDs4CAlw03Ty6FAjcE8A11/AOvDqXNwUIC9LLwA7iPxurPgEw+/r3ySPEJu5sJv8/bCYm7iPE98n7+gEwqz4/Gw7iy8AL0gUIlze8OvAONdcTwAjcuhTdPFw0AgIOzgTCg+eTIJw/zysA9fvGiMYD9BIrtj9wIXHoRsJvzQEBxjMrPa0V3twhwHDW9Q1TOhQ4BAnA0qTALOFWGnQ+qjD8+4PKysMv7Z0l/T85Jx3vgMRvyfv5VS/dPicc8+L1wFnRBQcVNyA76g/91wnANNvGE4w87jQDA7HOxsGW5rUffj+JLP71cccYxgbzUirMP0oiYemMwtPMAAAtM3Q9nxa23TTArtX6DOg5jzgCCnfTgsBL4GoZOj5PMf38Est0wzrszCT3PwMoFvDgxOvI+/inLgs/DR3Z4yPBq9AFBpE2gDvjEMfYA8Bj2tESNjx9NQQEVs+Mwarl1B5cP0At/Pbsx63FC/KQKd8/IiNT6tXCOsz//pEyuj2PF5DeSsDu1P0LeDkFOQALMdRkwG3ffRj8PfIx/v2kyyPDRuv4I+0/yygQ8UTFacj79/UtNT/yHcHkVcH/zwUFCTbdO9oRlNkBwJTZ2hHdOwk2BQX/z1XBweTyHTU/9S3792nIRMUQ8cso7T/4I0brI8Oky/798jH8PX0Ybd9kwDHUAAsFOXg5/Qvu1ErAkN6PF7o9kTL//jrM1cJT6iIj3z+QKQvyrcXsx/z2QC1cP9QequWMwVbPBAR9NTY80RJj2gPAx9jjEIA7kTYFBqvQI8HZ4w0dCz+nLvv468jgxBbwAyj3P8wkOux0wxLL/fxPMTo+ahlL4ILAd9MCCo846Dn6DK7VNMC23Z8WdD0tMwAA08yMwmHpSiLMP1IqBvMYxnHH/vWJLH4/tR+W5sbBsc4DA+40jDzGEzTbCcD91+oPIDsVNwUHWdH1wPPiJxzdPlUv+/lvyYDEHe85J/0/nSUv7crDg8r8+6owdD5WGizhpMDA0gQJFDhTOvUNcNYhwN7crRUrPcYzAQFvzUbCcehwIbY/EisD9IjG+8YA9c8rnD+TIIPnBMIOzgICXDTdPLoUCNwTwDXX8A68Opc3BQgL0svADuI/G6s+ATD7+vfJI8Qm7mwm/z9sJibuI8T3yfv6ATCrPj8bDuLLwAvSBQiXN7w68A411xPACNy6FN08XDQCAg7OBMKD55MgnD/PKwD1+8aIxgP0Eiu2P3AhcehGwm/NAQHGMys9rRXe3CHAcNb1DVM6FDgECcDSpMAs4VYadD6qMPz7g8rKwy/tnSX9PzknHe+AxG/J+/lVL90+Jxzz4vXAWdEFBxU3IDvqD/3XCcA028YTjDzuNAMDsc7GwZbmtR9+P4ks/vVxxxjGBvNSKsw/SiJh6YzC08wAAC0zdD2fFrbdNMCu1foM6DmPOAIKd9OCwEvgahk6Pk8x/fwSy3TDOuzMJPc/AygW8ODE68j7+KcuCz8NHdnjI8Gr0AUGkTaAO+MQx9gDwGPa0RI2PH01BARWz4zBquXUHlw/QC389uzHrcUL8pAp3z8iI1Pq1cI6zP/+kTK6PY8XkN5KwO7U/Qt4OQU5AAsx1GTAbd99GPw98jH+/aTLI8NG6/gj7T/LKBDxRMVpyPv39S01P/IdweRVwf/PBQUJNt072hGU2QHAlNnaEd07CTYFBf/PVcHB5PIdNT/1Lfv3achExRDxyyjtP/gjRusjw6TL/v3yMfw9fRht32TAMdQACwU5eDn9C+7USsCQ3o8Xuj2RMv/+OszVwlPqIiPfP5ApC/KtxezH/PZALVw/1B6q5YzBVs8EBH01NjzREmPaA8DH2OMQgDuRNgUGq9AjwdnjDR0LP6cu+/jryODEFvADKPc/zCQ67HTDEsv9/E8xOj5qGUvggsB30wIKjzjoOfoMrtU0wLbdnxZ0PS0zAADTzIzCYelKIsw/UioG8xjGccf+9Yksfj+1H5bmxsGxzgMD7jSMPMYTNNsJwP3X6g8gOxU3BQdZ0fXA8+InHN0+VS/7+W/JgMQd7zkn/T+dJS/tysODyvz7qjB0PlYaLOGkwMDSBAkUOFM69Q1w1iHA3tytFSs9xjMBAW/NRsJx6HAhtj8SKwP0iMb7xgD1zyucP5Mgg+cEwg7OAgJcNN08uhQI3BPANdfwDrw6lzcFCAvSy8AO4j8bqz4BMPv698kjxCbubCb/P2wmJu4jxPfJ+/oBMKs+PxsO4svAC9IFCJc3vDrwDjXXE8AI3LoU3TxcNAICDs4EwoPnkyCcP88rAPX7xojGA/QSK7Y/cCFx6EbCb80BAcYzKz2tFd7cIcBw1vUNUzoUOAQJwNKkwCzhVhp0Pqow/PuDysrDL+2dJf0/OScd74DEb8n7+VUv3T4nHPPi9cBZ0QUHFTcgO+oP/dcJwDTbxhOMPO40AwOxzsbBlua1H34/iSz+9XHHGMYG81IqzD9KImHpjMLTzA=="></audio>
+
+<div class="cronometro-popup-overlay" id="cronometroPopupOverlay">
+  <div class="cronometro-popup-card">
+    <h3>⏱ Novo cronômetro</h3>
+    <label for="cronometroNomeInput">Nome do cronômetro</label>
+    <input type="text" id="cronometroNomeInput" placeholder="Ex: Aguardando cliente" maxlength="40">
+    <div class="cronometro-popup-feedback" id="cronometroPopupFeedback"></div>
+    <div class="cronometro-popup-actions">
+      <button id="cronometroCancelarBtn">Cancelar</button>
+      <button id="cronometroIniciarBtn">▶ Iniciar</button>
+    </div>
+  </div>
+</div>
+
 <script>
   (function() {
     // ----- TEMA CLARO/ESCURO -----
@@ -1165,6 +1430,33 @@ function mostrarKanban() {
     }
     themeToggle.addEventListener('click', toggleTheme);
     if (html.getAttribute('data-theme') === 'dark') themeToggle.textContent = '☀️ Tema claro';
+
+    // ----- FUNÇÕES PARA MOSTRAR/ESCONDER CAMPOS CONDICIONAIS -----
+    window.mostrarKanban = function() {
+      const kanbanSim = document.querySelector('input[name="kanban"][value="Sim"]').checked;
+      const campos = document.getElementById("kanbanFields");
+      if (kanbanSim) {
+        campos.classList.add('show');
+      } else {
+        campos.classList.remove('show');
+      }
+    };
+
+    window.mostrarLigacao = function() {
+      const ligacaoSim = document.querySelector('input[name="ligacao"][value="Sim"]').checked;
+      const campos = document.getElementById("ligacaoFields");
+      if (ligacaoSim) {
+        campos.classList.add('show');
+      } else {
+        campos.classList.remove('show');
+      }
+    };
+
+    // Inicializar os campos condicionais ao carregar a página
+    function inicializarCamposCondicionais() {
+      mostrarKanban();
+      mostrarLigacao();
+    }
 
     // ----- FORMULÁRIO PRINCIPAL (popup) -----
     const gerarBtn = document.getElementById('gerarBtn');
@@ -1190,24 +1482,53 @@ function mostrarKanban() {
       const solucao = document.getElementById('solucao').value.trim() || '(não preenchido)';
       const chamados = document.querySelector('input[name="chamados"]:checked').value;
       const kanban = document.querySelector('input[name="kanban"]:checked').value;
+      const ligacao = document.querySelector('input[name="ligacao"]:checked').value;
       const atualizacao = document.querySelector('input[name="atualizacao"]:checked').value;
       const vinculado = document.querySelector('input[name="vinculado"]:checked').value;
-      let linhaAtualizacao = `Foi realizado atualização? ${atualizacao}`;
-      if (atualizacao === 'Sim') {
-        const de = document.getElementById('versaoDe').value.trim() || '(vazio)';
-        const para = document.getElementById('versaoPara').value.trim() || '(vazio)';
-        linhaAtualizacao += `
-
-Versão: ${de} para ${para}`;
+      
+      let blocoKanban = `Foi criado kanban? ${kanban}`;
+      if (kanban === 'Sim') {
+        const motivo = document.getElementById('kanbanMotivo').value.trim();
+        if (motivo) {
+          blocoKanban += `\nJustificativa Kanban: ${motivo}`;
+        }
       }
-      return `Solicitação ou problema: ${solicitacao}
 
-Solução: ${solucao}
+      let blocoLigacao = `Efetuou ligação? ${ligacao}`;
+      if (ligacao === 'Sim') {
+        const motivo = document.getElementById('ligacaoMotivo').value.trim();
+        if (motivo) {
+          blocoLigacao += `\nJustificativa ligação: ${motivo}`;
+        }
+      }
 
-Tem haver com os ultimos 3 chamdos? ${chamados}
-Foi criado kanban? ${kanban}
-${linhaAtualizacao}
-Cliente Vinculado?:${vinculado}`;
+      let blocoAtualizacao = `Foi realizado atualização? ${atualizacao}`;
+      if (atualizacao === 'Sim') {
+        const de = document.getElementById('versaoDe').value.trim();
+        const para = document.getElementById('versaoPara').value.trim();
+        if (de || para) {
+          blocoAtualizacao += `\nVersão: ${de || '(vazio)'} para ${para || '(vazio)'}`;
+        }
+      }
+
+      const blocos = [
+        `Solicitação ou problema: ${solicitacao}`,
+        `Solução: ${solucao}`,
+        `Tem haver com os últimos 3 chamados? ${chamados}`,
+        blocoKanban,
+        blocoLigacao,
+        blocoAtualizacao,
+        `Cliente vinculado? ${vinculado}`
+      ];
+
+      // Junta os blocos com APENAS uma quebra de linha entre eles (sem
+      // linha em branco), para colar direto no Kanban sem espaçamento extra.
+      // No final, garante que nunca fique mais de uma quebra de linha seguida,
+      // mesmo que algum valor colado pelo usuário já contenha quebras extras.
+      return blocos
+        .join('\n')
+        .replace(/\n{2,}/g, '\n')
+        .trim();
     }
 
     function mostrarPopup(texto) {
@@ -1223,13 +1544,18 @@ Cliente Vinculado?:${vinculado}`;
       document.getElementById('solucao').value = '';
       document.getElementById('versaoDe').value = '';
       document.getElementById('versaoPara').value = '';
+      document.getElementById('kanbanMotivo').value = '';
+      document.getElementById('ligacaoMotivo').value = '';
       
       document.querySelectorAll('input[name="chamados"]').forEach(r => r.checked = r.value === 'Não');
-      document.querySelectorAll('input[name="kanban"]').forEach(r => r.checked = r.value === 'Sim');
+      document.querySelectorAll('input[name="kanban"]').forEach(r => r.checked = r.value === 'Não');
+      document.querySelectorAll('input[name="ligacao"]').forEach(r => r.checked = r.value === 'Não');
       document.querySelectorAll('input[name="atualizacao"]').forEach(r => r.checked = r.value === 'Não');
       document.querySelectorAll('input[name="vinculado"]').forEach(r => r.checked = r.value === 'Sim');
       
       versaoFields.classList.remove('show');
+      document.getElementById('kanbanFields').classList.remove('show');
+      document.getElementById('ligacaoFields').classList.remove('show');
       
       limparTituloBtn.textContent = '✅';
       setTimeout(() => { limparTituloBtn.innerHTML = '🧹 Limpar'; }, 1200);
@@ -1776,12 +2102,6 @@ Cliente Vinculado?:${vinculado}`;
     const calcToggleBtn = document.getElementById('calcToggleBtn');
     const calcPanel = document.getElementById('calcPanel');
     const calcHoraInicial = document.getElementById('calcHoraInicial');
-
-    const agora = new Date();
-    calcHoraInicial.value = agora.toLocaleTimeString('pt-BR', {
-        hour: '2-digit',
-        minute: '2-digit'
-    });
     const calcHoras = document.getElementById('calcHoras');
     const calcMinutos = document.getElementById('calcMinutos');
     const calcChegada = document.getElementById('calcChegada');
@@ -1792,10 +2112,25 @@ Cliente Vinculado?:${vinculado}`;
 
     let calcAberto = false;
 
+    // Função para obter a hora atual com precisão de segundos
+    function obterHoraAtualPrecisa() {
+      const agora = new Date();
+      const horas = String(agora.getHours()).padStart(2, '0');
+      const minutos = String(agora.getMinutes()).padStart(2, '0');
+      return `${horas}:${minutos}`;
+    }
+
     calcToggleBtn.addEventListener('click', () => {
       calcAberto = !calcAberto;
       calcToggleBtn.classList.toggle('active', calcAberto);
       calcPanel.classList.toggle('aberto', calcAberto);
+      
+      // Quando abrir, atualizar com a hora atual precisa
+      if (calcAberto) {
+        const horaAtual = obterHoraAtualPrecisa();
+        calcHoraInicial.value = horaAtual;
+        calcularHorario(); // Recalcula automaticamente
+      }
     });
 
     function calcularHorario() {
@@ -1852,7 +2187,6 @@ Cliente Vinculado?:${vinculado}`;
     }
 
     calcCalcularBtn.addEventListener('click', calcularHorario);
-    setTimeout(calcularHorario, 100);
 
     calcLimparBtn.addEventListener('click', () => {
       calcHoraInicial.value = '';
@@ -1869,17 +2203,315 @@ Cliente Vinculado?:${vinculado}`;
       });
     });
 
+    // Inicializa com a hora atual ao carregar a página
+    window.addEventListener('load', () => {
+      const horaAtual = obterHoraAtualPrecisa();
+      calcHoraInicial.value = horaAtual;
+      calcularHorario();
+    });
+
     // ----- INICIALIZA GERAL -----
     atualizarCamposEdit();
     renderizarAtalhos();
+    
+    // Inicializar campos condicionais
+    inicializarCamposCondicionais();
+    
+    // Inicializar versão
     if (document.querySelector('input[name="atualizacao"]:checked').value === 'Sim') {
-      versaoFields.classList.add("versão" + 'show');
+      versaoFields.classList.add("show");
     }
 
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       html.setAttribute('data-theme', 'dark');
       themeToggle.textContent = '☀️ Tema claro';
     }
+
+    // ===== CRONÔMETROS FLUTUANTES =====
+    const cronometroFab = document.getElementById('cronometroFab');
+    const cronometroPopupOverlay = document.getElementById('cronometroPopupOverlay');
+    const cronometroNomeInput = document.getElementById('cronometroNomeInput');
+    const cronometroIniciarBtn = document.getElementById('cronometroIniciarBtn');
+    const cronometroCancelarBtn = document.getElementById('cronometroCancelarBtn');
+    const cronometroPopupFeedback = document.getElementById('cronometroPopupFeedback');
+    const cronometrosContainer = document.getElementById('cronometrosContainer');
+
+    const INTERVALO_NOTIFICACAO = 5 * 60 * 1000; // 5 minutos
+    let cronometros = [];
+    let cronometroIdSeq = 0;
+
+    function abrirPopupCronometro() {
+      cronometroNomeInput.value = '';
+      cronometroPopupFeedback.textContent = '';
+      cronometroPopupOverlay.classList.add('ativo');
+      setTimeout(() => cronometroNomeInput.focus(), 50);
+    }
+    function fecharPopupCronometro() {
+      cronometroPopupOverlay.classList.remove('ativo');
+    }
+    cronometroFab.addEventListener('click', abrirPopupCronometro);
+    cronometroCancelarBtn.addEventListener('click', fecharPopupCronometro);
+    cronometroPopupOverlay.addEventListener('click', (e) => {
+      if (e.target === cronometroPopupOverlay) fecharPopupCronometro();
+    });
+    cronometroNomeInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') iniciarNovoCronometro();
+    });
+    cronometroIniciarBtn.addEventListener('click', iniciarNovoCronometro);
+
+    function pedirPermissaoNotificacao() {
+      if (!('Notification' in window)) return Promise.resolve('unsupported');
+      if (Notification.permission === 'granted') return Promise.resolve('granted');
+      if (Notification.permission === 'denied') return Promise.resolve('denied');
+      return Notification.requestPermission();
+    }
+
+    function iniciarNovoCronometro() {
+      const nome = cronometroNomeInput.value.trim();
+      if (!nome) {
+        cronometroPopupFeedback.textContent = 'Digite um nome para o cronômetro.';
+        cronometroNomeInput.focus();
+        return;
+      }
+      pedirPermissaoNotificacao().then((permissao) => {
+        if (permissao === 'unsupported') {
+          cronometroPopupFeedback.textContent = 'Seu navegador não suporta notificações, mas o cronômetro será criado.';
+        } else if (permissao === 'denied') {
+          cronometroPopupFeedback.textContent = 'Notificações bloqueadas no navegador. O cronômetro será criado, mas sem avisos.';
+        }
+        destravarAudioCronometro();
+        criarCronometro(nome);
+        fecharPopupCronometro();
+      });
+    }
+
+    function formatarTempo(ms) {
+      const totalSeg = Math.floor(ms / 1000);
+      const h = Math.floor(totalSeg / 3600);
+      const m = Math.floor((totalSeg % 3600) / 60);
+      const s = totalSeg % 60;
+      const pad = n => String(n).padStart(2, '0');
+      return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
+    }
+
+    function criarCronometro(nome) {
+      const id = ++cronometroIdSeq;
+      const cronometro = {
+        id,
+        name: nome,
+        startTs: Date.now(),
+        accumulated: 0,
+        running: true,
+        notifyCount: 0
+      };
+
+      const card = document.createElement('div');
+      card.className = 'cronometro-card';
+      card.dataset.id = String(id);
+
+      const main = document.createElement('div');
+      main.className = 'cronometro-card-main';
+
+      const header = document.createElement('div');
+      header.className = 'cronometro-card-header';
+
+      const nomeSpan = document.createElement('span');
+      nomeSpan.className = 'cronometro-nome';
+      nomeSpan.textContent = nome;
+      nomeSpan.title = nome;
+
+      header.appendChild(nomeSpan);
+
+      const tempoDiv = document.createElement('div');
+      tempoDiv.className = 'cronometro-tempo';
+      tempoDiv.textContent = '00:00';
+
+      main.appendChild(header);
+      main.appendChild(tempoDiv);
+
+      const acoesDiv = document.createElement('div');
+      acoesDiv.className = 'cronometro-acoes';
+
+      const pausarBtn = document.createElement('button');
+      pausarBtn.className = 'cronometro-pausar';
+      pausarBtn.title = 'Pausar';
+      pausarBtn.textContent = '⏸';
+      pausarBtn.addEventListener('click', () => togglePausaCronometro(id));
+
+      const fecharBtn = document.createElement('button');
+      fecharBtn.className = 'cronometro-fechar';
+      fecharBtn.title = 'Remover cronômetro';
+      fecharBtn.textContent = '✕';
+      fecharBtn.addEventListener('click', () => removerCronometro(id));
+
+      acoesDiv.appendChild(pausarBtn);
+      acoesDiv.appendChild(fecharBtn);
+
+      card.appendChild(main);
+      card.appendChild(acoesDiv);
+
+      cronometrosContainer.appendChild(card);
+      cronometro.el = card;
+      cronometro.tempoEl = tempoDiv;
+      cronometro.pausarBtnEl = pausarBtn;
+
+      cronometros.push(cronometro);
+      atualizarTodosCronometros();
+    }
+
+    function togglePausaCronometro(id) {
+      const c = cronometros.find(c => c.id === id);
+      if (!c) return;
+      if (c.running) {
+        c.accumulated += Date.now() - c.startTs;
+        c.running = false;
+        c.pausarBtnEl.textContent = '▶';
+        c.pausarBtnEl.title = 'Retomar';
+        c.el.classList.add('cronometro-pausado');
+      } else {
+        c.startTs = Date.now();
+        c.running = true;
+        c.pausarBtnEl.textContent = '⏸';
+        c.pausarBtnEl.title = 'Pausar';
+        c.el.classList.remove('cronometro-pausado');
+      }
+    }
+
+    function removerCronometro(id) {
+      const idx = cronometros.findIndex(c => c.id === id);
+      if (idx === -1) return;
+      cronometros[idx].el.remove();
+      cronometros.splice(idx, 1);
+    }
+
+    const cronometroToast = document.getElementById('cronometroToast');
+    const cronometroBeepAudio = document.getElementById('cronometroBeepAudio');
+    let cronometroToastTimeout = null;
+    let audioDestravado = false;
+
+    // Alguns navegadores só permitem tocar áudio programaticamente depois de uma
+    // interação direta do usuário. Por isso "destravamos" o player assim que o
+    // usuário clica em "Iniciar", tocando e pausando instantaneamente em silêncio.
+    function destravarAudioCronometro() {
+      if (audioDestravado || !cronometroBeepAudio) return;
+      const volumeOriginal = cronometroBeepAudio.volume;
+      cronometroBeepAudio.volume = 0;
+      const p = cronometroBeepAudio.play();
+      if (p && typeof p.then === 'function') {
+        p.then(() => {
+          cronometroBeepAudio.pause();
+          cronometroBeepAudio.currentTime = 0;
+          cronometroBeepAudio.volume = volumeOriginal;
+          audioDestravado = true;
+        }).catch(() => {
+          cronometroBeepAudio.volume = volumeOriginal;
+        });
+      } else {
+        cronometroBeepAudio.pause();
+        cronometroBeepAudio.currentTime = 0;
+        cronometroBeepAudio.volume = volumeOriginal;
+        audioDestravado = true;
+      }
+    }
+
+    function tocarBipCronometro() {
+      // Tentativa 1: elemento <audio> (mais confiável, sobrevive melhor a
+      // políticas de autoplay do que um AudioContext criado fora de um clique).
+      if (cronometroBeepAudio) {
+        try {
+          cronometroBeepAudio.currentTime = 0;
+          const p = cronometroBeepAudio.play();
+          if (p && typeof p.catch === 'function') {
+            p.catch(() => { tocarBipViaOscilador(); });
+          }
+          return;
+        } catch (e) {
+          // segue para o fallback abaixo
+        }
+      }
+      tocarBipViaOscilador();
+    }
+
+    function tocarBipViaOscilador() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const disparar = () => {
+          [0, 0.18].forEach((delay) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = 880;
+            gain.gain.setValueAtTime(0.0001, ctx.currentTime + delay);
+            gain.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + delay + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + 0.16);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + delay);
+            osc.stop(ctx.currentTime + delay + 0.18);
+          });
+          setTimeout(() => ctx.close(), 500);
+        };
+        if (ctx.state === 'suspended') {
+          ctx.resume().then(disparar).catch(() => {});
+        } else {
+          disparar();
+        }
+      } catch (e) {
+        // ambiente sem suporte a áudio; ignora silenciosamente
+      }
+    }
+
+    function mostrarToastCronometro(texto) {
+      cronometroToast.textContent = texto;
+      cronometroToast.classList.add('ativo');
+      clearTimeout(cronometroToastTimeout);
+      cronometroToastTimeout = setTimeout(() => {
+        cronometroToast.classList.remove('ativo');
+      }, 4500);
+    }
+
+    function notificarCronometro(c, minutos) {
+      const titulo = `⏱ ${c.name}`;
+      const corpo = `Já se passaram ${minutos} minutos.`;
+      let notificacaoOk = false;
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try {
+          new Notification(titulo, {
+            body: corpo,
+            tag: `cronometro-${c.id}-${c.notifyCount}`,
+            requireInteraction: true,
+            silent: false
+          });
+          notificacaoOk = true;
+        } catch (e) {
+          // alguns navegadores (principalmente mobile/Windows com foco assist) bloqueiam
+          // "new Notification" silenciosamente — por isso sempre reforçamos com toast + som abaixo.
+        }
+      }
+      // Reforço visual/sonoro sempre ativo, independente da notificação do sistema ter funcionado,
+      // pois o SO pode suprimir o balão de notificação sem lançar erro (ex.: Foco Assistido do Windows).
+      mostrarToastCronometro(`${titulo} — ${corpo}`);
+      tocarBipCronometro();
+      c.el.classList.add('cronometro-notificado');
+      setTimeout(() => c.el.classList.remove('cronometro-notificado'), 2500);
+    }
+
+    function atualizarTodosCronometros() {
+      cronometros.forEach(c => {
+        const elapsed = c.accumulated + (c.running ? Date.now() - c.startTs : 0);
+        c.tempoEl.textContent = formatarTempo(elapsed);
+        if (c.running) {
+          const intervalosPassados = Math.floor(elapsed / INTERVALO_NOTIFICACAO);
+          if (intervalosPassados > c.notifyCount) {
+            c.notifyCount = intervalosPassados;
+            notificarCronometro(c, intervalosPassados * 5);
+          }
+        }
+      });
+    }
+    setInterval(atualizarTodosCronometros, 1000);
   })();
 </script>
 </body>
