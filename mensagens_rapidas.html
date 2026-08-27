@@ -126,43 +126,6 @@
             min-width: 90px;
         }
 
-        .top-bar .variaveis-hint {
-            font-size: 10px;
-            color: #64748b;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            flex-shrink: 0;
-            padding: 0 2px;
-        }
-        [data-theme="dark"] .top-bar .variaveis-hint {
-            color: #8fa3be;
-        }
-        .top-bar .variaveis-hint .tag-var {
-            background: #eef2f8;
-            padding: 1px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-family: monospace;
-            cursor: pointer;
-            transition: 0.15s;
-            border: 1px solid transparent;
-            user-select: none;
-        }
-        .top-bar .variaveis-hint .tag-var:hover {
-            background: #dce4ed;
-            border-color: #2d7aff;
-            transform: scale(1.05);
-        }
-        [data-theme="dark"] .top-bar .variaveis-hint .tag-var {
-            background: #2d3a4f;
-            color: #b8c9e0;
-        }
-        [data-theme="dark"] .top-bar .variaveis-hint .tag-var:hover {
-            background: #3b4a62;
-            border-color: #5a8aff;
-        }
-
         .top-bar .acoes-topo {
             display: flex;
             gap: 4px;
@@ -1368,13 +1331,6 @@
             .modal-card {
                 padding: 14px 14px;
             }
-            .top-bar .variaveis-hint {
-                font-size: 8px;
-            }
-            .top-bar .variaveis-hint .tag-var {
-                font-size: 8px;
-                padding: 1px 4px;
-            }
             .btn {
                 font-size: 10px;
                 padding: 3px 7px;
@@ -1408,12 +1364,6 @@
             <div class="campo-var">
                 <label>📅 Fim</label>
                 <input type="date" id="dataFim" />
-            </div>
-            <!-- Tags de variáveis -->
-            <div class="variaveis-hint">
-                <span class="tag-var" data-var="{nome}">{nome}</span>
-                <span class="tag-var" data-var="{inicio}">{inicio}</span>
-                <span class="tag-var" data-var="{fim}">{fim}</span>
             </div>
         </div>
 
@@ -1568,7 +1518,7 @@
             }
 
             // ============================================================
-            // INSERIR VARIÁVEL NO TEXTO (clique nas tags)
+            // INSERIR VARIÁVEL NO TEXTO (clique nas tags do modal)
             // ============================================================
             function configurarInserirVariavel(selector, targetId) {
                 const elementos = document.querySelectorAll(selector);
@@ -2010,9 +1960,8 @@
             });
 
             // ============================================================
-            // CONFIGURAR INSERÇÃO DE VARIÁVEIS POR CLICK
+            // CONFIGURAR INSERÇÃO DE VARIÁVEIS POR CLICK (apenas no modal)
             // ============================================================
-            configurarInserirVariavel('.tag-var', 'modalCorpo');
             configurarInserirVariavel('.tag-var-modal', 'modalCorpo');
 
             // ============================================================
