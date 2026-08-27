@@ -1,0 +1,2548 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facilitador de Atendimento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET E BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f0f4fa;
+            color: #0b1a2e;
+            padding: 0;
+            transition: background 0.25s, color 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        [data-theme="dark"] body {
+            background: #121926;
+            color: #e6edf5;
+        }
+
+        /* ===== BARRA SUPERIOR FIXA ===== */
+        .top-bar {
+            background: #ffffff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 12px rgba(0, 20, 40, 0.06);
+            flex-shrink: 0;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.25s;
+            border-bottom: 1px solid #eef2f8;
+        }
+        [data-theme="dark"] .top-bar {
+            background: #1a2538;
+            border-bottom-color: #2d3a4f;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .top-bar .logo {
+            font-size: 17px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0b2b44;
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .top-bar .logo {
+            color: #e6edf5;
+        }
+        .top-bar .logo i {
+            color: #2d7aff;
+        }
+
+        .top-bar .variaveis-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .top-bar .campo-var {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 85px;
+            flex: 1;
+        }
+        .top-bar .campo-var label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #64748b;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        [data-theme="dark"] .top-bar .campo-var label {
+            color: #8fa3be;
+        }
+        .top-bar .campo-var input {
+            padding: 4px 8px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 12px;
+            background: #fafcff;
+            transition: 0.15s;
+            color: #0b1a2e;
+            width: 100%;
+            min-width: 70px;
+        }
+        [data-theme="dark"] .top-bar .campo-var input {
+            background: #0f1729;
+            border-color: #3b4a62;
+            color: #e6edf5;
+        }
+        .top-bar .campo-var input:focus {
+            border-color: #2d7aff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 122, 255, 0.08);
+        }
+        .top-bar .campo-var.cliente {
+            flex: 1.5;
+            min-width: 110px;
+        }
+
+        .top-bar .variaveis-hint {
+            font-size: 10px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+            padding: 0 4px;
+        }
+        [data-theme="dark"] .top-bar .variaveis-hint {
+            color: #8fa3be;
+        }
+        .top-bar .variaveis-hint .tag-var {
+            background: #eef2f8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-family: monospace;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 1px solid transparent;
+            user-select: none;
+        }
+        .top-bar .variaveis-hint .tag-var:hover {
+            background: #dce4ed;
+            border-color: #2d7aff;
+            transform: scale(1.05);
+        }
+        [data-theme="dark"] .top-bar .variaveis-hint .tag-var {
+            background: #2d3a4f;
+            color: #b8c9e0;
+        }
+        [data-theme="dark"] .top-bar .variaveis-hint .tag-var:hover {
+            background: #3b4a62;
+            border-color: #5a8aff;
+        }
+
+        .top-bar .acoes-topo {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #eef2f8;
+            color: #1f3349;
+        }
+        .btn:hover {
+            background: #dce4ed;
+            transform: scale(0.97);
+        }
+        .btn i {
+            font-size: 13px;
+        }
+        .btn-primary {
+            background: #1a4cff;
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 76, 255, 0.2);
+        }
+        .btn-primary:hover {
+            background: #0e3fd6;
+        }
+        .btn-success {
+            background: #16a34a;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #0f8a3b;
+        }
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #dce4ed;
+        }
+        .btn-outline:hover {
+            background: #f1f5fa;
+        }
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 11px;
+        }
+        .btn-xs {
+            padding: 2px 6px;
+            font-size: 10px;
+            border-radius: 30px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1.5px solid #dce4ed;
+            border-radius: 40px;
+            padding: 5px 10px;
+            font-weight: 500;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #1f3349;
+            transition: 0.2s;
+        }
+        [data-theme="dark"] .theme-toggle {
+            border-color: #3b4a62;
+            color: #d6e0ee;
+        }
+        .theme-toggle:hover {
+            background: #eef2f6;
+        }
+        [data-theme="dark"] .theme-toggle:hover {
+            background: #2d3a4f;
+        }
+
+        /* ===== ÁREA DE CONTEÚDO ===== */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+        }
+        .content-area::-webkit-scrollbar {
+            width: 5px;
+        }
+        .content-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .content-area::-webkit-scrollbar-thumb {
+            background: #c0cbd8;
+            border-radius: 10px;
+        }
+        [data-theme="dark"] .content-area::-webkit-scrollbar-thumb {
+            background: #3b4a62;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 14px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .msg-card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 14px 16px;
+            box-shadow: 0 4px 16px rgba(0, 20, 40, 0.06);
+            border: 1px solid #eef2f8;
+            transition: 0.15s;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-height: 90px;
+        }
+        [data-theme="dark"] .msg-card {
+            background: #1e293b;
+            border-color: #2d3a4f;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        .msg-card:hover {
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 20, 40, 0.08);
+        }
+        [data-theme="dark"] .msg-card:hover {
+            border-color: #4a5a72;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .msg-card .card-titulo {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1a4cff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        [data-theme="dark"] .msg-card .card-titulo {
+            color: #5a8aff;
+        }
+
+        .msg-card .card-preview {
+            font-size: 12px;
+            color: #475569;
+            flex: 1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+        [data-theme="dark"] .msg-card .card-preview {
+            color: #94a3b8;
+        }
+
+        .msg-card .card-acoes {
+            display: flex;
+            gap: 4px;
+            justify-content: flex-end;
+            border-top: 1px solid #eef2f8;
+            padding-top: 8px;
+            margin-top: 2px;
+        }
+        [data-theme="dark"] .msg-card .card-acoes {
+            border-top-color: #2d3a4f;
+        }
+
+        .vazio-msg {
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 40px 0;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+        [data-theme="dark"] .vazio-msg {
+            color: #64748b;
+        }
+
+        /* ===== FEEDBACK ===== */
+        .toast-feedback {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1a4cff;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s ease;
+            box-shadow: 0 8px 24px rgba(26, 76, 255, 0.3);
+        }
+        .toast-feedback.ativo {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast-feedback.erro {
+            background: #dc2626;
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3);
+        }
+
+        /* ===== BLOCO DE NOTAS FLUTUANTE ===== */
+        .sticky-note-float {
+            position: fixed;
+            min-width: 180px;
+            min-height: 100px;
+            width: 340px;
+            height: 260px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 14px 16px 12px;
+            box-shadow: 0 12px 48px rgba(0, 20, 40, 0.2);
+            z-index: 500;
+            transition: background 0.25s, box-shadow 0.2s;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(2px);
+            cursor: default;
+            user-select: none;
+            resize: both;
+            overflow: hidden;
+            touch-action: none;
+            display: flex;
+            flex-direction: column;
+        }
+        [data-theme="dark"] .sticky-note-float {
+            background: #1e293b;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+            border-color: #3b4a62;
+        }
+
+        .sticky-note-float::after {
+            content: "⤡";
+            position: absolute;
+            bottom: 4px;
+            right: 6px;
+            font-size: 13px;
+            color: #a0b3c9;
+            cursor: nwse-resize;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+            pointer-events: auto;
+            z-index: 10;
+        }
+        .sticky-note-float:hover::after {
+            opacity: 1;
+        }
+        [data-theme="dark"] .sticky-note-float::after {
+            color: #5a6f8f;
+        }
+
+        .sticky-note-float.minimizado {
+            min-height: 44px;
+            height: 44px !important;
+            overflow: hidden;
+            resize: none;
+        }
+        .sticky-note-float.minimizado::after {
+            display: none;
+        }
+        .sticky-note-float.minimizado .sticky-body {
+            display: none;
+        }
+        .sticky-note-float.minimizado .sticky-header .minimizar-btn {
+            transform: rotate(180deg);
+        }
+
+        .sticky-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 8px;
+            cursor: grab;
+            touch-action: none;
+            padding: 2px 0;
+            flex-shrink: 0;
+        }
+        .sticky-header:active {
+            cursor: grabbing;
+        }
+        .sticky-header label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #52677a;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: grab;
+            user-select: none;
+        }
+        [data-theme="dark"] .sticky-header label {
+            color: #8fa3be;
+        }
+        .sticky-header label::before {
+            content: "📝";
+            font-size: 14px;
+        }
+        .sticky-actions {
+            display: flex;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .sticky-actions button {
+            background: transparent;
+            border: none;
+            font-size: 13px;
+            color: #798ea5;
+            cursor: pointer;
+            padding: 3px 5px;
+            border-radius: 20px;
+            transition: 0.15s;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            user-select: none;
+        }
+        .sticky-actions button:hover {
+            background: #eef2f6;
+            color: #1f3349;
+        }
+        [data-theme="dark"] .sticky-actions button:hover {
+            background: #2d3a4f;
+            color: #d6e0ee;
+        }
+        .sticky-actions .minimizar-btn {
+            transition: transform 0.3s ease;
+        }
+
+        .sticky-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            position: relative;
+        }
+
+        .sticky-body textarea {
+            flex: 1;
+            width: 100%;
+            padding: 8px 12px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 12px;
+            font-family: inherit;
+            background: #fafff7;
+            resize: none;
+            transition: 0.15s;
+            color: #0b1a2e;
+            cursor: text;
+            user-select: text;
+            min-height: 30px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        [data-theme="dark"] .sticky-body textarea {
+            background: #0f1729;
+            border-color: #3b4a62;
+            color: #e6edf5;
+        }
+        .sticky-body textarea:focus {
+            border-color: #2d7aff;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(45, 122, 255, 0.08);
+        }
+        .sticky-body textarea::placeholder {
+            color: #a0b3c9;
+            font-style: italic;
+        }
+
+        .sticky-status {
+            font-size: 10px;
+            color: #8fa3be;
+            margin-top: 3px;
+            text-align: right;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            user-select: none;
+            flex-shrink: 0;
+            padding-right: 18px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 20, 40, 0.5);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal-overlay.ativo {
+            display: flex;
+        }
+        .modal-card {
+            background: #fff;
+            max-width: 440px;
+            width: 100%;
+            border-radius: 24px;
+            padding: 22px 24px 18px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: modalIn 0.2s ease;
+        }
+        [data-theme="dark"] .modal-card {
+            background: #1e293b;
+            color: #e6edf5;
+        }
+        @keyframes modalIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.96) translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .modal-card h3 {
+            font-size: 17px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0b2b44;
+        }
+        [data-theme="dark"] .modal-card h3 {
+            color: #e6edf5;
+        }
+        .modal-card h3 i {
+            color: #2d7aff;
+        }
+        .modal-card label {
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 10px;
+            margin-bottom: 3px;
+            color: #334e6e;
+            display: block;
+        }
+        [data-theme="dark"] .modal-card label {
+            color: #b8c9e0;
+        }
+        .modal-card input,
+        .modal-card textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #fafcff;
+            color: #0b1a2e;
+        }
+        [data-theme="dark"] .modal-card input,
+        [data-theme="dark"] .modal-card textarea {
+            background: #0f1729;
+            border-color: #3b4a62;
+            color: #e6edf5;
+        }
+        .modal-card input:focus,
+        .modal-card textarea:focus {
+            border-color: #2d7aff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 122, 255, 0.08);
+        }
+        .modal-card textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        .modal-card .variaveis-preview {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 11px;
+            color: #475569;
+            margin-top: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px 10px;
+        }
+        [data-theme="dark"] .modal-card .variaveis-preview {
+            background: #1f2a3e;
+            color: #94a3b8;
+        }
+        .modal-card .variaveis-preview .tag-var-modal {
+            background: #e2e8f0;
+            padding: 1px 6px;
+            border-radius: 30px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 1px solid transparent;
+            user-select: none;
+        }
+        .modal-card .variaveis-preview .tag-var-modal:hover {
+            background: #cbd5e1;
+            border-color: #2d7aff;
+            transform: scale(1.05);
+        }
+        [data-theme="dark"] .modal-card .variaveis-preview .tag-var-modal {
+            background: #2d3a4f;
+            color: #b8c9e0;
+        }
+        [data-theme="dark"] .modal-card .variaveis-preview .tag-var-modal:hover {
+            background: #3b4a62;
+            border-color: #5a8aff;
+        }
+        .modal-card .feedback {
+            font-size: 12px;
+            color: #b91c1c;
+            margin-top: 5px;
+            display: none;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .modal-actions .btn {
+            flex: 1;
+            justify-content: center;
+            min-width: 70px;
+        }
+
+        /* ===== CALCULADORA ===== */
+        .calc-toggle-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a4cff, #2d7aff);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(26, 76, 255, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .calc-toggle-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 30px rgba(26, 76, 255, 0.45);
+        }
+        .calc-toggle-btn.active {
+            background: #e74c3c;
+            transform: rotate(45deg);
+        }
+        .calc-toggle-btn.active:hover {
+            transform: rotate(45deg) scale(1.08);
+        }
+
+        .calc-panel {
+            position: fixed;
+            bottom: 86px;
+            right: 24px;
+            width: 290px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 18px 20px 18px;
+            box-shadow: 0 16px 60px rgba(0, 20, 40, 0.2);
+            z-index: 550;
+            display: none;
+            opacity: 0;
+            transform: translateY(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        [data-theme="dark"] .calc-panel {
+            background: #1e293b;
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.5);
+            border-color: #3b4a62;
+        }
+        .calc-panel.aberto {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .calc-panel h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f3349;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        [data-theme="dark"] .calc-panel h3 {
+            color: #d6e0ee;
+        }
+        .calc-panel h3::before {
+            content: "⏰";
+            font-size: 16px;
+        }
+        .calc-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+        .calc-row label {
+            font-size: 11px;
+            font-weight: 500;
+            color: #52677a;
+            margin: 0;
+            min-width: 32px;
+        }
+        [data-theme="dark"] .calc-row label {
+            color: #8fa3be;
+        }
+        .calc-row input[type="time"] {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: "Inter", monospace;
+            background: #fafcff;
+            transition: 0.15s;
+            min-width: 0;
+        }
+        [data-theme="dark"] .calc-row input[type="time"] {
+            background: #0f1729;
+            border-color: #3b4a62;
+            color: #e6edf5;
+        }
+        .calc-row input[type="time"]:focus {
+            border-color: #2d7aff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 122, 255, 0.12);
+        }
+        .calc-row input[type="number"] {
+            width: 42px;
+            padding: 6px 2px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+            font-family: "Inter", monospace;
+            background: #fafcff;
+            transition: 0.15s;
+        }
+        [data-theme="dark"] .calc-row input[type="number"] {
+            background: #0f1729;
+            border-color: #3b4a62;
+            color: #e6edf5;
+        }
+        .calc-row input[type="number"]:focus {
+            border-color: #2d7aff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 122, 255, 0.12);
+        }
+        .calc-row span {
+            font-size: 12px;
+            color: #52677a;
+            font-weight: 500;
+        }
+        [data-theme="dark"] .calc-row span {
+            color: #8fa3be;
+        }
+        .calc-resultado {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: #f2f7fe;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a4cff;
+            font-family: "Inter", monospace;
+            letter-spacing: 1px;
+        }
+        [data-theme="dark"] .calc-resultado {
+            background: #1f2a3e;
+            color: #5a8aff;
+        }
+        .calc-comparacao {
+            font-size: 12px;
+            color: #52677a;
+            margin-top: 4px;
+            text-align: center;
+            min-height: 18px;
+        }
+        [data-theme="dark"] .calc-comparacao {
+            color: #8fa3be;
+        }
+        .calc-comparacao .atraso {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        .calc-comparacao .adiantado {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        .calc-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .calc-actions button {
+            flex: 1;
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .calc-calcular-btn {
+            background: #1a4cff;
+            color: white;
+        }
+        .calc-calcular-btn:hover {
+            background: #0e3fd6;
+        }
+        .calc-limpar-btn {
+            background: #eef2f6;
+            color: #1f3349;
+        }
+        [data-theme="dark"] .calc-limpar-btn {
+            background: #2d3a4f;
+            color: #d6e0ee;
+        }
+        .calc-limpar-btn:hover {
+            background: #dce4ed;
+        }
+        [data-theme="dark"] .calc-limpar-btn:hover {
+            background: #3b4a62;
+        }
+
+        /* ===== CRONÔMETROS ===== */
+        .cronometro-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 80px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #3d6bff;
+            color: #fff;
+            border: none;
+            font-size: 19px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(26, 76, 255, 0.28);
+            z-index: 1500;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .cronometro-fab:hover {
+            transform: scale(1.06);
+            box-shadow: 0 6px 18px rgba(26, 76, 255, 0.38);
+        }
+        .cronometro-fab:active {
+            transform: scale(0.94);
+        }
+
+        .cronometros-container {
+            position: fixed;
+            bottom: 80px;
+            right: 80px;
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap-reverse;
+            justify-content: flex-start;
+            align-content: flex-end;
+            gap: 5px;
+            z-index: 1400;
+            max-width: min(70vw, 600px);
+            max-height: 28vh;
+            overflow-y: auto;
+            padding: 2px;
+        }
+
+        .cronometro-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(6px);
+            border-radius: 10px;
+            padding: 5px 6px 5px 10px;
+            width: auto;
+            max-width: 170px;
+            box-shadow: 0 4px 14px rgba(0, 20, 40, 0.10);
+            border: 1px solid rgba(11, 26, 46, 0.08);
+            transition: box-shadow 0.3s, border-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        [data-theme="dark"] .cronometro-card {
+            background: rgba(30, 41, 59, 0.92);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        }
+        .cronometro-card.cronometro-pausado {
+            opacity: 0.6;
+        }
+        .cronometro-card.cronometro-notificado {
+            border-color: #1a4cff;
+            box-shadow: 0 0 0 2px rgba(26, 76, 255, 0.3), 0 4px 14px rgba(0, 20, 40, 0.10);
+        }
+        .cronometro-card-main {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            flex: 1;
+        }
+        .cronometro-card-header {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .cronometro-nome {
+            font-size: 10px;
+            font-weight: 600;
+            color: #52677a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80px;
+        }
+        [data-theme="dark"] .cronometro-nome {
+            color: #93a6bd;
+        }
+        .cronometro-tempo {
+            font-size: 14px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.2px;
+            color: #0b1a2e;
+            line-height: 1.2;
+        }
+        [data-theme="dark"] .cronometro-tempo {
+            color: #e6edf5;
+        }
+        .cronometro-acoes {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .cronometro-pausar,
+        .cronometro-fechar {
+            background: transparent;
+            border: none;
+            color: #8fa3be;
+            font-size: 12px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cronometro-pausar:hover {
+            background: #eef2f6;
+            color: #1f3349;
+        }
+        .cronometro-fechar:hover {
+            background: #eef2f6;
+            color: #d64545;
+        }
+        [data-theme="dark"] .cronometro-pausar:hover,
+        [data-theme="dark"] .cronometro-fechar:hover {
+            background: #2d3a4f;
+            color: #d6e0ee;
+        }
+
+        .cronometro-popup-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 26, 46, 0.45);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .cronometro-popup-overlay.ativo {
+            display: flex;
+        }
+        .cronometro-popup-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px 22px 18px;
+            width: 300px;
+            max-width: 90vw;
+            box-shadow: 0 16px 40px rgba(0, 20, 40, 0.25);
+        }
+        [data-theme="dark"] .cronometro-popup-card {
+            background: #1e293b;
+        }
+        .cronometro-popup-card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #0b1a2e;
+        }
+        [data-theme="dark"] .cronometro-popup-card h3 {
+            color: #e6edf5;
+        }
+        .cronometro-popup-card label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1f3349;
+        }
+        [data-theme="dark"] .cronometro-popup-card label {
+            color: #b8c9e0;
+        }
+        .cronometro-popup-card input[type="text"] {
+            width: 100%;
+            border: 1px solid #dce4ed;
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-size: 13px;
+            font-family: inherit;
+            margin-bottom: 4px;
+            background: #f9fbfd;
+            color: inherit;
+        }
+        [data-theme="dark"] .cronometro-popup-card input[type="text"] {
+            border-color: #3b4a62;
+            background: #16202f;
+        }
+        .cronometro-popup-feedback {
+            font-size: 11px;
+            color: #d64545;
+            min-height: 14px;
+            margin-bottom: 8px;
+        }
+        .cronometro-popup-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        .cronometro-popup-actions button {
+            border-radius: 30px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #cronometroIniciarBtn {
+            background: #1a4cff;
+            color: #fff;
+            border: none;
+        }
+        #cronometroIniciarBtn:hover {
+            background: #0e3fd6;
+        }
+        #cronometroCancelarBtn {
+            background: transparent;
+            border: 1px solid #dce4ed;
+            color: #1f3349;
+        }
+        [data-theme="dark"] #cronometroCancelarBtn {
+            border-color: #3b4a62;
+            color: #b8c9e0;
+        }
+
+        .cronometro-toast {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: #1a4cff;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            box-shadow: 0 10px 30px rgba(26, 76, 255, 0.4);
+        }
+        .cronometro-toast.ativo {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 10px 14px;
+            }
+            .top-bar .variaveis-row {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+            .top-bar .campo-var {
+                min-width: 70px;
+                flex: 1;
+            }
+            .top-bar .campo-var.cliente {
+                min-width: 90px;
+            }
+            .top-bar .acoes-topo {
+                justify-content: flex-end;
+            }
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+            .sticky-note-float {
+                width: 260px !important;
+                min-width: 140px;
+                height: 200px !important;
+            }
+            .calc-panel {
+                width: 260px;
+                right: 14px;
+                bottom: 80px;
+            }
+            .calc-toggle-btn {
+                bottom: 18px;
+                right: 14px;
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+            .cronometro-fab {
+                bottom: 18px;
+                right: 66px;
+                width: 44px;
+                height: 44px;
+                font-size: 17px;
+            }
+            .cronometros-container {
+                bottom: 70px;
+                right: 66px;
+                max-width: 80vw;
+                max-height: 26vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-bar {
+                padding: 8px 10px;
+            }
+            .top-bar .variaveis-row {
+                gap: 6px;
+            }
+            .top-bar .campo-var input {
+                font-size: 11px;
+                padding: 3px 6px;
+                min-width: 50px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .msg-card {
+                padding: 10px 12px;
+                min-height: 70px;
+            }
+            .msg-card .card-titulo {
+                font-size: 12px;
+            }
+            .msg-card .card-preview {
+                font-size: 11px;
+                -webkit-line-clamp: 1;
+            }
+            .sticky-note-float {
+                width: 200px !important;
+                min-width: 110px;
+                height: 160px !important;
+                padding: 8px 8px 6px;
+            }
+            .sticky-body textarea {
+                font-size: 11px;
+                padding: 5px 8px;
+            }
+            .calc-panel {
+                width: 220px !important;
+                right: 8px;
+                bottom: 70px;
+                padding: 12px 14px;
+            }
+            .calc-toggle-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                bottom: 12px;
+                right: 8px;
+            }
+            .cronometro-fab {
+                bottom: 12px;
+                right: 56px;
+                width: 40px;
+                height: 40px;
+                font-size: 15px;
+            }
+            .cronometros-container {
+                bottom: 60px;
+                right: 56px;
+                max-width: 88vw;
+                max-height: 22vh;
+            }
+            .modal-card {
+                padding: 14px 14px;
+            }
+            .top-bar .variaveis-hint {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== BARRA SUPERIOR FIXA ===== -->
+    <div class="top-bar">
+        <div class="logo">
+            <i class="fas fa-user-check"></i> Facilitador
+        </div>
+
+        <div class="variaveis-row">
+            <div class="campo-var">
+                <label>📅 Início</label>
+                <input type="date" id="dataInicio" />
+            </div>
+            <div class="campo-var">
+                <label>📅 Fim</label>
+                <input type="date" id="dataFim" />
+            </div>
+            <div class="campo-var cliente">
+                <label>👤 Cliente</label>
+                <input type="text" id="nomeCliente" placeholder="Nome" />
+            </div>
+            <div class="variaveis-hint">
+                <span class="tag-var" data-var="{nome}">{nome}</span>
+                <span class="tag-var" data-var="{inicio}">{inicio}</span>
+                <span class="tag-var" data-var="{fim}">{fim}</span>
+            </div>
+        </div>
+
+        <div class="acoes-topo">
+            <button class="btn btn-primary" id="btnNovaMsg"><i class="fas fa-plus"></i> Nova</button>
+            <button class="btn btn-outline" id="btnExportar" title="Exportar mensagens"><i class="fas fa-download"></i></button>
+            <button class="btn btn-outline" id="btnImportar" title="Importar mensagens"><i class="fas fa-upload"></i></button>
+            <button class="btn btn-outline" id="btnLimparVariaveis" title="Limpar variáveis"><i class="fas fa-eraser"></i></button>
+            <button class="theme-toggle" id="themeToggle">🌓</button>
+            <input type="file" id="importarInput" accept=".json" style="display:none" />
+        </div>
+    </div>
+
+    <!-- ===== ÁREA DE CONTEÚDO ===== -->
+    <div class="content-area">
+        <div class="cards-grid" id="listaMensagens">
+            <div class="vazio-msg" id="vazioMsg">Nenhuma mensagem. Clique em "Nova" para criar.</div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST FEEDBACK ===== -->
+    <div class="toast-feedback" id="toastFeedback"></div>
+
+    <!-- ===== BLOCO DE NOTAS FLUTUANTE ===== -->
+    <div class="sticky-note-float" id="stickyNoteFloat" style="left: auto; right: 24px; bottom: 24px;">
+        <div class="sticky-header" id="stickyHeader">
+            <label>Bloco de notas</label>
+            <div class="sticky-actions">
+                <button class="minimizar-btn" id="minimizarStickyBtn" title="Minimizar/Expandir">▼</button>
+                <button id="limparStickyBtn" title="Limpar nota">🗑</button>
+            </div>
+        </div>
+        <div class="sticky-body">
+            <textarea id="stickyNoteText" placeholder="Digite algo aqui... (salvo automaticamente)"></textarea>
+            <div class="sticky-status" id="stickyNoteStatus">Salvo automaticamente</div>
+        </div>
+    </div>
+
+    <!-- ===== CALCULADORA ===== -->
+    <button class="calc-toggle-btn" id="calcToggleBtn" title="Calculadora de horários">⏰</button>
+    <div class="calc-panel" id="calcPanel">
+        <h3>Calculadora de Horários</h3>
+        <div class="calc-row">
+            <label>Início</label>
+            <input type="time" id="calcHoraInicial" value="" />
+        </div>
+        <div class="calc-row">
+            <label>+</label>
+            <input type="number" id="calcHoras" value="1" min="0" max="99" style="width:42px;" />
+            <span>h</span>
+            <input type="number" id="calcMinutos" value="10" min="0" max="59" style="width:42px;" />
+            <span>min</span>
+        </div>
+        <div class="calc-row" style="margin-top:4px;">
+            <label>Chegou</label>
+            <input type="time" id="calcChegada" placeholder="Opcional" />
+        </div>
+        <div class="calc-resultado" id="calcResultado">--:--</div>
+        <div class="calc-comparacao" id="calcComparacao">Insira um horário inicial</div>
+        <div class="calc-actions">
+            <button class="calc-calcular-btn" id="calcCalcularBtn">Calcular</button>
+            <button class="calc-limpar-btn" id="calcLimparBtn">Limpar</button>
+        </div>
+    </div>
+
+    <!-- ===== CRONÔMETROS ===== -->
+    <div id="cronometrosContainer" class="cronometros-container"></div>
+    <button id="cronometroFab" class="cronometro-fab" title="Novo cronômetro">⏱</button>
+    <div id="cronometroToast" class="cronometro-toast"></div>
+    <audio id="cronometroBeepAudio" preload="auto" src="data:audio/wav;base64,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"></audio>
+
+    <!-- ===== POPUP NOVO CRONÔMETRO ===== -->
+    <div class="cronometro-popup-overlay" id="cronometroPopupOverlay">
+        <div class="cronometro-popup-card">
+            <h3>⏱ Novo cronômetro</h3>
+            <label for="cronometroNomeInput">Nome do cronômetro</label>
+            <input type="text" id="cronometroNomeInput" placeholder="Ex: Aguardando cliente" maxlength="40" />
+            <div class="cronometro-popup-feedback" id="cronometroPopupFeedback"></div>
+            <div class="cronometro-popup-actions">
+                <button id="cronometroCancelarBtn">Cancelar</button>
+                <button id="cronometroIniciarBtn">▶ Iniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL PARA CRIAR/EDITAR MENSAGEM ===== -->
+    <div class="modal-overlay" id="modalMsg">
+        <div class="modal-card">
+            <h3 id="modalTitulo"><i class="fas fa-plus-circle"></i> Nova mensagem</h3>
+            <input type="hidden" id="editIndex" value="" />
+
+            <label>Título</label>
+            <input type="text" id="modalTituloInput" placeholder="Ex: Atendimento, Encerramento..." maxlength="40" />
+
+            <label>Corpo (use {nome}, {inicio}, {fim})</label>
+            <textarea id="modalCorpo" placeholder="Olá {nome}, atendimento de {inicio} a {fim}."></textarea>
+
+            <div class="variaveis-preview">
+                <span class="tag-var-modal" data-var="{nome}">{nome} → <strong id="pvNome">(cliente)</strong></span>
+                <span class="tag-var-modal" data-var="{inicio}">{inicio} → <strong id="pvInicio">(data)</strong></span>
+                <span class="tag-var-modal" data-var="{fim}">{fim} → <strong id="pvFim">(data)</strong></span>
+            </div>
+
+            <div class="feedback" id="modalFeedback"></div>
+
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="btnSalvarMsg"><i class="fas fa-check"></i> Salvar</button>
+                <button class="btn btn-danger" id="btnExcluirMsg" style="display:none;"><i class="fas fa-trash"></i> Excluir</button>
+                <button class="btn btn-outline" id="btnCancelarMsg">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ============================================================
+            // TEMA
+            // ============================================================
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+
+            function toggleTheme() {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'light' ? 'dark' : 'light';
+                html.setAttribute('data-theme', next);
+                themeToggle.textContent = next === 'dark' ? '☀️' : '🌓';
+            }
+            themeToggle.addEventListener('click', toggleTheme);
+            if (html.getAttribute('data-theme') === 'dark') themeToggle.textContent = '☀️';
+
+            // ============================================================
+            // TOAST FEEDBACK
+            // ============================================================
+            const toastFeedback = document.getElementById('toastFeedback');
+            let toastTimeout = null;
+
+            function mostrarToast(msg, erro = false) {
+                toastFeedback.textContent = msg;
+                toastFeedback.className = 'toast-feedback ativo' + (erro ? ' erro' : '');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toastFeedback.classList.remove('ativo');
+                }, 3000);
+            }
+
+            // ============================================================
+            // INSERIR VARIÁVEL NO TEXTO (clique nas tags)
+            // ============================================================
+            function configurarInserirVariavel(selector, targetId) {
+                const elementos = document.querySelectorAll(selector);
+                const target = document.getElementById(targetId);
+                if (!target) return;
+
+                elementos.forEach(el => {
+                    el.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const variavel = this.dataset.var || this.textContent.trim();
+                        const textarea = target;
+                        const start = textarea.selectionStart;
+                        const end = textarea.selectionEnd;
+                        const texto = textarea.value;
+                        const antes = texto.substring(0, start);
+                        const depois = texto.substring(end);
+                        textarea.value = antes + variavel + depois;
+                        const novaPos = start + variavel.length;
+                        textarea.selectionStart = novaPos;
+                        textarea.selectionEnd = novaPos;
+                        textarea.focus();
+                        // Dispara evento de input para atualizar previews se necessário
+                        textarea.dispatchEvent(new Event('input'));
+                    });
+                });
+            }
+
+            // ============================================================
+            // STORAGE
+            // ============================================================
+            const KEY_MSGS = 'facilitador_mensagens_v6';
+            const KEY_NOTAS = 'facilitador_notas_v6';
+            const KEY_CAMPOS = 'facilitador_campos_v6';
+
+            // ============================================================
+            // ELEMENTOS
+            // ============================================================
+            const dataInicio = document.getElementById('dataInicio');
+            const dataFim = document.getElementById('dataFim');
+            const nomeCliente = document.getElementById('nomeCliente');
+            const lista = document.getElementById('listaMensagens');
+            const vazioMsg = document.getElementById('vazioMsg');
+
+            // Modal
+            const modal = document.getElementById('modalMsg');
+            const modalTitulo = document.getElementById('modalTitulo');
+            const editIndex = document.getElementById('editIndex');
+            const modalTituloInput = document.getElementById('modalTituloInput');
+            const modalCorpo = document.getElementById('modalCorpo');
+            const modalFeedback = document.getElementById('modalFeedback');
+            const btnSalvar = document.getElementById('btnSalvarMsg');
+            const btnExcluir = document.getElementById('btnExcluirMsg');
+            const btnCancelar = document.getElementById('btnCancelarMsg');
+
+            // Previews
+            const pvNome = document.getElementById('pvNome');
+            const pvInicio = document.getElementById('pvInicio');
+            const pvFim = document.getElementById('pvFim');
+
+            let editandoIndex = null;
+
+            // ============================================================
+            // FUNÇÕES
+            // ============================================================
+            function carregarMsgs() {
+                try { return JSON.parse(localStorage.getItem(KEY_MSGS)) || []; } catch { return []; }
+            }
+
+            function salvarMsgs(lista) {
+                localStorage.setItem(KEY_MSGS, JSON.stringify(lista));
+            }
+
+            function carregarCampos() {
+                try {
+                    const d = JSON.parse(localStorage.getItem(KEY_CAMPOS));
+                    if (d) {
+                        if (d.inicio) dataInicio.value = d.inicio;
+                        if (d.fim) dataFim.value = d.fim;
+                        if (d.cliente) nomeCliente.value = d.cliente;
+                    }
+                } catch (e) {}
+            }
+
+            function salvarCampos() {
+                localStorage.setItem(KEY_CAMPOS, JSON.stringify({
+                    inicio: dataInicio.value,
+                    fim: dataFim.value,
+                    cliente: nomeCliente.value
+                }));
+            }
+
+            function carregarNotas() {
+                try {
+                    const n = localStorage.getItem(KEY_NOTAS);
+                    if (n !== null) stickyNoteText.value = n;
+                } catch (e) {}
+            }
+
+            function salvarNotas() {
+                localStorage.setItem(KEY_NOTAS, stickyNoteText.value);
+                stickyNoteStatus.textContent = 'Salvo ✓';
+                stickyNoteStatus.style.opacity = '1';
+                clearTimeout(stickyTimeout);
+                stickyTimeout = setTimeout(() => {
+                    stickyNoteStatus.textContent = 'Salvo automaticamente';
+                    stickyNoteStatus.style.opacity = '0.7';
+                }, 1500);
+            }
+
+            function formatarData(d) {
+                if (!d) return '';
+                const p = d.split('-');
+                if (p.length !== 3) return d;
+                return `${p[2]}/${p[1]}/${p[0]}`;
+            }
+
+            function getVals() {
+                return {
+                    nome: nomeCliente.value || '(cliente)',
+                    inicio: dataInicio.value ? formatarData(dataInicio.value) : '(data início)',
+                    fim: dataFim.value ? formatarData(dataFim.value) : '(data fim)'
+                };
+            }
+
+            function preencher(template) {
+                const v = getVals();
+                return template.replace(/{nome}/g, v.nome).replace(/{inicio}/g, v.inicio).replace(/{fim}/g, v.fim);
+            }
+
+            function atualizarPreviews() {
+                const v = getVals();
+                pvNome.textContent = v.nome;
+                pvInicio.textContent = v.inicio;
+                pvFim.textContent = v.fim;
+            }
+
+            // ============================================================
+            // RENDERIZAR LISTA (cards)
+            // ============================================================
+            function renderizar() {
+                const msgs = carregarMsgs();
+                lista.querySelectorAll('.msg-card').forEach(el => el.remove());
+
+                if (msgs.length === 0) {
+                    vazioMsg.style.display = 'block';
+                    return;
+                }
+                vazioMsg.style.display = 'none';
+
+                msgs.forEach((item, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'msg-card';
+
+                    const titulo = document.createElement('div');
+                    titulo.className = 'card-titulo';
+                    titulo.textContent = item.titulo || 'Sem título';
+                    titulo.title = item.titulo || '';
+
+                    const preview = document.createElement('div');
+                    preview.className = 'card-preview';
+                    const corpo = item.corpo || '';
+                    preview.textContent = corpo;
+                    preview.title = corpo;
+
+                    const acoes = document.createElement('div');
+                    acoes.className = 'card-acoes';
+
+                    const btnCopiar = document.createElement('button');
+                    btnCopiar.className = 'btn btn-success btn-xs';
+                    btnCopiar.innerHTML = '<i class="fas fa-copy"></i>';
+                    btnCopiar.title = 'Copiar';
+                    btnCopiar.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const texto = preencher(item.corpo || '');
+                        copiarTexto(texto, btnCopiar);
+                    });
+
+                    const btnEditar = document.createElement('button');
+                    btnEditar.className = 'btn btn-outline btn-xs';
+                    btnEditar.innerHTML = '<i class="fas fa-pen"></i>';
+                    btnEditar.title = 'Editar';
+                    btnEditar.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        abrirModalEditar(idx);
+                    });
+
+                    const btnDel = document.createElement('button');
+                    btnDel.className = 'btn btn-danger btn-xs';
+                    btnDel.innerHTML = '<i class="fas fa-trash"></i>';
+                    btnDel.title = 'Excluir';
+                    btnDel.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (confirm('Excluir esta mensagem?')) {
+                            excluirMsg(idx);
+                        }
+                    });
+
+                    acoes.appendChild(btnCopiar);
+                    acoes.appendChild(btnEditar);
+                    acoes.appendChild(btnDel);
+
+                    card.appendChild(titulo);
+                    card.appendChild(preview);
+                    card.appendChild(acoes);
+
+                    lista.appendChild(card);
+                });
+            }
+
+            // ============================================================
+            // CRUD
+            // ============================================================
+            function salvarNova(titulo, corpo) {
+                const lista = carregarMsgs();
+                lista.push({ titulo: titulo.trim(), corpo: corpo.trim() });
+                salvarMsgs(lista);
+                renderizar();
+            }
+
+            function atualizarMsg(idx, titulo, corpo) {
+                const lista = carregarMsgs();
+                if (idx >= 0 && idx < lista.length) {
+                    lista[idx] = { titulo: titulo.trim(), corpo: corpo.trim() };
+                    salvarMsgs(lista);
+                    renderizar();
+                }
+            }
+
+            function excluirMsg(idx) {
+                const lista = carregarMsgs();
+                if (idx >= 0 && idx < lista.length) {
+                    lista.splice(idx, 1);
+                    salvarMsgs(lista);
+                    renderizar();
+                }
+            }
+
+            // ============================================================
+            // EXPORT / IMPORT
+            // ============================================================
+            document.getElementById('btnExportar').addEventListener('click', () => {
+                const msgs = carregarMsgs();
+                if (msgs.length === 0) {
+                    mostrarToast('Nenhuma mensagem para exportar.', true);
+                    return;
+                }
+                const blob = new Blob([JSON.stringify(msgs, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `mensagens_${new Date().toISOString().slice(0,10)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                mostrarToast(`${msgs.length} mensagem(ns) exportada(s)!`);
+            });
+
+            document.getElementById('btnImportar').addEventListener('click', () => {
+                document.getElementById('importarInput').click();
+            });
+
+            document.getElementById('importarInput').addEventListener('change', (ev) => {
+                const arquivo = ev.target.files[0];
+                if (!arquivo) return;
+                const leitor = new FileReader();
+                leitor.onload = (e) => {
+                    try {
+                        const importados = JSON.parse(e.target.result);
+                        if (!Array.isArray(importados)) throw new Error('Formato inválido');
+                        if (importados.length === 0) throw new Error('Arquivo vazio');
+
+                        const atuais = carregarMsgs();
+                        let count = 0;
+                        importados.forEach(item => {
+                            if (item.titulo && item.corpo) {
+                                atuais.push({
+                                    titulo: item.titulo.trim(),
+                                    corpo: item.corpo.trim()
+                                });
+                                count++;
+                            }
+                        });
+                        salvarMsgs(atuais);
+                        renderizar();
+                        mostrarToast(`${count} mensagem(ns) importada(s)!`);
+                    } catch (err) {
+                        mostrarToast('Erro ao importar: ' + err.message, true);
+                    }
+                    ev.target.value = '';
+                };
+                leitor.readAsText(arquivo);
+            });
+
+            // ============================================================
+            // MODAL
+            // ============================================================
+            function abrirModalNovo() {
+                editandoIndex = null;
+                editIndex.value = '';
+                modalTitulo.innerHTML = '<i class="fas fa-plus-circle"></i> Nova mensagem';
+                modalTituloInput.value = '';
+                modalCorpo.value = '';
+                btnExcluir.style.display = 'none';
+                modalFeedback.style.display = 'none';
+                atualizarPreviews();
+                modal.classList.add('ativo');
+                setTimeout(() => modalTituloInput.focus(), 80);
+            }
+
+            function abrirModalEditar(idx) {
+                const lista = carregarMsgs();
+                if (idx < 0 || idx >= lista.length) return;
+                const item = lista[idx];
+                editandoIndex = idx;
+                editIndex.value = idx;
+                modalTitulo.innerHTML = '<i class="fas fa-edit"></i> Editar mensagem';
+                modalTituloInput.value = item.titulo || '';
+                modalCorpo.value = item.corpo || '';
+                btnExcluir.style.display = 'block';
+                modalFeedback.style.display = 'none';
+                atualizarPreviews();
+                modal.classList.add('ativo');
+                setTimeout(() => modalTituloInput.focus(), 80);
+            }
+
+            function fecharModal() {
+                modal.classList.remove('ativo');
+                editandoIndex = null;
+            }
+
+            function salvarDoModal() {
+                const titulo = modalTituloInput.value.trim();
+                const corpo = modalCorpo.value.trim();
+
+                if (!titulo) {
+                    modalFeedback.textContent = 'Digite um título.';
+                    modalFeedback.style.display = 'block';
+                    modalTituloInput.focus();
+                    return;
+                }
+                if (!corpo) {
+                    modalFeedback.textContent = 'Digite o corpo da mensagem.';
+                    modalFeedback.style.display = 'block';
+                    modalCorpo.focus();
+                    return;
+                }
+
+                modalFeedback.style.display = 'none';
+
+                if (editandoIndex !== null) {
+                    atualizarMsg(editandoIndex, titulo, corpo);
+                } else {
+                    salvarNova(titulo, corpo);
+                }
+                fecharModal();
+            }
+
+            function excluirDoModal() {
+                if (editandoIndex === null) return;
+                if (confirm('Excluir esta mensagem?')) {
+                    excluirMsg(editandoIndex);
+                    fecharModal();
+                }
+            }
+
+            // ============================================================
+            // COPIAR TEXTO
+            // ============================================================
+            function copiarTexto(texto, el) {
+                const orig = el.innerHTML;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(texto).then(() => feedbackCopy(el)).catch(() => fallbackCopy(texto, el));
+                } else {
+                    fallbackCopy(texto, el);
+                }
+
+                function feedbackCopy(elem) {
+                    elem.innerHTML = '<i class="fas fa-check"></i>';
+                    setTimeout(() => elem.innerHTML = orig, 1200);
+                }
+
+                function fallbackCopy(t, elem) {
+                    const temp = document.createElement('textarea');
+                    temp.value = t;
+                    document.body.appendChild(temp);
+                    temp.select();
+                    try {
+                        document.execCommand('copy');
+                        feedbackCopy(elem);
+                    } catch (e) {
+                        alert('Não foi possível copiar.');
+                    }
+                    document.body.removeChild(temp);
+                }
+            }
+
+            // ============================================================
+            // EVENTOS
+            // ============================================================
+            document.getElementById('btnNovaMsg').addEventListener('click', abrirModalNovo);
+
+            document.getElementById('btnLimparVariaveis').addEventListener('click', () => {
+                dataInicio.value = '';
+                dataFim.value = '';
+                nomeCliente.value = '';
+                salvarCampos();
+                atualizarPreviews();
+            });
+
+            btnSalvar.addEventListener('click', salvarDoModal);
+            btnExcluir.addEventListener('click', excluirDoModal);
+            btnCancelar.addEventListener('click', fecharModal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) fecharModal();
+            });
+
+            // Auto-salvar
+            function autoSalvar() {
+                salvarCampos();
+                salvarNotas();
+                atualizarPreviews();
+            }
+
+            [dataInicio, dataFim, nomeCliente].forEach(el => {
+                el.addEventListener('input', autoSalvar);
+            });
+
+            // Atalhos no modal
+            modalTituloInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault();
+                    modalCorpo.focus(); }
+            });
+            modalCorpo.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    salvarDoModal();
+                }
+            });
+
+            // ============================================================
+            // CONFIGURAR INSERÇÃO DE VARIÁVEIS POR CLICK
+            // ============================================================
+            // Tags na barra superior
+            configurarInserirVariavel('.tag-var', 'modalCorpo');
+
+            // Tags dentro do modal (preview)
+            configurarInserirVariavel('.tag-var-modal', 'modalCorpo');
+
+            // ============================================================
+            // BLOCO DE NOTAS FLUTUANTE
+            // ============================================================
+            const STICKY_KEY = 'stickyNoteContent';
+            const stickyNoteText = document.getElementById('stickyNoteText');
+            const stickyNoteStatus = document.getElementById('stickyNoteStatus');
+            const limparStickyBtn = document.getElementById('limparStickyBtn');
+            const minimizarBtn = document.getElementById('minimizarStickyBtn');
+            const stickyFloat = document.getElementById('stickyNoteFloat');
+            const stickyHeader = document.getElementById('stickyHeader');
+            let stickyTimeout = null;
+
+            function carregarPosicao() {
+                try {
+                    const pos = JSON.parse(localStorage.getItem('stickyNotePosition'));
+                    if (pos) {
+                        stickyFloat.style.left = pos.left;
+                        stickyFloat.style.right = pos.right;
+                        stickyFloat.style.top = pos.top;
+                        stickyFloat.style.bottom = pos.bottom;
+                    }
+                    const size = JSON.parse(localStorage.getItem('stickyNoteSize'));
+                    if (size) {
+                        stickyFloat.style.width = size.width;
+                        stickyFloat.style.height = size.height;
+                    }
+                } catch (e) { /* ignore */ }
+            }
+
+            function salvarPosicao() {
+                try {
+                    const rect = stickyFloat.getBoundingClientRect();
+                    const pos = {
+                        left: stickyFloat.style.left,
+                        right: stickyFloat.style.right,
+                        top: stickyFloat.style.top,
+                        bottom: stickyFloat.style.bottom
+                    };
+                    localStorage.setItem('stickyNotePosition', JSON.stringify(pos));
+                    const size = {
+                        width: stickyFloat.style.width,
+                        height: stickyFloat.style.height
+                    };
+                    localStorage.setItem('stickyNoteSize', JSON.stringify(size));
+                } catch (e) { /* ignore */ }
+            }
+
+            function carregarStickyNote() {
+                try {
+                    const salvo = localStorage.getItem(STICKY_KEY);
+                    if (salvo !== null) {
+                        stickyNoteText.value = salvo;
+                    }
+                } catch (e) { /* ignore */ }
+            }
+
+            stickyNoteText.addEventListener('input', salvarNotas);
+
+            limparStickyBtn.addEventListener('click', () => {
+                if (stickyNoteText.value.trim() === '') return;
+                if (confirm('Limpar o conteúdo do bloco de notas?')) {
+                    stickyNoteText.value = '';
+                    salvarNotas();
+                    stickyNoteStatus.textContent = 'Limpo ✓';
+                    stickyNoteStatus.style.opacity = '1';
+                    setTimeout(() => {
+                        stickyNoteStatus.textContent = 'Salvo automaticamente';
+                        stickyNoteStatus.style.opacity = '0.7';
+                    }, 1500);
+                }
+            });
+
+            let minimizado = false;
+            minimizarBtn.addEventListener('click', () => {
+                minimizado = !minimizado;
+                stickyFloat.classList.toggle('minimizado', minimizado);
+                minimizarBtn.textContent = minimizado ? '▲' : '▼';
+                if (!minimizado) {
+                    try {
+                        const size = JSON.parse(localStorage.getItem('stickyNoteSize'));
+                        if (size && size.height) {
+                            stickyFloat.style.height = size.height;
+                        } else {
+                            stickyFloat.style.height = '260px';
+                        }
+                    } catch (e) {
+                        stickyFloat.style.height = '260px';
+                    }
+                }
+                salvarPosicao();
+            });
+
+            // ARRASTE
+            let isDragging = false;
+            let dragStartX, dragStartY;
+            let startLeft, startTop, startRight, startBottom;
+
+            stickyHeader.addEventListener('mousedown', (e) => {
+                if (e.target.closest('.sticky-actions')) return;
+                isDragging = true;
+                const rect = stickyFloat.getBoundingClientRect();
+                dragStartX = e.clientX;
+                dragStartY = e.clientY;
+
+                const style = window.getComputedStyle(stickyFloat);
+                startLeft = style.left;
+                startTop = style.top;
+                startRight = style.right;
+                startBottom = style.bottom;
+
+                stickyFloat.style.cursor = 'grabbing';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                const dx = e.clientX - dragStartX;
+                const dy = e.clientY - dragStartY;
+
+                if (startLeft !== 'auto') {
+                    const leftVal = parseFloat(startLeft) || 0;
+                    stickyFloat.style.left = (leftVal + dx) + 'px';
+                    stickyFloat.style.right = 'auto';
+                } else if (startRight !== 'auto') {
+                    const rightVal = parseFloat(startRight) || 0;
+                    stickyFloat.style.right = (rightVal - dx) + 'px';
+                    stickyFloat.style.left = 'auto';
+                }
+
+                if (startTop !== 'auto') {
+                    const topVal = parseFloat(startTop) || 0;
+                    stickyFloat.style.top = (topVal + dy) + 'px';
+                    stickyFloat.style.bottom = 'auto';
+                } else if (startBottom !== 'auto') {
+                    const bottomVal = parseFloat(startBottom) || 0;
+                    stickyFloat.style.bottom = (bottomVal - dy) + 'px';
+                    stickyFloat.style.top = 'auto';
+                }
+
+                e.preventDefault();
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    stickyFloat.style.cursor = 'default';
+                    document.body.style.userSelect = '';
+                    salvarPosicao();
+                }
+            });
+
+            // TOUCH
+            stickyHeader.addEventListener('touchstart', (e) => {
+                if (e.target.closest('.sticky-actions')) return;
+                const touch = e.touches[0];
+                isDragging = true;
+                const rect = stickyFloat.getBoundingClientRect();
+                dragStartX = touch.clientX;
+                dragStartY = touch.clientY;
+
+                const style = window.getComputedStyle(stickyFloat);
+                startLeft = style.left;
+                startTop = style.top;
+                startRight = style.right;
+                startBottom = style.bottom;
+
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            }, { passive: false });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const touch = e.touches[0];
+                const dx = touch.clientX - dragStartX;
+                const dy = touch.clientY - dragStartY;
+
+                if (startLeft !== 'auto') {
+                    const leftVal = parseFloat(startLeft) || 0;
+                    stickyFloat.style.left = (leftVal + dx) + 'px';
+                    stickyFloat.style.right = 'auto';
+                } else if (startRight !== 'auto') {
+                    const rightVal = parseFloat(startRight) || 0;
+                    stickyFloat.style.right = (rightVal - dx) + 'px';
+                    stickyFloat.style.left = 'auto';
+                }
+
+                if (startTop !== 'auto') {
+                    const topVal = parseFloat(startTop) || 0;
+                    stickyFloat.style.top = (topVal + dy) + 'px';
+                    stickyFloat.style.bottom = 'auto';
+                } else if (startBottom !== 'auto') {
+                    const bottomVal = parseFloat(startBottom) || 0;
+                    stickyFloat.style.bottom = (bottomVal - dy) + 'px';
+                    stickyFloat.style.top = 'auto';
+                }
+
+                e.preventDefault();
+            }, { passive: false });
+
+            document.addEventListener('touchend', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    document.body.style.userSelect = '';
+                    salvarPosicao();
+                }
+            });
+
+            function ajustarTextarea() {
+                if (!minimizado) {
+                    const rect = stickyFloat.getBoundingClientRect();
+                    const headerHeight = stickyHeader.getBoundingClientRect().height;
+                    const statusHeight = stickyNoteStatus.getBoundingClientRect().height;
+                    const padding = 24;
+                    const gap = 8;
+                    const newHeight = rect.height - headerHeight - statusHeight - padding - gap - 4;
+
+                    if (newHeight > 30) {
+                        stickyNoteText.style.height = newHeight + 'px';
+                    } else {
+                        stickyNoteText.style.height = '30px';
+                    }
+                }
+            }
+
+            const resizeObserver = new ResizeObserver(() => {
+                if (!minimizado) {
+                    ajustarTextarea();
+                    salvarPosicao();
+                }
+            });
+            resizeObserver.observe(stickyFloat);
+
+            window.addEventListener('resize', () => {
+                if (!minimizado) {
+                    ajustarTextarea();
+                }
+            });
+
+            setTimeout(ajustarTextarea, 100);
+            carregarPosicao();
+            carregarStickyNote();
+
+            // ============================================================
+            // CALCULADORA
+            // ============================================================
+            const calcToggleBtn = document.getElementById('calcToggleBtn');
+            const calcPanel = document.getElementById('calcPanel');
+            const calcHoraInicial = document.getElementById('calcHoraInicial');
+            const calcHoras = document.getElementById('calcHoras');
+            const calcMinutos = document.getElementById('calcMinutos');
+            const calcChegada = document.getElementById('calcChegada');
+            const calcResultado = document.getElementById('calcResultado');
+            const calcComparacao = document.getElementById('calcComparacao');
+            const calcCalcularBtn = document.getElementById('calcCalcularBtn');
+            const calcLimparBtn = document.getElementById('calcLimparBtn');
+
+            let calcAberto = false;
+
+            function obterHoraAtualPrecisa() {
+                const agora = new Date();
+                return String(agora.getHours()).padStart(2, '0') + ':' + String(agora.getMinutes()).padStart(2, '0');
+            }
+
+            calcToggleBtn.addEventListener('click', () => {
+                calcAberto = !calcAberto;
+                calcToggleBtn.classList.toggle('active', calcAberto);
+                calcPanel.classList.toggle('aberto', calcAberto);
+
+                if (calcAberto) {
+                    calcHoraInicial.value = obterHoraAtualPrecisa();
+                    calcularHorario();
+                }
+            });
+
+            function calcularHorario() {
+                const horaInicial = calcHoraInicial.value;
+                const horas = parseInt(calcHoras.value) || 0;
+                const minutos = parseInt(calcMinutos.value) || 0;
+
+                if (!horaInicial) {
+                    calcResultado.textContent = '--:--';
+                    calcComparacao.textContent = '⚠️ Selecione um horário inicial';
+                    return;
+                }
+
+                const partes = horaInicial.split(':');
+                let hora = parseInt(partes[0]);
+                let minuto = parseInt(partes[1]);
+
+                minuto += minutos;
+                hora += horas;
+
+                while (minuto >= 60) { minuto -= 60;
+                    hora += 1; }
+                while (hora >= 24) { hora -= 24; }
+
+                const resultado = String(hora).padStart(2, '0') + ':' + String(minuto).padStart(2, '0');
+                calcResultado.textContent = resultado;
+
+                const chegada = calcChegada.value;
+                if (chegada) {
+                    function toMin(str) {
+                        const p = str.split(':');
+                        return parseInt(p[0]) * 60 + parseInt(p[1]);
+                    }
+                    const diff = toMin(chegada) - toMin(resultado);
+                    if (diff === 0) {
+                        calcComparacao.innerHTML = `✅ Exato (${chegada})`;
+                    } else if (diff > 0) {
+                        const h = Math.floor(diff / 60);
+                        const m = diff % 60;
+                        calcComparacao.innerHTML =
+                            `⏰ <span class="atraso">${h}h${String(m).padStart(2,'0')}min ATRASADO</span>`;
+                    } else {
+                        const d = Math.abs(diff);
+                        const h = Math.floor(d / 60);
+                        const m = d % 60;
+                        calcComparacao.innerHTML =
+                            `✅ <span class="adiantado">${h}h${String(m).padStart(2,'0')}min ADIANTADO</span>`;
+                    }
+                } else {
+                    calcComparacao.textContent = `${horaInicial} + ${horas}h${String(minutos).padStart(2,'0')}min = ${resultado}`;
+                }
+            }
+
+            calcCalcularBtn.addEventListener('click', calcularHorario);
+            calcLimparBtn.addEventListener('click', () => {
+                calcHoraInicial.value = '';
+                calcHoras.value = '';
+                calcMinutos.value = '';
+                calcChegada.value = '';
+                calcResultado.textContent = '--:--';
+                calcComparacao.textContent = '';
+            });
+            document.querySelectorAll('.calc-row input').forEach(el => {
+                el.addEventListener('keydown', (e) => { if (e.key === 'Enter') calcularHorario(); });
+            });
+
+            // ============================================================
+            // CRONÔMETROS
+            // ============================================================
+            const cronometroFab = document.getElementById('cronometroFab');
+            const cronometroPopupOverlay = document.getElementById('cronometroPopupOverlay');
+            const cronometroNomeInput = document.getElementById('cronometroNomeInput');
+            const cronometroIniciarBtn = document.getElementById('cronometroIniciarBtn');
+            const cronometroCancelarBtn = document.getElementById('cronometroCancelarBtn');
+            const cronometroPopupFeedback = document.getElementById('cronometroPopupFeedback');
+            const cronometrosContainer = document.getElementById('cronometrosContainer');
+
+            let cronometros = [];
+            let cronometroIdSeq = 0;
+
+            function abrirPopupCronometro() {
+                cronometroNomeInput.value = '';
+                cronometroPopupFeedback.textContent = '';
+                cronometroPopupOverlay.classList.add('ativo');
+                setTimeout(() => cronometroNomeInput.focus(), 50);
+            }
+
+            function fecharPopupCronometro() {
+                cronometroPopupOverlay.classList.remove('ativo');
+            }
+
+            cronometroFab.addEventListener('click', abrirPopupCronometro);
+            cronometroCancelarBtn.addEventListener('click', fecharPopupCronometro);
+            cronometroPopupOverlay.addEventListener('click', (e) => {
+                if (e.target === cronometroPopupOverlay) fecharPopupCronometro();
+            });
+            cronometroNomeInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') iniciarNovoCronometro();
+            });
+            cronometroIniciarBtn.addEventListener('click', iniciarNovoCronometro);
+
+            function pedirPermissaoNotificacao() {
+                if (!('Notification' in window)) return Promise.resolve('unsupported');
+                if (Notification.permission === 'granted') return Promise.resolve('granted');
+                if (Notification.permission === 'denied') return Promise.resolve('denied');
+                return Notification.requestPermission();
+            }
+
+            function iniciarNovoCronometro() {
+                const nome = cronometroNomeInput.value.trim();
+                if (!nome) {
+                    cronometroPopupFeedback.textContent = 'Digite um nome.';
+                    cronometroNomeInput.focus();
+                    return;
+                }
+                pedirPermissaoNotificacao().then(() => {
+                    destravarAudioCronometro();
+                    criarCronometro(nome);
+                    fecharPopupCronometro();
+                });
+            }
+
+            function formatarTempo(ms) {
+                const total = Math.floor(ms / 1000);
+                const h = Math.floor(total / 3600);
+                const m = Math.floor((total % 3600) / 60);
+                const s = total % 60;
+                const pad = n => String(n).padStart(2, '0');
+                return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
+            }
+
+            function criarCronometro(nome) {
+                const id = ++cronometroIdSeq;
+                const cronometro = {
+                    id,
+                    name: nome,
+                    startTs: Date.now(),
+                    accumulated: 0,
+                    running: true,
+                    notifyCount: 0
+                };
+
+                const card = document.createElement('div');
+                card.className = 'cronometro-card';
+                card.dataset.id = String(id);
+
+                const main = document.createElement('div');
+                main.className = 'cronometro-card-main';
+
+                const header = document.createElement('div');
+                header.className = 'cronometro-card-header';
+
+                const nomeSpan = document.createElement('span');
+                nomeSpan.className = 'cronometro-nome';
+                nomeSpan.textContent = nome;
+                nomeSpan.title = nome;
+
+                header.appendChild(nomeSpan);
+
+                const tempoDiv = document.createElement('div');
+                tempoDiv.className = 'cronometro-tempo';
+                tempoDiv.textContent = '00:00';
+
+                main.appendChild(header);
+                main.appendChild(tempoDiv);
+
+                const acoesDiv = document.createElement('div');
+                acoesDiv.className = 'cronometro-acoes';
+
+                const pausarBtn = document.createElement('button');
+                pausarBtn.className = 'cronometro-pausar';
+                pausarBtn.title = 'Pausar';
+                pausarBtn.textContent = '⏸';
+                pausarBtn.addEventListener('click', () => togglePausaCronometro(id));
+
+                const fecharBtn = document.createElement('button');
+                fecharBtn.className = 'cronometro-fechar';
+                fecharBtn.title = 'Remover';
+                fecharBtn.textContent = '✕';
+                fecharBtn.addEventListener('click', () => removerCronometro(id));
+
+                acoesDiv.appendChild(pausarBtn);
+                acoesDiv.appendChild(fecharBtn);
+
+                card.appendChild(main);
+                card.appendChild(acoesDiv);
+
+                cronometrosContainer.appendChild(card);
+                cronometro.el = card;
+                cronometro.tempoEl = tempoDiv;
+                cronometro.pausarBtnEl = pausarBtn;
+
+                cronometros.push(cronometro);
+                atualizarTodosCronometros();
+            }
+
+            function togglePausaCronometro(id) {
+                const c = cronometros.find(c => c.id === id);
+                if (!c) return;
+                if (c.running) {
+                    c.accumulated += Date.now() - c.startTs;
+                    c.running = false;
+                    c.pausarBtnEl.textContent = '▶';
+                    c.pausarBtnEl.title = 'Retomar';
+                    c.el.classList.add('cronometro-pausado');
+                } else {
+                    c.startTs = Date.now();
+                    c.running = true;
+                    c.pausarBtnEl.textContent = '⏸';
+                    c.pausarBtnEl.title = 'Pausar';
+                    c.el.classList.remove('cronometro-pausado');
+                }
+            }
+
+            function removerCronometro(id) {
+                const idx = cronometros.findIndex(c => c.id === id);
+                if (idx === -1) return;
+                cronometros[idx].el.remove();
+                cronometros.splice(idx, 1);
+            }
+
+            const cronometroToast = document.getElementById('cronometroToast');
+            const cronometroBeepAudio = document.getElementById('cronometroBeepAudio');
+            let cronometroToastTimeout = null;
+            let audioDestravado = false;
+
+            function destravarAudioCronometro() {
+                if (audioDestravado || !cronometroBeepAudio) return;
+                const vol = cronometroBeepAudio.volume;
+                cronometroBeepAudio.volume = 0;
+                const p = cronometroBeepAudio.play();
+                if (p && typeof p.then === 'function') {
+                    p.then(() => {
+                        cronometroBeepAudio.pause();
+                        cronometroBeepAudio.currentTime = 0;
+                        cronometroBeepAudio.volume = vol;
+                        audioDestravado = true;
+                    }).catch(() => { cronometroBeepAudio.volume = vol; });
+                } else {
+                    cronometroBeepAudio.pause();
+                    cronometroBeepAudio.currentTime = 0;
+                    cronometroBeepAudio.volume = vol;
+                    audioDestravado = true;
+                }
+            }
+
+            function tocarBipCronometro() {
+                if (cronometroBeepAudio) {
+                    try {
+                        cronometroBeepAudio.currentTime = 0;
+                        const p = cronometroBeepAudio.play();
+                        if (p && typeof p.catch === 'function') p.catch(() => {});
+                        return;
+                    } catch (e) {}
+                }
+                try {
+                    const ctx = new(window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = 880;
+                    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.18);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.2);
+                    setTimeout(() => ctx.close(), 500);
+                } catch (e) {}
+            }
+
+            function mostrarToastCronometro(texto) {
+                cronometroToast.textContent = texto;
+                cronometroToast.classList.add('ativo');
+                clearTimeout(cronometroToastTimeout);
+                cronometroToastTimeout = setTimeout(() => {
+                    cronometroToast.classList.remove('ativo');
+                }, 4500);
+            }
+
+            function notificarCronometro(c, minutos) {
+                const titulo = `⏱ ${c.name}`;
+                const corpo = `Já se passaram ${minutos} minutos.`;
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    try {
+                        new Notification(titulo, {
+                            body: corpo,
+                            tag: `cronometro-${c.id}-${c.notifyCount}`,
+                            requireInteraction: true,
+                            silent: false
+                        });
+                    } catch (e) {}
+                }
+                mostrarToastCronometro(`${titulo} — ${corpo}`);
+                tocarBipCronometro();
+                c.el.classList.add('cronometro-notificado');
+                setTimeout(() => c.el.classList.remove('cronometro-notificado'), 2500);
+            }
+
+            const INTERVALO_NOTIF = 5 * 60 * 1000;
+
+            function atualizarTodosCronometros() {
+                cronometros.forEach(c => {
+                    const elapsed = c.accumulated + (c.running ? Date.now() - c.startTs : 0);
+                    c.tempoEl.textContent = formatarTempo(elapsed);
+                    if (c.running) {
+                        const passados = Math.floor(elapsed / INTERVALO_NOTIF);
+                        if (passados > c.notifyCount) {
+                            c.notifyCount = passados;
+                            notificarCronometro(c, passados * 5);
+                        }
+                    }
+                });
+            }
+
+            setInterval(atualizarTodosCronometros, 1000);
+
+            // ============================================================
+            // INICIALIZAÇÃO GERAL
+            // ============================================================
+            carregarCampos();
+            renderizar();
+            atualizarPreviews();
+
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                html.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+
+        })();
+    </script>
+
+</body>
+</html>
