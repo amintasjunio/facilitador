@@ -1123,16 +1123,70 @@
             border-color: #3b4a62;
             background: #16202f;
         }
+
+        /* ===== CONFIGURAÇÃO DE INTERVALO DO CRONÔMETRO ===== */
+        .cronometro-config-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #e2e8f0;
+        }
+        [data-theme="dark"] .cronometro-config-row {
+            border-top-color: #3b4a62;
+        }
+        .cronometro-config-row label {
+            font-size: 11px;
+            font-weight: 500;
+            margin: 0;
+            color: #52677a;
+            min-width: 36px;
+        }
+        [data-theme="dark"] .cronometro-config-row label {
+            color: #8fa3be;
+        }
+        .cronometro-config-row input[type="number"] {
+            width: 50px;
+            padding: 5px 2px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: center;
+            font-family: "Inter", monospace;
+            background: #fafcff;
+            transition: 0.15s;
+        }
+        [data-theme="dark"] .cronometro-config-row input[type="number"] {
+            background: #0f1729;
+            border-color: #3b4a62;
+            color: #e6edf5;
+        }
+        .cronometro-config-row input[type="number"]:focus {
+            border-color: #2d7aff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 122, 255, 0.12);
+        }
+        .cronometro-config-row span {
+            font-size: 11px;
+            color: #798ea5;
+        }
+        [data-theme="dark"] .cronometro-config-row span {
+            color: #8fa3be;
+        }
+
         .cronometro-popup-feedback {
             font-size: 11px;
             color: #d64545;
             min-height: 14px;
-            margin-bottom: 8px;
+            margin-top: 4px;
         }
+
         .cronometro-popup-actions {
             display: flex;
             gap: 8px;
             justify-content: flex-end;
+            margin-top: 10px;
         }
         .cronometro-popup-actions button {
             border-radius: 30px;
@@ -1413,7 +1467,16 @@
             <h3>⏱ Novo cronômetro</h3>
             <label for="cronometroNomeInput">Nome do cronômetro</label>
             <input type="text" id="cronometroNomeInput" placeholder="Ex: Aguardando cliente" maxlength="40" />
+
+            <!-- ===== CONFIGURAÇÃO DE INTERVALO ===== -->
+            <div class="cronometro-config-row">
+                <label>Notificar</label>
+                <input type="number" id="cronometroIntervaloInput" value="5" min="1" max="120" />
+                <span>minutos</span>
+            </div>
+
             <div class="cronometro-popup-feedback" id="cronometroPopupFeedback"></div>
+
             <div class="cronometro-popup-actions">
                 <button id="cronometroCancelarBtn">Cancelar</button>
                 <button id="cronometroIniciarBtn">▶ Iniciar</button>
@@ -1504,7 +1567,6 @@
                         textarea.selectionStart = novaPos;
                         textarea.selectionEnd = novaPos;
                         textarea.focus();
-                        // Dispara evento de input para atualizar previews se necessário
                         textarea.dispatchEvent(new Event('input'));
                     });
                 });
@@ -1927,10 +1989,7 @@
             // ============================================================
             // CONFIGURAR INSERÇÃO DE VARIÁVEIS POR CLICK
             // ============================================================
-            // Tags na barra superior
             configurarInserirVariavel('.tag-var', 'modalCorpo');
-
-            // Tags dentro do modal (preview)
             configurarInserirVariavel('.tag-var-modal', 'modalCorpo');
 
             // ============================================================
@@ -2274,11 +2333,12 @@
             });
 
             // ============================================================
-            // CRONÔMETROS
+            // CRONÔMETROS (COM INTERVALO CONFIGURÁVEL)
             // ============================================================
             const cronometroFab = document.getElementById('cronometroFab');
             const cronometroPopupOverlay = document.getElementById('cronometroPopupOverlay');
             const cronometroNomeInput = document.getElementById('cronometroNomeInput');
+            const cronometroIntervaloInput = document.getElementById('cronometroIntervaloInput');
             const cronometroIniciarBtn = document.getElementById('cronometroIniciarBtn');
             const cronometroCancelarBtn = document.getElementById('cronometroCancelarBtn');
             const cronometroPopupFeedback = document.getElementById('cronometroPopupFeedback');
@@ -2289,6 +2349,7 @@
 
             function abrirPopupCronometro() {
                 cronometroNomeInput.value = '';
+                cronometroIntervaloInput.value = 5;
                 cronometroPopupFeedback.textContent = '';
                 cronometroPopupOverlay.classList.add('ativo');
                 setTimeout(() => cronometroNomeInput.focus(), 50);
@@ -2322,9 +2383,14 @@
                     cronometroNomeInput.focus();
                     return;
                 }
+
+                let intervaloMinutos = parseInt(cronometroIntervaloInput.value) || 5;
+                if (intervaloMinutos < 1) intervaloMinutos = 1;
+                if (intervaloMinutos > 120) intervaloMinutos = 120;
+
                 pedirPermissaoNotificacao().then(() => {
                     destravarAudioCronometro();
-                    criarCronometro(nome);
+                    criarCronometro(nome, intervaloMinutos);
                     fecharPopupCronometro();
                 });
             }
@@ -2338,7 +2404,7 @@
                 return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
             }
 
-            function criarCronometro(nome) {
+            function criarCronometro(nome, intervaloMinutos) {
                 const id = ++cronometroIdSeq;
                 const cronometro = {
                     id,
@@ -2346,7 +2412,8 @@
                     startTs: Date.now(),
                     accumulated: 0,
                     running: true,
-                    notifyCount: 0
+                    notifyCount: 0,
+                    intervaloMs: intervaloMinutos * 60 * 1000
                 };
 
                 const card = document.createElement('div');
@@ -2507,17 +2574,18 @@
                 setTimeout(() => c.el.classList.remove('cronometro-notificado'), 2500);
             }
 
-            const INTERVALO_NOTIF = 5 * 60 * 1000;
-
             function atualizarTodosCronometros() {
                 cronometros.forEach(c => {
                     const elapsed = c.accumulated + (c.running ? Date.now() - c.startTs : 0);
                     c.tempoEl.textContent = formatarTempo(elapsed);
+
                     if (c.running) {
-                        const passados = Math.floor(elapsed / INTERVALO_NOTIF);
+                        const intervaloMs = c.intervaloMs || 5 * 60 * 1000;
+                        const passados = Math.floor(elapsed / intervaloMs);
                         if (passados > c.notifyCount) {
                             c.notifyCount = passados;
-                            notificarCronometro(c, passados * 5);
+                            const minutosDecorridos = passados * (intervaloMs / 60000);
+                            notificarCronometro(c, Math.round(minutosDecorridos));
                         }
                     }
                 });
