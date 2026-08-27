@@ -257,6 +257,7 @@
             flex-direction: column;
             gap: 6px;
             min-height: 80px;
+            cursor: pointer;
         }
         [data-theme="dark"] .msg-card {
             background: #1e293b;
@@ -534,7 +535,7 @@
             padding-right: 18px;
         }
 
-        /* ===== MODAL ===== */
+        /* ===== MODAL DE EDIÇÃO/CRIAÇÃO ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -678,6 +679,110 @@
             flex: 1;
             justify-content: center;
             min-width: 70px;
+        }
+
+        /* ===== MODAL DE VISUALIZAÇÃO ===== */
+        .view-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 20, 40, 0.6);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1100;
+            padding: 20px;
+        }
+        .view-modal-overlay.ativo {
+            display: flex;
+        }
+        .view-modal-card {
+            background: #fff;
+            max-width: 520px;
+            width: 100%;
+            border-radius: 24px;
+            padding: 24px 28px 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: modalIn 0.2s ease;
+        }
+        [data-theme="dark"] .view-modal-card {
+            background: #1e293b;
+            color: #e6edf5;
+        }
+        .view-modal-card h3 {
+            font-size: 17px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0b2b44;
+        }
+        [data-theme="dark"] .view-modal-card h3 {
+            color: #e6edf5;
+        }
+        .view-modal-card h3 i {
+            color: #2d7aff;
+        }
+        .view-modal-card .view-subtitle {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 14px;
+            border-bottom: 1px solid #eef2f8;
+            padding-bottom: 10px;
+        }
+        [data-theme="dark"] .view-modal-card .view-subtitle {
+            color: #8fa3be;
+            border-bottom-color: #2d3a4f;
+        }
+        .view-modal-card .view-body {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 18px;
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #eef2f8;
+            min-height: 80px;
+        }
+        [data-theme="dark"] .view-modal-card .view-body {
+            background: #0f1729;
+            border-color: #2d3a4f;
+            color: #e6edf5;
+        }
+        .view-modal-card .view-body::-webkit-scrollbar {
+            width: 4px;
+        }
+        .view-modal-card .view-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        [data-theme="dark"] .view-modal-card .view-body::-webkit-scrollbar-thumb {
+            background: #3b4a62;
+        }
+        .view-modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .view-modal-actions .btn {
+            flex: 1;
+            justify-content: center;
+            min-width: 80px;
+        }
+        .view-feedback {
+            font-size: 12px;
+            color: #16a34a;
+            display: none;
+            align-items: center;
+            gap: 4px;
+            margin-left: 8px;
+        }
+        .view-feedback.ativo {
+            display: inline-flex;
         }
 
         /* ===== CALCULADORA ===== */
@@ -1088,7 +1193,6 @@
             background: #16202f;
         }
 
-        /* ===== CONFIGURAÇÃO DE INTERVALO DO CRONÔMETRO ===== */
         .cronometro-config-row {
             display: flex;
             align-items: center;
@@ -1256,6 +1360,10 @@
                 max-width: 80vw;
                 max-height: 26vh;
             }
+            .view-modal-card {
+                max-width: 95%;
+                padding: 18px 16px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1330,6 +1438,14 @@
             }
             .modal-card {
                 padding: 14px 14px;
+            }
+            .view-modal-card {
+                padding: 14px 12px;
+            }
+            .view-modal-card .view-body {
+                font-size: 13px;
+                padding: 12px 14px;
+                max-height: 200px;
             }
             .btn {
                 font-size: 10px;
@@ -1485,6 +1601,20 @@
         </div>
     </div>
 
+    <!-- ===== MODAL DE VISUALIZAÇÃO DA MENSAGEM ===== -->
+    <div class="view-modal-overlay" id="viewModal">
+        <div class="view-modal-card">
+            <h3 id="viewTitulo"><i class="fas fa-file-alt"></i> <span id="viewTituloTexto">Mensagem</span></h3>
+            <div class="view-subtitle" id="viewSubtitle">Visualização completa</div>
+            <div class="view-body" id="viewBody">Carregando...</div>
+            <div class="view-modal-actions">
+                <button class="btn btn-success" id="viewCopiarBtn"><i class="fas fa-copy"></i> Copiar</button>
+                <button class="btn btn-outline" id="viewFecharBtn">Fechar</button>
+                <span class="view-feedback" id="viewFeedback"><i class="fas fa-check-circle"></i> Copiado!</span>
+            </div>
+        </div>
+    </div>
+
     <script>
         (function() {
             // ============================================================
@@ -1561,7 +1691,7 @@
             const lista = document.getElementById('listaMensagens');
             const vazioMsg = document.getElementById('vazioMsg');
 
-            // Modal
+            // Modal de edição
             const modal = document.getElementById('modalMsg');
             const modalTitulo = document.getElementById('modalTitulo');
             const editIndex = document.getElementById('editIndex');
@@ -1572,12 +1702,22 @@
             const btnExcluir = document.getElementById('btnExcluirMsg');
             const btnCancelar = document.getElementById('btnCancelarMsg');
 
+            // Modal de visualização
+            const viewModal = document.getElementById('viewModal');
+            const viewTituloTexto = document.getElementById('viewTituloTexto');
+            const viewSubtitle = document.getElementById('viewSubtitle');
+            const viewBody = document.getElementById('viewBody');
+            const viewCopiarBtn = document.getElementById('viewCopiarBtn');
+            const viewFecharBtn = document.getElementById('viewFecharBtn');
+            const viewFeedback = document.getElementById('viewFeedback');
+
             // Previews
             const pvNome = document.getElementById('pvNome');
             const pvInicio = document.getElementById('pvInicio');
             const pvFim = document.getElementById('pvFim');
 
             let editandoIndex = null;
+            let viewIndex = null;
 
             // ============================================================
             // FUNÇÕES
@@ -1670,6 +1810,14 @@
                 msgs.forEach((item, idx) => {
                     const card = document.createElement('div');
                     card.className = 'msg-card';
+                    card.dataset.index = idx;
+
+                    // Clique no card para visualizar
+                    card.addEventListener('click', (e) => {
+                        // Se clicou em um botão dentro do card, não abrir visualização
+                        if (e.target.closest('.card-acoes')) return;
+                        abrirVisualizacao(idx);
+                    });
 
                     const titulo = document.createElement('div');
                     titulo.className = 'card-titulo';
@@ -1726,6 +1874,45 @@
                     lista.appendChild(card);
                 });
             }
+
+            // ============================================================
+            // VISUALIZAÇÃO DA MENSAGEM
+            // ============================================================
+            function abrirVisualizacao(idx) {
+                const msgs = carregarMsgs();
+                if (idx < 0 || idx >= msgs.length) return;
+                const item = msgs[idx];
+                viewIndex = idx;
+
+                const textoCompleto = preencher(item.corpo || '');
+
+                viewTituloTexto.textContent = item.titulo || 'Sem título';
+                viewSubtitle.textContent = `Mensagem #${idx + 1} • ${new Date().toLocaleString()}`;
+                viewBody.textContent = textoCompleto || '(mensagem vazia)';
+                viewFeedback.classList.remove('ativo');
+                viewModal.classList.add('ativo');
+            }
+
+            function fecharVisualizacao() {
+                viewModal.classList.remove('ativo');
+                viewIndex = null;
+            }
+
+            viewFecharBtn.addEventListener('click', fecharVisualizacao);
+            viewModal.addEventListener('click', (e) => {
+                if (e.target === viewModal) fecharVisualizacao();
+            });
+
+            viewCopiarBtn.addEventListener('click', () => {
+                const texto = viewBody.textContent;
+                if (texto && texto !== '(mensagem vazia)') {
+                    copiarTexto(texto, viewCopiarBtn);
+                    viewFeedback.classList.add('ativo');
+                    setTimeout(() => {
+                        viewFeedback.classList.remove('ativo');
+                    }, 2000);
+                }
+            });
 
             // ============================================================
             // CRUD
@@ -1813,7 +2000,7 @@
             });
 
             // ============================================================
-            // MODAL
+            // MODAL DE EDIÇÃO
             // ============================================================
             function abrirModalNovo() {
                 editandoIndex = null;
@@ -1896,8 +2083,14 @@
                 }
 
                 function feedbackCopy(elem) {
-                    elem.innerHTML = '<i class="fas fa-check"></i>';
-                    setTimeout(() => elem.innerHTML = orig, 1200);
+                    elem.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                    setTimeout(() => {
+                        if (elem.id === 'viewCopiarBtn') {
+                            elem.innerHTML = '<i class="fas fa-copy"></i> Copiar';
+                        } else {
+                            elem.innerHTML = orig;
+                        }
+                    }, 1500);
                 }
 
                 function fallbackCopy(t, elem) {
